@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://d35errf4tbvga"]
+
+[ext_resource type="Script" uid="uid://b2ij1aw7an2r7" path="res://libs/ortho_grid_map/grid_object.gd" id="1_5io3f"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_uiyn6"]
+size = Vector3(1, 0.2, 1)
+
+[node name="Tile" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_uiyn6")
+script = ExtResource("1_5io3f")

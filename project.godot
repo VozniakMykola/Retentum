@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="Retentum"
+run/main_scene="uid://b4kdmhic4mr1h"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+G="*res://classes/G.gd"
 
 [editor]
 

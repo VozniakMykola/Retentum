@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dstbkuiyj2qve"]
+
+[ext_resource type="Script" uid="uid://cjugr2pl114e2" path="res://libs/ortho_grid_map/ortho_grid_map.gd" id="1_c3d08"]
+
+[node name="OrthoGridMap" type="Node3D"]
+script = ExtResource("1_c3d08")
