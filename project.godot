@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-G="*res://classes/G.gd"
+G="*res://src/G.gd"
 
 [editor]
 

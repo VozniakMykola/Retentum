@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Biome" load_steps=2 format=3 uid="uid://c2tjktui7kt7x"]
+
+[ext_resource type="Script" uid="uid://bmp4k8nlenb5s" path="res://src/biome.gd" id="1_agw7a"]
+
+[resource]
+script = ExtResource("1_agw7a")
+biome_id = "FACTORY"
+biome_decor = Array[PackedScene]([])
+biome_environment = Array[PackedScene]([])
+tiles_palette = Array[PackedScene]([])
+is_unlocked = false
+required_wins = 0
+metadata/_custom_type_script = "uid://bmp4k8nlenb5s"

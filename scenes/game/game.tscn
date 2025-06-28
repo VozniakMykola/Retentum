@@ -1,7 +1,11 @@
 [gd_scene load_steps=4 format=3 uid="uid://b4kdmhic4mr1h"]
 
 [ext_resource type="Script" uid="uid://dm02qk28362ba" path="res://scenes/game/game.gd" id="1_sul5r"]
-[ext_resource type="Script" uid="uid://bu0ej8i80gkj1" path="res://scenes/game/level_builder.gd" id="2_7h61r"]
+
+[sub_resource type="GDScript" id="GDScript_sul5r"]
+script/source = "extends Node
+class_name LevelGenerator
+"
 
 [sub_resource type="Environment" id="Environment_0sr1o"]
 background_mode = 2
@@ -12,7 +16,7 @@ glow_enabled = true
 script = ExtResource("1_sul5r")
 
 [node name="LevelBuilder" type="Node" parent="."]
-script = ExtResource("2_7h61r")
+script = SubResource("GDScript_sul5r")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_0sr1o")

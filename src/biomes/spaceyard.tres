@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Biome" load_steps=3 format=3 uid="uid://d18r24um3nhbf"]
+
+[ext_resource type="Script" uid="uid://bmp4k8nlenb5s" path="res://src/biome.gd" id="1_x5kir"]
+[ext_resource type="Script" uid="uid://4i8mptx6xfxa" path="res://src/terrain_pattern.gd" id="2_aq5qi"]
+
+[resource]
+script = ExtResource("1_x5kir")
+biome_id = "SPACEYARD"
+biome_decor = Array[PackedScene]([])
+biome_environment = Array[PackedScene]([])
+tiles_palette = Array[PackedScene]([])
+terrain_patterns = Array[ExtResource("2_aq5qi")]([])
+is_unlocked = false
+required_wins = 0
+metadata/_custom_type_script = "uid://bmp4k8nlenb5s"

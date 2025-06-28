@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Biome" load_steps=2 format=3 uid="uid://cg2xx5evtj4g5"]
+
+[ext_resource type="Script" uid="uid://bmp4k8nlenb5s" path="res://src/biome.gd" id="1_b8dmn"]
+
+[resource]
+script = ExtResource("1_b8dmn")
+biome_id = "FLUFFY_PRISON"
+biome_decor = Array[PackedScene]([])
+biome_environment = Array[PackedScene]([])
+tiles_palette = Array[PackedScene]([])
+is_unlocked = false
+required_wins = 0
+metadata/_custom_type_script = "uid://bmp4k8nlenb5s"

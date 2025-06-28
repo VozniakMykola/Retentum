@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cys0c72c5dtqm"]
+
+[ext_resource type="Script" uid="uid://b3uwbkyiuqw2e" path="res://src/tile/tile.gd" id="1_bmg38"]
+[ext_resource type="Material" uid="uid://b66k7nd3xxya7" path="res://assets/materials/chia.tres" id="2_mbvpv"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4q3l0"]
+size = Vector3(1, 0.1, 1)
+
+[node name="TestObj" type="Node3D"]
+script = ExtResource("1_bmg38")
+metadata/_custom_type_script = "uid://b2ij1aw7an2r7"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12497, 0.0932582, 0.319485)
+material_override = ExtResource("2_mbvpv")
+lod_bias = 0.001
+mesh = SubResource("BoxMesh_4q3l0")

@@ -1,9 +1,8 @@
 extends Node3D
 
 #const TILE_SCENE: PackedScene = preload("res://libs/ortho_grid_map/grid_object.tscn")
-const TILE_SCENE = preload("res://scenes/game/test_obj.tscn")
+const TILE_SCENE = preload("res://src/tile/tile.tscn")
 @onready var tile_map: Node3D = $TileMap
-
 const GRID_SIZE: int = 9
 var tile_size: int
 var grid_map: OrthoGridMap
@@ -11,7 +10,7 @@ var grid_map: OrthoGridMap
 func _ready() -> void:
 	grid_map = OrthoGridMap.new()
 	grid_map.y_index = 2
-	grid_map.cell_size = Vector2(1.1, 1.1)
+	grid_map.cell_size = Vector2(1, 1)
 	add_child(grid_map)
 	spawn_just_grid_zov()
 
