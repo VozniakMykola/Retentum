@@ -8,10 +8,8 @@ size = Vector3(1, 0.1, 1)
 
 [node name="TestObj" type="Node3D"]
 script = ExtResource("1_bmg38")
-metadata/_custom_type_script = "uid://b2ij1aw7an2r7"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12497, 0.0932582, 0.319485)
 material_override = ExtResource("2_mbvpv")
 lod_bias = 0.001
 mesh = SubResource("BoxMesh_4q3l0")
