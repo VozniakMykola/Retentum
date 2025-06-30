@@ -85,7 +85,7 @@ func set_cell_item(pos: Vector2i, grid_object: GridObject) -> void:
 	var world_pos: Vector3 = grid_to_world_true(grid_object._cell_true_position)
 	grid_object.position = world_pos
 	grid_object._world_position = Vector2(world_pos.x, world_pos.z)
-	
+	grid_object.name = "GridObject_%d_%d" % [pos.x, pos.y]
 	_grid_objects[pos] = grid_object
 	add_child(grid_object)
 

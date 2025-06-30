@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TileResource" load_steps=2 format=3 uid="uid://cs52nm366j123"]
+
+[ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tile/tile_res.gd" id="1_yfgvp"]
+
+[resource]
+script = ExtResource("1_yfgvp")
+tile_id = "red_fur"
+albedo_color = Color(1, 1, 1, 1)
+ignore_albedo = false
+is_unlocked = false
+metadata/_custom_type_script = "uid://bcsf5g74r2jr5"

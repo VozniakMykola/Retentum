@@ -4,18 +4,16 @@ class_name Biome
 @export var biome_id: String = ""
 
 @export_group("Visual")
+@export var tiles_palette: Array[TileResource] = []
+@export var terrain_patterns: Array[G.TerrainPattern] = []
+@export_group("Visual 2")
 @export var biome_decor: Array[PackedScene] = [] 
 @export var biome_environment: Array[PackedScene] = []
-@export var tiles_palette: Array[PackedScene] = []
-
-@export_group("Gameplay")
-@export var terrain_patterns: Array[TerrainPattern] = []
-
-@export_group("Special")
+@export_group("Journal")
 @export var is_unlocked: bool = false
 @export var required_wins: int = 0
 
-func get_random_tile_material() -> PackedScene:
+func get_random_tile_from_palette() -> PackedScene:
 	return tiles_palette.pick_random()
 
 #func generate_field() -> Array:

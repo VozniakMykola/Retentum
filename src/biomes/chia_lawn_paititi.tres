@@ -5,10 +5,10 @@
 
 [resource]
 script = ExtResource("1_rbdaj")
-biome_id = "CHIA_LAWN_PAITITI"
+biome_id = "chia_lawn_paititi"
+tiles_palette = Array[PackedScene]([])
 biome_decor = Array[PackedScene]([])
 biome_environment = Array[PackedScene]([])
-tiles_palette = Array[PackedScene]([])
 terrain_patterns = Array[ExtResource("2_gaitt")]([])
 is_unlocked = false
 required_wins = 0
