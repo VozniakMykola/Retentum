@@ -5,10 +5,9 @@ extends Node3D
 @export var world_shape: G.ShapePattern
 @export var world_size: Vector2i = Vector2(9, 18)
 @export_group("Grid")
-@export var cell_size: Vector2 = Vector2(1.05, 1.05)
+@export var cell_size: Vector2 = Vector2(1.15, 1.15)
 
 const TILE_SCENE = preload("res://src/tile/tile.tscn")
-const GRID_SIZE: int = 9
 var grid_map: OrthoGridMap
 
 func _ready() -> void:
@@ -19,9 +18,9 @@ func _ready() -> void:
 	spawn_grid()
 
 func spawn_grid() -> void:
-	for y in GRID_SIZE*2-1:
-		for x in GRID_SIZE:
-			if y % 2 != 0 and x == GRID_SIZE - 1:
+	for y in world_size.y-1:
+		for x in world_size.x:
+			if y % 2 != 0 and x == world_size.x - 1:
 				continue 
 			var grid_object = TILE_SCENE.instantiate()
 			var grid_pos = Vector2i(x, y)

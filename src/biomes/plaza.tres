@@ -1,7 +1,6 @@
-[gd_resource type="Resource" script_class="Biome" load_steps=5 format=3 uid="uid://bijc32l6f50wb"]
+[gd_resource type="Resource" script_class="Biome" load_steps=4 format=3 uid="uid://bijc32l6f50wb"]
 
 [ext_resource type="Script" uid="uid://bmp4k8nlenb5s" path="res://src/biome.gd" id="1_fnrwp"]
-[ext_resource type="Script" uid="uid://4i8mptx6xfxa" path="res://src/terrain_pattern.gd" id="2_mevxa"]
 [ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tile/tile_res.gd" id="3_ok6om"]
 [ext_resource type="Resource" uid="uid://crn68ij1j1lji" path="res://src/tiles/gray_concrete.tres" id="4_0y25i"]
 
@@ -9,7 +8,7 @@
 script = ExtResource("1_fnrwp")
 biome_id = "plaza"
 tiles_palette = Array[ExtResource("3_ok6om")]([ExtResource("4_0y25i")])
-terrain_patterns = Array[ExtResource("2_mevxa")]([null])
+terrain_patterns = Array[int]([0])
 biome_decor = Array[PackedScene]([])
 biome_environment = Array[PackedScene]([])
 is_unlocked = true

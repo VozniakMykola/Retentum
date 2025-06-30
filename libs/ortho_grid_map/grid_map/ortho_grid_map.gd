@@ -5,8 +5,10 @@
 ## [img width=300]res://libs/ortho_grid_map/Staggered_ Iso.png[/img][br]
 ## [b]2. True Isometric[/b] - Cartesian grid aligns directly with the tile axes without any offsets, meaning the coordinates are logically and visually aligned along the grid axes.[br]
 ## [img width=300]res://libs/ortho_grid_map/True_ Iso.png[/img][br]
+@icon("res://libs/ortho_grid_map/grid_map.svg")
 class_name OrthoGridMap
 extends Node3D
+
 @export var cell_size: Vector2 = Vector2(1.0, 1.0):
 	set(value):
 		cell_size = value if value != Vector2.ZERO else Vector2.ONE

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d35errf4tbvga"]
+
+[ext_resource type="Script" uid="uid://b2ij1aw7an2r7" path="res://libs/ortho_grid_map/grid_object/grid_object.gd" id="1_5io3f"]
+
+[node name="Tile" type="Node3D"]
+script = ExtResource("1_5io3f")

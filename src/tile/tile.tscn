@@ -1,19 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cys0c72c5dtqm"]
+[gd_scene load_steps=3 format=3 uid="uid://cys0c72c5dtqm"]
 
 [ext_resource type="Script" uid="uid://b3uwbkyiuqw2e" path="res://src/tile/tile.gd" id="1_bmg38"]
-[ext_resource type="Resource" uid="uid://crn68ij1j1lji" path="res://src/tiles/gray_concrete.tres" id="2_qnrrg"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_4q3l0"]
-size = Vector3(1, 0.1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bdefd"]
 
-[node name="TestObj" type="Node3D"]
+[node name="Tile" type="Node3D"]
 script = ExtResource("1_bmg38")
-tile_data = ExtResource("2_qnrrg")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_4q3l0")
 
 [node name="Area3D" type="Area3D" parent="."]
 

@@ -17,6 +17,7 @@ var tile_state: G.TileState = G.TileState.NORMAL
 #Sizes
 var tile_size: Vector3 = Vector3(1.0, 0.2, 1.0)
 var hitbox_size: Vector3
+var hitbox_y_offset: float
 #Positive Interractions
 var lift_height: float = 0.3
 var lift_speed: float = 0.15
@@ -38,6 +39,7 @@ func _ready() -> void:
 	lifted_mesh_position = original_mesh_position + Vector3(0, lift_height, 0)
 	
 	hitbox_size = Vector3(tile_size.x, tile_size.y, tile_size.z)
+	hitbox_y_offset = lift_height
 	
 	if tile_data:
 		_apply_tile_settings()
@@ -63,6 +65,7 @@ func _apply_tile_settings() -> void:
 			mesh_instance.material_override = tile_data.material
 	if collision_shape:
 		collision_shape.shape.size = hitbox_size
+		collision_shape.position.y += hitbox_y_offset
 
 func _process(delta):
 		pass
@@ -102,6 +105,8 @@ func on_click(event: InputEventMouseButton) -> void:
 				G.TileState.ENDGAME:
 					_tile_action_blocked()
 				G.TileState.DEAD:
+					pass
+				_:
 					pass
 		elif gameplay_state == G.GameplayState.OCCUPIED:
 			_tile_action_blocked()

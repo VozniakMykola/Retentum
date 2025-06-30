@@ -1,5 +1,6 @@
-extends Node3D
+@icon("res://libs/ortho_grid_map/grid_obj.svg")
 class_name GridObject
+extends Node3D
 
 ## Position in staggered isometric grid
 var cell_position: Vector2i:
