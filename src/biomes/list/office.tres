@@ -1,12 +1,19 @@
-[gd_resource type="Resource" script_class="Biome" load_steps=3 format=3 uid="uid://nlje0smmh7gy"]
+[gd_resource type="Resource" script_class="Biome" load_steps=10 format=3 uid="uid://nlje0smmh7gy"]
 
 [ext_resource type="Script" uid="uid://bmp4k8nlenb5s" path="res://src/biomes/biome.gd" id="1_r42td"]
 [ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tiles/tile_res.gd" id="2_ixgwx"]
+[ext_resource type="Resource" uid="uid://d27ub7v2d3oq5" path="res://src/tiles/list/dark_gray_carpet.tres" id="3_ujcbg"]
+[ext_resource type="Resource" uid="uid://dgyhq3rq1lhuv" path="res://src/tiles/list/blue_carpet.tres" id="4_kxcyd"]
+[ext_resource type="Resource" uid="uid://mcf4a6awn6dm" path="res://src/tiles/list/cyan_carpet.tres" id="5_qnbte"]
+[ext_resource type="Resource" uid="uid://dcbds287ueyv2" path="res://src/tiles/list/purple_carpet.tres" id="6_pr6pj"]
+[ext_resource type="Resource" uid="uid://bsaafp8edqhsu" path="res://src/tiles/list/teal_carpet.tres" id="7_pscf2"]
+[ext_resource type="Resource" uid="uid://bwnmvwm0155kg" path="res://src/tiles/list/yellow_carpet.tres" id="8_vo0io"]
+[ext_resource type="Resource" uid="uid://cgbrq8rh7ldgl" path="res://src/tiles/list/olive_carpet.tres" id="9_luecc"]
 
 [resource]
 script = ExtResource("1_r42td")
 biome_id = "office"
-tiles_palette = Array[ExtResource("2_ixgwx")]([])
+tiles_palette = Array[ExtResource("2_ixgwx")]([ExtResource("3_ujcbg"), ExtResource("4_kxcyd"), ExtResource("5_qnbte"), ExtResource("6_pr6pj"), ExtResource("7_pscf2"), ExtResource("8_vo0io"), ExtResource("9_luecc")])
 terrain_patterns = Array[int]([0, 5, 4])
 biome_decor = Array[PackedScene]([])
 biome_environment = Array[PackedScene]([])

@@ -1,12 +1,28 @@
-[gd_resource type="Resource" script_class="Biome" load_steps=3 format=3 uid="uid://d18r24um3nhbf"]
+[gd_resource type="Resource" script_class="Biome" load_steps=19 format=3 uid="uid://d18r24um3nhbf"]
 
 [ext_resource type="Script" uid="uid://bmp4k8nlenb5s" path="res://src/biomes/biome.gd" id="1_x5kir"]
 [ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tiles/tile_res.gd" id="2_y7yq0"]
+[ext_resource type="Resource" uid="uid://cqtwpr3yawlhw" path="res://src/tiles/list/green_chia.tres" id="3_btuoo"]
+[ext_resource type="Resource" uid="uid://cfklw0gd00jne" path="res://src/tiles/list/black_tile.tres" id="4_2w2jd"]
+[ext_resource type="Resource" uid="uid://buqug2tvn8yjv" path="res://src/tiles/list/brown_rust.tres" id="5_ghl0s"]
+[ext_resource type="Resource" uid="uid://dgyhq3rq1lhuv" path="res://src/tiles/list/blue_carpet.tres" id="6_umo6j"]
+[ext_resource type="Resource" uid="uid://mcf4a6awn6dm" path="res://src/tiles/list/cyan_carpet.tres" id="7_u02pp"]
+[ext_resource type="Resource" uid="uid://crn68ij1j1lji" path="res://src/tiles/list/gray_concrete.tres" id="8_u2xci"]
+[ext_resource type="Resource" uid="uid://bmopgjsvl07om" path="res://src/tiles/list/navy_lapis.tres" id="9_l65pm"]
+[ext_resource type="Resource" uid="uid://bxkml7ih6vt7x" path="res://src/tiles/list/orange_buffer.tres" id="10_h0dx0"]
+[ext_resource type="Resource" uid="uid://bli32ylvv75f" path="res://src/tiles/list/pink_fur.tres" id="11_x2wp0"]
+[ext_resource type="Resource" uid="uid://dcbds287ueyv2" path="res://src/tiles/list/purple_carpet.tres" id="12_kfe24"]
+[ext_resource type="Resource" uid="uid://cs52nm366j123" path="res://src/tiles/list/red_fur.tres" id="13_ygejv"]
+[ext_resource type="Resource" uid="uid://dt5wqbu7l5wb5" path="res://src/tiles/list/white_tile.tres" id="14_cvkc4"]
+[ext_resource type="Resource" uid="uid://bsaafp8edqhsu" path="res://src/tiles/list/teal_carpet.tres" id="15_s18v0"]
+[ext_resource type="Resource" uid="uid://bwnmvwm0155kg" path="res://src/tiles/list/yellow_carpet.tres" id="16_at22k"]
+[ext_resource type="Resource" uid="uid://cgbrq8rh7ldgl" path="res://src/tiles/list/olive_carpet.tres" id="17_67ccl"]
+[ext_resource type="Resource" uid="uid://d27ub7v2d3oq5" path="res://src/tiles/list/dark_gray_carpet.tres" id="18_a6wiw"]
 
 [resource]
 script = ExtResource("1_x5kir")
 biome_id = "spaceyard"
-tiles_palette = Array[ExtResource("2_y7yq0")]([])
+tiles_palette = Array[ExtResource("2_y7yq0")]([ExtResource("3_btuoo"), ExtResource("4_2w2jd"), ExtResource("5_ghl0s"), ExtResource("6_umo6j"), ExtResource("7_u02pp"), ExtResource("8_u2xci"), ExtResource("9_l65pm"), ExtResource("10_h0dx0"), ExtResource("11_x2wp0"), ExtResource("12_kfe24"), ExtResource("13_ygejv"), ExtResource("14_cvkc4"), ExtResource("15_s18v0"), ExtResource("16_at22k"), ExtResource("17_67ccl"), ExtResource("18_a6wiw")])
 terrain_patterns = Array[int]([6, 5, 2, 1, 3, 0, 4])
 biome_decor = Array[PackedScene]([])
 biome_environment = Array[PackedScene]([])

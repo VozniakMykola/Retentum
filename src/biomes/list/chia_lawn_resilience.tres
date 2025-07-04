@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="Biome" load_steps=3 format=3 uid="uid://nwayp7rl8mjo"]
+[gd_resource type="Resource" script_class="Biome" load_steps=5 format=3 uid="uid://nwayp7rl8mjo"]
 
 [ext_resource type="Script" uid="uid://bmp4k8nlenb5s" path="res://src/biomes/biome.gd" id="1_paal8"]
 [ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tiles/tile_res.gd" id="2_fool7"]
+[ext_resource type="Resource" uid="uid://cqtwpr3yawlhw" path="res://src/tiles/list/green_chia.tres" id="3_mmqme"]
+[ext_resource type="Resource" uid="uid://buqug2tvn8yjv" path="res://src/tiles/list/brown_rust.tres" id="4_c7bnc"]
 
 [resource]
 script = ExtResource("1_paal8")
 biome_id = "chia_lawn_resilience"
-tiles_palette = Array[ExtResource("2_fool7")]([])
+tiles_palette = Array[ExtResource("2_fool7")]([ExtResource("3_mmqme"), ExtResource("4_c7bnc")])
 terrain_patterns = Array[int]([2, 5])
 biome_decor = Array[PackedScene]([])
 biome_environment = Array[PackedScene]([])

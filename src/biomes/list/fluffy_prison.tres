@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="Biome" load_steps=3 format=3 uid="uid://cg2xx5evtj4g5"]
+[gd_resource type="Resource" script_class="Biome" load_steps=5 format=3 uid="uid://cg2xx5evtj4g5"]
 
 [ext_resource type="Script" uid="uid://bmp4k8nlenb5s" path="res://src/biomes/biome.gd" id="1_b8dmn"]
 [ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tiles/tile_res.gd" id="2_qpgmx"]
+[ext_resource type="Resource" uid="uid://bli32ylvv75f" path="res://src/tiles/list/pink_fur.tres" id="3_kun2n"]
+[ext_resource type="Resource" uid="uid://cs52nm366j123" path="res://src/tiles/list/red_fur.tres" id="4_vuf0x"]
 
 [resource]
 script = ExtResource("1_b8dmn")
 biome_id = "fluffy_prison"
-tiles_palette = Array[ExtResource("2_qpgmx")]([])
+tiles_palette = Array[ExtResource("2_qpgmx")]([ExtResource("3_kun2n"), ExtResource("4_vuf0x")])
 terrain_patterns = Array[int]([3, 0])
 biome_decor = Array[PackedScene]([])
 biome_environment = Array[PackedScene]([])

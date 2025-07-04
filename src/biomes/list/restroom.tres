@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="Biome" load_steps=3 format=3 uid="uid://bjv5yers7e4tf"]
+[gd_resource type="Resource" script_class="Biome" load_steps=5 format=3 uid="uid://bjv5yers7e4tf"]
 
 [ext_resource type="Script" uid="uid://bmp4k8nlenb5s" path="res://src/biomes/biome.gd" id="1_6kwa1"]
 [ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tiles/tile_res.gd" id="2_lr23a"]
+[ext_resource type="Resource" uid="uid://cfklw0gd00jne" path="res://src/tiles/list/black_tile.tres" id="3_6cvc0"]
+[ext_resource type="Resource" uid="uid://dt5wqbu7l5wb5" path="res://src/tiles/list/white_tile.tres" id="4_ckkep"]
 
 [resource]
 script = ExtResource("1_6kwa1")
 biome_id = "restroom"
-tiles_palette = Array[ExtResource("2_lr23a")]([])
+tiles_palette = Array[ExtResource("2_lr23a")]([ExtResource("3_6cvc0"), ExtResource("4_ckkep")])
 terrain_patterns = Array[int]([1, 0])
 biome_decor = Array[PackedScene]([])
 biome_environment = Array[PackedScene]([])
