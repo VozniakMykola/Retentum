@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://7oqfhs7554i0" path="res://assets/materials/material_resources/chia/3_displacement.png" id="4_1cyt1"]
 
 [resource]
-albedo_color = Color(4.62055e-06, 0.513002, 3.85046e-07, 1)
 albedo_texture = ExtResource("1_ivmqo")
 roughness_texture = ExtResource("4_1cyt1")
 normal_enabled = true

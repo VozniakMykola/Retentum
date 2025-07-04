@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TileResource" load_steps=3 format=3 uid="uid://cjt1kmq8egxdo"]
+
+[ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tiles/tile_res.gd" id="1_8t868"]
+[ext_resource type="Material" uid="uid://blx15j5lwjej" path="res://assets/materials/test.tres" id="1_whs7n"]
+
+[resource]
+script = ExtResource("1_8t868")
+tile_id = "test"
+base_material = ExtResource("1_whs7n")
+albedo_color = 13
+ignore_albedo = false
+is_unlocked = false
+metadata/_custom_type_script = "uid://bcsf5g74r2jr5"

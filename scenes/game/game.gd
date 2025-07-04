@@ -1,13 +1,10 @@
 extends Node3D
 
-@export_group("World")
-@export var biome: Biome
-@export var world_shape: G.ShapePattern
-@export var world_size: Vector2i = Vector2(9, 18)
+@export var world_size: Vector2i = Vector2(9,18)
 @export_group("Grid")
-@export var cell_size: Vector2 = Vector2(1.15, 1.15)
+@export var cell_size: Vector2 = Vector2(1.05, 1.05)
 
-const TILE_SCENE = preload("res://src/tile/tile.tscn")
+const TILE_SCENE = preload("res://src/tiles/tile.tscn")
 var grid_map: OrthoGridMap
 
 func _ready() -> void:

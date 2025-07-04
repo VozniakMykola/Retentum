@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Biome" load_steps=3 format=3 uid="uid://ckbppu14ptoo6"]
+
+[ext_resource type="Script" uid="uid://bmp4k8nlenb5s" path="res://src/biomes/biome.gd" id="1_afjp3"]
+[ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tiles/tile_res.gd" id="2_cjs4x"]
+
+[resource]
+script = ExtResource("1_afjp3")
+biome_id = "padded_cell"
+tiles_palette = Array[ExtResource("2_cjs4x")]([])
+terrain_patterns = Array[int]([0])
+biome_decor = Array[PackedScene]([])
+biome_environment = Array[PackedScene]([])
+is_unlocked = false
+required_wins = 0
+metadata/_custom_type_script = "uid://bmp4k8nlenb5s"

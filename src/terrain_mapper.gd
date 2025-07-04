@@ -18,3 +18,7 @@ func map_terrain(terrain_name: G.TerrainPattern, array: Array[Vector2i]) -> Dict
 		_:
 			pass
 	return {} #delete this
+
+
+func _map_SOLID(size: Vector2i):
+	pass

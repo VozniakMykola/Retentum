@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TileResource" load_steps=3 format=3 uid="uid://buqug2tvn8yjv"]
+
+[ext_resource type="Material" uid="uid://caaw5lmrph3sr" path="res://assets/materials/rust.tres" id="1_ip25x"]
+[ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tiles/tile_res.gd" id="1_s3ybi"]
+
+[resource]
+script = ExtResource("1_s3ybi")
+tile_id = "brown_rust"
+base_material = ExtResource("1_ip25x")
+albedo_color = 2
+ignore_albedo = false
+is_unlocked = false
+metadata/_custom_type_script = "uid://bcsf5g74r2jr5"

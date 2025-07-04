@@ -1,19 +1,20 @@
 [gd_resource type="StandardMaterial3D" load_steps=6 format=3 uid="uid://blx15j5lwjej"]
 
-[ext_resource type="Texture2D" uid="uid://f1y78cqgbhi6" path="res://assets/materials/material_resources/test/Concrete041D_1K-PNG_Color.png" id="1_gpkfx"]
-[ext_resource type="Texture2D" uid="uid://hpty7p374an6" path="res://assets/materials/material_resources/test/Concrete041D_1K-PNG_AmbientOcclusion.png" id="2_gla6l"]
-[ext_resource type="Texture2D" uid="uid://2fyotdai152e" path="res://assets/materials/material_resources/test/Concrete041D_1K-PNG_Displacement.png" id="3_h524l"]
-[ext_resource type="Texture2D" uid="uid://c76aijq8kn24" path="res://assets/materials/material_resources/test/Concrete041D_1K-PNG_NormalDX.png" id="4_c001p"]
-[ext_resource type="Texture2D" uid="uid://crbnbi1mfvf3m" path="res://assets/materials/material_resources/test/Concrete041D_1K-PNG_Roughness.png" id="5_7hr14"]
+[ext_resource type="Texture2D" uid="uid://cj716oihjn7t0" path="res://assets/materials/material_resources/test/e3.png" id="1_5wbe0"]
+[ext_resource type="Texture2D" uid="uid://cqlbbc62eotc6" path="res://assets/materials/material_resources/test/e3_specular (2).png" id="2_gpkfx"]
+[ext_resource type="Texture2D" uid="uid://dvam4ku4x6p1s" path="res://assets/materials/material_resources/test/e3_specular.png" id="3_gla6l"]
+[ext_resource type="Texture2D" uid="uid://d022lfi0psvbb" path="res://assets/materials/material_resources/test/e3_specular (3).png" id="4_h524l"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_c001p"]
 
 [resource]
-albedo_texture = ExtResource("1_gpkfx")
-roughness_texture = ExtResource("5_7hr14")
+albedo_texture = ExtResource("1_5wbe0")
+roughness_texture = ExtResource("4_h524l")
 normal_enabled = true
-normal_texture = ExtResource("4_c001p")
+normal_texture = ExtResource("3_gla6l")
 ao_enabled = true
-ao_texture = ExtResource("2_gla6l")
-heightmap_texture = ExtResource("3_h524l")
+ao_texture = ExtResource("2_gpkfx")
+heightmap_texture = SubResource("CompressedTexture2D_c001p")
 uv1_scale = Vector3(0.7, 0.5, 0.5)
 uv1_offset = Vector3(0, 1.585, 0)
 uv2_triplanar_sharpness = 0.0915052

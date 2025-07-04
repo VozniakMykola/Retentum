@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TileResource" load_steps=3 format=3 uid="uid://bli32ylvv75f"]
+
+[ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tiles/tile_res.gd" id="1_mpgkb"]
+[ext_resource type="Material" uid="uid://cu6i1qlbvc26q" path="res://assets/materials/fur.tres" id="1_rdnd5"]
+
+[resource]
+script = ExtResource("1_mpgkb")
+tile_id = "pink_fur"
+base_material = ExtResource("1_rdnd5")
+albedo_color = 10
+ignore_albedo = false
+is_unlocked = false
+metadata/_custom_type_script = "uid://bcsf5g74r2jr5"
