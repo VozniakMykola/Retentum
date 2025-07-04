@@ -51,8 +51,10 @@ func session_ended(is_win: bool, total_seconds: int):
 			sequences_completed += 1
 		7:
 			climaxes_completed += 1
+			check_biome_unlocks()
 		2:
 			middles_completed += 1
+			check_chalks_unlocks()
 		
 	current_pacing_state = pacing_sequence[current_sequence_index]
 #endregion
@@ -101,53 +103,52 @@ func get_color(color_enum: ColorType) -> Color:
 	return active_color_module.get(color_enum, Color.WHITE)
 #endregion
 
-##region Materials
-#enum MaterialType {
-	#CONCRETE, 
-	#TILE, 
-	#CHIA, 
-	#LAPIS, 
-	#RUST,  
-	#BUFFER,  
-	#FUR,     
-	#CARPET,
-	#TEST
-#}
-##endregion
-
-
-#region Enums new
-
-enum ShapePattern {
-	RECTANGLE,
-	DIAMOND,
-	#ETC ETC....
+#region Progression Rewards Biomes
+var biome_progress = {
+	"unlocked": [preload("res://src/biomes/list/plaza.tres")],
+	"last_unlocked": preload("res://src/biomes/list/plaza.tres")
 }
 
-enum TerrainPattern {
-	SOLID,
-	CHECKERED,
-	DOTTED,
-	HEARTS,
-	PLAID,
-	PATCHY,
-	NOISE,
-	#ETC ETC....
+var biome_requirements = {
+	#preload("res://src/biomes/list/plaza.tres"): 0,
+	preload("res://src/biomes/list/restroom.tres"): 1,
+	preload("res://src/biomes/list/chia_lawn_paititi.tres"): 2,
+	preload("res://src/biomes/list/padded_cell.tres"): 3,
+	preload("res://src/biomes/list/fluffy_prison.tres"): 4,
+	preload("res://src/biomes/list/office.tres"): 5,
+	preload("res://src/biomes/list/chia_lawn_resilience.tres"): 6,
+	preload("res://src/biomes/list/factory.tres"): 7,
+	preload("res://src/biomes/list/spaceyard.tres"): 25
 }
+
+func check_biome_unlocks():
+	for biome in biome_requirements:
+		if not biome in biome_progress["unlocked"] and climaxes_completed >= biome_requirements[biome]:
+			biome_progress["unlocked"].append(biome)
+			biome_progress["last_unlocked"] = biome
+			print("Biome unlocked: ", biome.resource_path)
 #endregion
-#region Enums
 
+#region Progression Rewards Chalks
+func check_chalks_unlocks():
+	
+	biome_progress["last_unlocked"] = null
+	
+	for chalk in chalk_requirements:
+		if not chalk in unlocked_chalks and middles_completed >= chalk_requirements[chalk]:
+			unlocked_chalks.append(chalk)
 
-enum BiomeType {
-	PLAZA,
-	RESTROOM,
-	CHIA_LAWN_PAITITI,
-	CHIA_LAWN_RESILIENCE,
-	PADDED_CELL,
-	FLUFFY_PRISON,
-	OFFICE,
-	FACTORY,
-	SPACEYARD
+var unlocked_chalks: Array[ChalkType] = []
+
+var chalk_requirements = {
+	ChalkType.DECOY: 1,
+	ChalkType.REVELATION: 1,
+	ChalkType.GUIDANCE: 2,
+	ChalkType.HOPSCOTCH: 3,
+	ChalkType.SCOTOMA: 3,
+	ChalkType.SIGIL: 4,
+	ChalkType.SUPERPOSITION: 4,
+	ChalkType.ITINERARIUM: 5,
 }
 
 enum ChalkType {
@@ -160,6 +161,61 @@ enum ChalkType {
 	ITINERARIUM,
 	SUPERPOSITION
 }
+#endregion
+
+#region Progression Rewards Shape Bundles
+enum ShapePattern {
+	RECTANGLE,
+	DIAMOND,
+	CIRCLE,
+	ISLANDS
+	#ETC ETC....
+}
+#endregion
+
+#region Enums
+
+enum TerrainPattern {
+	SOLID,
+	CHECKERED,
+	DOTTED,
+	HEARTS,
+	PLAID,
+	PATCHY,
+	NOISE,
+	#ETC ETC....
+}
+#endregion
+
+#region Unused Enums
+#enum MaterialType {
+	#CONCRETE, 
+	#TILE, 
+	#CHIA, 
+	#LAPIS, 
+	#RUST,  
+	#BUFFER,  
+	#FUR,     
+	#CARPET,
+	#TEST
+#}
+
+#enum BiomeType {
+	#PLAZA,
+	#RESTROOM,
+	#CHIA_LAWN_PAITITI,
+	#CHIA_LAWN_RESILIENCE,
+	#PADDED_CELL,
+	#FLUFFY_PRISON,
+	#OFFICE,
+	#FACTORY,
+	#SPACEYARD
+#}
+
+var total_chalk_issued: int = 0 #gived by game #divide by random and specified?
+var total_chalk_collected: int = 0 #collected by player #divide by random and specified?
+var total_chalk_spawned: int = 0 #spawned by game
+var total_chalk_used: int = 0 #spawned by player
 
 enum TileState{
 	NORMAL,
@@ -174,13 +230,3 @@ enum GameplayState {
 }
 
 #endregion
-#if failed_level_conut > completed_level_conut *2 then show tips
-
-var total_chalk_issued: int = 0 #gived by game #divide by random and specified?
-var total_chalk_collected: int = 0 #collected by player #divide by random and specified?
-var total_chalk_spawned: int = 0 #spawned by game
-var total_chalk_used: int = 0 #spawned by player
-
-#var unlocked_tiles: Array[ColorType]
-#unlocked other staff for bestiary
-#unlock_tile func?

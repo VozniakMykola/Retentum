@@ -30,3 +30,15 @@ transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -
 projection = 1
 current = true
 size = 14.0
+
+[node name="Button" type="Button" parent="."]
+offset_right = 206.0
+offset_bottom = 63.0
+text = "WIN"
+
+[node name="Button2" type="Button" parent="."]
+offset_left = 1.0
+offset_top = 63.0
+offset_right = 207.0
+offset_bottom = 126.0
+text = "LOSE"

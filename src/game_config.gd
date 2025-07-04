@@ -3,7 +3,7 @@ extends Node
 
 #Neutral
 var world_shape: G.ShapePattern
-var biome: Biome #for terrain_patterns and tiles_palette
+var biome: Biome = G.biome_progress["unlocked"][0]
 var chalk_tiles_count: int = 2
 var chalk_inventory_count: int = 2
 #Pacing
@@ -21,10 +21,22 @@ func _ready():
 
 func create_game():
 	get_pacing_settings()
-	get_progress_settings()
+	get_world_shape()
+	get_biome()
+	#get_chalk_count()
+	#get inventory_chalk_count()
 
-func get_progress_settings():
-	pass
+func get_world_shape():
+	world_shape = randi() % G.ShapePattern.size()
+
+func get_biome():
+	if G.current_win_streak > 0:
+		if G.biome_progress["last_unlocked"]:
+			biome = G.biome_progress["last_unlocked"]
+		else:
+			biome = G.biome_progress["unlocked"].pick_pandom()
+	else:
+		var biome = G.biome_progress["unlocked"].filter(func(b): return b != G.biome_progress["last_unlocked"])
 
 func get_pacing_settings():
 	var pacing_state = G.current_pacing_state
