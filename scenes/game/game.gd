@@ -12,15 +12,16 @@ func _ready() -> void:
 	grid_map.name = "MainGridMap"
 	grid_map.cell_size = cell_size
 	add_child(grid_map)
-	spawn_grid()
+	var field_data = GC.create_game()
+	for coord in field_data:
+		var tile = field_data[coord]
+		var grid_object = TILE_SCENE.instantiate()
+		grid_object.tile_data = tile
+		grid_map.set_cell_item(Vector2i(coord.x, coord.y), grid_object)
 
-func spawn_grid() -> void:
-	for y in world_size.y-1:
-		for x in world_size.x:
-			if y % 2 != 0 and x == world_size.x - 1:
-				continue 
-			var grid_object = TILE_SCENE.instantiate()
-			var grid_pos = Vector2i(x, y)
-			grid_map.set_cell_item(grid_pos, grid_object)
-			
-			#await get_tree().create_timer(0.05).timeout
+
+func _on_lose_pressed() -> void:
+	G.session_ended(false)
+
+func _on_win_pressed() -> void:
+	G.session_ended(true)

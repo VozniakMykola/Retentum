@@ -1,4 +1,6 @@
 extends Node
+#Global GC
+
 #pacer & progressor
 
 #Neutral
@@ -19,12 +21,20 @@ var terrain_mapper = TerrainMapper.new()
 func _ready():
 	pass
 
-func create_game():
+func create_game() -> Dictionary:
 	get_pacing_settings()
 	get_world_shape()
 	get_biome()
 	#get_chalk_count()
 	#get inventory_chalk_count()
+	return create_level()
+
+func create_level() -> Dictionary:
+	var shaped_raw: Array = shape_mapper.create_shape(world_shape, world_size)
+	var random_pattern = biome.get_random_pattern()
+	var palette: Array[TileResource] = biome.tiles_palette
+	var terrained_raw: Dictionary = terrain_mapper.map_terrain(random_pattern, palette, shaped_raw)
+	return terrained_raw
 
 func get_world_shape():
 	world_shape = randi() % G.ShapePattern.size()
@@ -60,6 +70,7 @@ func get_pacing_settings():
 	deviation_threshold = deviation_threshold_pace[pacing_state]
 	monke_center_spawn = monke_center_spawn_pace[pacing_state]
 
+#y = x*2 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 var world_size_pace = {
 	G.PacingState.EASY: { "min_size": Vector2(9, 18), "max_size": Vector2(9, 18) },
 	G.PacingState.MEDIUM: { "min_size": Vector2(9, 18), "max_size": Vector2(9, 18) },

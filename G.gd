@@ -1,4 +1,5 @@
 extends Node
+#Global G
 
 #region Pacing & Progression
 #Total data
@@ -33,7 +34,7 @@ var pacing_sequence = [
 	PacingState.EASY #LULL
 ]
 
-func session_ended(is_win: bool, total_seconds: int):
+func session_ended(is_win: bool, total_seconds: int = 0):
 	#Total data
 	total_games += 1
 	if is_win:
@@ -168,8 +169,10 @@ enum ShapePattern {
 	RECTANGLE,
 	DIAMOND,
 	CIRCLE,
-	ISLANDS
+	CROSS,
+	CANDY
 	#ETC ETC....
+	#ISLANDS R.I.P
 }
 #endregion
 

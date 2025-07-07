@@ -13,10 +13,10 @@ class_name Biome
 @export var is_unlocked: bool = false
 @export var required_wins: int = 0
 
-func get_random_palette_tile() -> PackedScene:
+func get_random_palette_tile() -> TileResource:
 	return tiles_palette.pick_random()
 
-func get_random_pattern() -> PackedScene:
+func get_random_pattern() -> G.TerrainPattern:
 	return terrain_patterns.pick_random()
 
 #func generate_field() -> Array:
