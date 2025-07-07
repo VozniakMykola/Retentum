@@ -1,7 +1,7 @@
 extends Resource
 class_name Biome
 
-@export var biome_id: String = ""
+@export var biome_id: G.BiomeType = G.BiomeType.PLAZA
 
 @export_group("Visual")
 @export var tiles_palette: Array[TileResource] = []

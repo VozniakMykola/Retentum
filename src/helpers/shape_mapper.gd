@@ -4,18 +4,18 @@ class_name ShapeMapper
 func create_shape(shape_name: G.ShapePattern, size: Vector2i) -> Array:
 	print("_create_", G.ShapePattern.keys()[shape_name])
 	match shape_name:
-		#G.ShapePattern.RECTANGLE:
-			#return _create_rectangle(size)
-		#G.ShapePattern.DIAMOND:
-			#return _create_diamond(size)
-		#G.ShapePattern.CIRCLE:
-			#return _create_circle(size)
-		#G.ShapePattern.CROSS:
-			#return _create_cross(size)
-		#G.ShapePattern.CANDY:
-			#return _create_candy(size)
+		G.ShapePattern.RECTANGLE:
+			return _create_rectangle(size)
+		G.ShapePattern.DIAMOND:
+			return _create_diamond(size)
+		G.ShapePattern.CIRCLE:
+			return _create_circle(size)
+		G.ShapePattern.CROSS:
+			return _create_cross(size)
+		G.ShapePattern.CANDY:
+			return _create_candy(size)
 		_:
-			return _create_diamond(Vector2i(9,18))
+			return _create_rectangle(size)
 
 func _create_rectangle(size: Vector2i) -> Array[Array]:
 	var grid: Array[Array] = []

@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("1_rbdaj")
-biome_id = "chia_lawn_paititi"
+biome_id = 2
 tiles_palette = Array[ExtResource("2_viyiw")]([ExtResource("3_cdptk"), ExtResource("4_22cnd")])
 terrain_patterns = Array[int]([2, 0])
 biome_decor = Array[PackedScene]([])

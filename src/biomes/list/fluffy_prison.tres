@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("1_b8dmn")
-biome_id = "fluffy_prison"
+biome_id = 4
 tiles_palette = Array[ExtResource("2_qpgmx")]([ExtResource("3_kun2n"), ExtResource("4_vuf0x")])
 terrain_patterns = Array[int]([3, 0])
 biome_decor = Array[PackedScene]([])

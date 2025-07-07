@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("1_afjp3")
-biome_id = "padded_cell"
+biome_id = 3
 tiles_palette = Array[ExtResource("2_cjs4x")]([ExtResource("3_dnwil")])
 terrain_patterns = Array[int]([0])
 biome_decor = Array[PackedScene]([])

@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-G="*res://G.gd"
-GC="*res://src/game_config.gd"
+G="*res://src/globals/G.gd"
+P="*res://src/globals/P.gd"
 
 [editor]
 
