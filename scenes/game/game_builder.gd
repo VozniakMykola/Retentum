@@ -14,7 +14,8 @@ func start_new_game() -> Dictionary:
 	return generate_level(current_config)
 	
 func generate_level(config: GameConfig) -> Dictionary:
-	var biome = G.BIOME_RESOURCES[config.biome]
+	#var biome = G.BIOME_RESOURCES[config.biome]
+	var biome = G.BIOME_RESOURCES[G.BiomeType.PLAZA]
 	var shaped_raw = shape_mapper.create_shape(config.world_shape, config.world_size)
 	var random_pattern = biome.get_random_pattern()
 	var palette = biome.tiles_palette

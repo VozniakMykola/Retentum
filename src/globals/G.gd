@@ -40,7 +40,19 @@ const CHALK_RESOURCES = {
 }
 
 enum ShapePattern { RECTANGLE, DIAMOND, CIRCLE, CROSS, CANDY }
-enum TerrainPattern { SOLID, CHECKERED, DOTTED, HEARTS, PLAID, PATCHY, NOISE }
+enum TerrainPattern { 
+	SOLID, 
+	CHECKERED, 
+	DOTTED, 
+	HEARTS, 
+	PLAID, 
+	PATCHY, 
+	NOISE,
+	ZEBRA_V,
+	ZEBRA_H,
+	ARCHIPELAGO,
+
+	}
 enum TileState { NORMAL, DEAD, CHALKED, ENDGAME }
 enum GameplayState { EMPTY, OCCUPIED }
 

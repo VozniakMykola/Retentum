@@ -3,23 +3,17 @@ extends Node3D
 @export_group("Game")
 var game_builder: GameBuilder = GameBuilder.new()
 var game_config: Dictionary
-@export_group("Grid")
-@export var cell_size: Vector2 = Vector2(1.05, 1.05)
+
+@onready var grid_map: OrthoGridMap = $MainGridMap
 
 const TILE_SCENE = preload("res://src/tiles/tile.tscn")
 const GAME_SCENE = preload("res://scenes/game/game.tscn") 
-var grid_map: OrthoGridMap
 
 func _ready() -> void:
 	initialize_game()
 
 func initialize_game() -> void:
 	game_config = game_builder.start_new_game()
-	
-	grid_map = OrthoGridMap.new()
-	grid_map.name = "MainGridMap"
-	grid_map.cell_size = cell_size
-	add_child(grid_map)
 	
 	generate_level()
 
