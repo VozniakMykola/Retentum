@@ -10,7 +10,7 @@
 script = ExtResource("1_fnrwp")
 biome_id = 0
 tiles_palette = Array[ExtResource("3_ok6om")]([ExtResource("5_mcyu8"), ExtResource("4_hyjjq"), ExtResource("5_hyjjq")])
-terrain_patterns = Array[int]([4])
+terrain_patterns = Array[int]([5])
 biome_decor = Array[PackedScene]([])
 biome_environment = Array[PackedScene]([])
 is_unlocked = true

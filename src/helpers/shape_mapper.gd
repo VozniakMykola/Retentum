@@ -12,8 +12,8 @@ func create_shape(shape_name: G.ShapePattern, size: Vector2i) -> Array:
 			return _create_circle(size)
 		G.ShapePattern.CROSS:
 			return _create_cross(size)
-		G.ShapePattern.CANDY:
-			return _create_candy(size)
+		G.ShapePattern.HEXAGON:
+			return _create_hexagon(size)
 		_:
 			return _create_rectangle(size)
 
@@ -30,6 +30,30 @@ func _create_rectangle(size: Vector2i) -> Array[Array]:
 		grid.append(row)
 		
 	return grid
+
+
+#BBBBBBBBBBAAAAAAAAAAAAAAAAAAAAADDDDDDDDDDDDDDDDDDDD
+func _create_hexagon(size: Vector2i) -> Array[Array]:
+	var grid: Array[Array] = []
+	var center: Vector2 = size * 0.5
+	var max_distance: float = max(center.x, center.y)
+	
+	for y in range(size.y):
+		var is_odd_row: bool = y % 2 == 1
+		var row: Array = []
+		for x in range(size.x):
+			var dx: float = (x + 0.5 if is_odd_row else x) - center.x
+			var dy: float = y - center.y
+			var distance: float = (abs(dx) + abs(dy)) / max_distance
+			var is_inside: bool = distance <= 1.0
+			if y % 2 != 0 and x == size.x - 1:
+				row.append(0)
+			else:
+				row.append(1 if is_inside else 0)
+		grid.append(row)
+	
+	return grid
+
 
 func _create_diamond(size: Vector2i) -> Array[Array]:
 	var grid: Array[Array] = []
@@ -65,28 +89,6 @@ func _create_circle(size: Vector2i) -> Array[Array]:
 			var distance_squared: float = nx * nx + ny * ny
 			var is_inside: bool = distance_squared <= 0.93  # 0.93 - magic number for better circle appearance
 			row.append(1 if is_inside else 0)
-		grid.append(row)
-	
-	return grid
-
-
-func _create_candy(size: Vector2i) -> Array[Array]:
-	var grid: Array[Array] = []
-	var center: Vector2 = size * 0.5
-	var max_distance: float = max(center.x, center.y)
-	
-	for y in range(size.y):
-		var is_odd_row: bool = y % 2 == 1
-		var row: Array = []
-		for x in range(size.x):
-			var dx: float = (x + 0.5 if is_odd_row else x) - center.x
-			var dy: float = y - center.y
-			var distance: float = (abs(dx) + abs(dy)) / max_distance
-			var is_inside: bool = distance <= 1.0
-			if y % 2 != 0 and x == size.x - 1:
-				row.append(0)
-			else:
-				row.append(1 if is_inside else 0)
 		grid.append(row)
 	
 	return grid
