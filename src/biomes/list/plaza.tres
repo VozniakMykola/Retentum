@@ -1,16 +1,18 @@
-[gd_resource type="Resource" script_class="Biome" load_steps=6 format=3 uid="uid://bijc32l6f50wb"]
+[gd_resource type="Resource" script_class="Biome" load_steps=8 format=3 uid="uid://bijc32l6f50wb"]
 
 [ext_resource type="Script" uid="uid://bmp4k8nlenb5s" path="res://src/biomes/biome.gd" id="1_fnrwp"]
 [ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tiles/tile_res.gd" id="3_ok6om"]
 [ext_resource type="Resource" uid="uid://cfklw0gd00jne" path="res://src/tiles/list/black_tile.tres" id="4_hyjjq"]
 [ext_resource type="Resource" uid="uid://dt5wqbu7l5wb5" path="res://src/tiles/list/white_tile.tres" id="5_hyjjq"]
 [ext_resource type="Resource" uid="uid://bxkml7ih6vt7x" path="res://src/tiles/list/orange_buffer.tres" id="5_mcyu8"]
+[ext_resource type="Resource" uid="uid://mcf4a6awn6dm" path="res://src/tiles/list/cyan_carpet.tres" id="6_3p30a"]
+[ext_resource type="Resource" uid="uid://cgbrq8rh7ldgl" path="res://src/tiles/list/olive_carpet.tres" id="7_2qeqb"]
 
 [resource]
 script = ExtResource("1_fnrwp")
 biome_id = 0
-tiles_palette = Array[ExtResource("3_ok6om")]([ExtResource("5_mcyu8"), ExtResource("4_hyjjq"), ExtResource("5_hyjjq")])
-terrain_patterns = Array[int]([5])
+tiles_palette = Array[ExtResource("3_ok6om")]([ExtResource("5_mcyu8"), ExtResource("4_hyjjq"), ExtResource("5_hyjjq"), ExtResource("6_3p30a"), ExtResource("7_2qeqb")])
+terrain_patterns = Array[int]([3])
 biome_decor = Array[PackedScene]([])
 biome_environment = Array[PackedScene]([])
 is_unlocked = true

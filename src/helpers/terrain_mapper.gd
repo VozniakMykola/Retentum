@@ -45,7 +45,7 @@ func map_terrain(terrain_name: G.TerrainPattern, palette: Array, shape_grid: Arr
 			return _map_shape_single(pattern_tiles, shape_grid, width, height, big_heart_template_even, big_heart_template_odd)
 		G.TerrainPattern.HEARTS:
 			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name])
-			return _map_shape(pattern_tiles, shape_grid, width, height, heart_template_even, heart_template_odd, Vector2i(1,3), Vector2i(3,5))
+			return _map_shape(pattern_tiles, shape_grid, width, height, heart_template_even, heart_template_odd, Vector2i(1,2), Vector2i(3,6), false)
 		_:
 			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name])
 			return _map_SOLID(pattern_tiles, shape_grid, width, height)
@@ -56,7 +56,7 @@ const SHAPE_ELEMENT_COUNT: Dictionary = {
 	G.TerrainPattern.DOTTED: 2,
 	G.TerrainPattern.HEARTS: 2,
 	G.TerrainPattern.PLAID: 3,
-	G.TerrainPattern.PATCHY: 3,
+	G.TerrainPattern.PATCHY: 4,
 	G.TerrainPattern.NOISE: -1,
 	G.TerrainPattern.ZEBRA_V: 2,
 	G.TerrainPattern.ZEBRA_H: 2,
@@ -103,12 +103,93 @@ var big_heart_template_odd: Array[Vector2i] = [
 	Vector2i(-1, 0),
 ]
 
-#var rect_odd: Array[Vector2i] = [
-	#Vector2i(0, 0),  
-	#Vector2i(0, -1), 
-	#Vector2i(1, -1),
-	#Vector2i(0, -2),
-#]
+const SQUARE_TEMPLATE_KEYS: Array = ["s", "m", "l"]
+var square_templates: Dictionary = {
+	"s": {
+		"odd": [
+			Vector2i(0, 0), 
+			Vector2i(0, -1), 
+			Vector2i(1, -1), 
+			Vector2i(0, -2)
+			],
+		"even": 
+			[
+			Vector2i(0, 0), 
+			Vector2i(0, -1), 
+			Vector2i(-1, -1),
+			Vector2i(0, -2)
+			]
+	},
+	"m": {
+		"odd": [
+			Vector2i(0, 0), 
+			Vector2i(0, -1), 
+			Vector2i(1, -1), 
+			Vector2i(0, -2),
+			
+			Vector2i(0, 2),
+			Vector2i(0, 1), 
+			Vector2i(1, 1),
+			Vector2i(1, 0),
+			Vector2i(-1, 0),
+			],
+		"even": [
+			Vector2i(0, 0), 
+			Vector2i(0, -1), 
+			Vector2i(-1, -1),
+			Vector2i(0, -2),
+			
+			Vector2i(0, 2),
+			Vector2i(0, 1), 
+			Vector2i(-1, 1),
+			Vector2i(1, 0),
+			Vector2i(-1, 0),
+			]
+	},
+	"l": {
+		"odd": [
+			Vector2i(0, 0), 
+			Vector2i(0, -1), 
+			Vector2i(1, -1), 
+			Vector2i(0, -2),
+			
+			Vector2i(0, 2),
+			Vector2i(0, 1), 
+			Vector2i(1, 1),
+			Vector2i(1, 0),
+			Vector2i(-1, 0),
+			
+			Vector2i(-1, 1), 
+			Vector2i(-1, 2), 
+			Vector2i(0, 3), 
+			Vector2i(0, 4), 
+			Vector2i(1, 3), 
+			Vector2i(1, 2), 
+			Vector2i(2, 1), 
+			],
+		"even": [
+			Vector2i(0, 0), 
+			Vector2i(0, -1), 
+			Vector2i(-1, -1),
+			Vector2i(0, -2),
+			
+			Vector2i(0, 2),
+			Vector2i(0, 1), 
+			Vector2i(-1, 1),
+			Vector2i(1, 0),
+			Vector2i(-1, 0),
+			
+			Vector2i(-2, 1), 
+			Vector2i(-1, 2), 
+			Vector2i(-1, 3), 
+			Vector2i(0, 4), 
+			Vector2i(0, 3), 
+			Vector2i(1, 2), 
+			Vector2i(1, 1), 
+			]
+	},
+	#"xl": {}
+}
 #endregion
 
 #approved
@@ -210,7 +291,7 @@ func _map_DOTTED(tiles: Array, shape_grid: Array, width: int, height: int) -> Di
 	return result
 
 #approved
-func _map_shape(tiles: Array, shape_grid: Array, width: int, height: int, template_even: Array[Vector2i], template_odd: Array[Vector2i], coord_offset: Vector2i, spacing: Vector2i) -> Dictionary:
+func _map_shape(tiles: Array, shape_grid: Array, width: int, height: int, template_even: Array[Vector2i], template_odd: Array[Vector2i], coord_offset: Vector2i, spacing: Vector2i, is_random: bool = false) -> Dictionary:
 	var result = {}
 	if tiles.size() < 2: 
 		return result
@@ -222,6 +303,10 @@ func _map_shape(tiles: Array, shape_grid: Array, width: int, height: int, templa
 	
 	for center_y in range(coord_offset.y, height, spacing.y):
 		for center_x in range(coord_offset.x, width, spacing.x):
+			
+			if is_random:
+				center_x += randi_range(-1, 0)
+				center_y += randi_range(1, 1)
 			
 			var template = template_even if center_y % 2 == 0 else template_odd
 			
@@ -269,71 +354,50 @@ func _map_shape_single(tiles: Array, shape_grid: Array, width: int, height: int,
 	
 	return result
 
-
-
-
-
-
-func _map_PATCHY(tiles: Array, shape_grid: Array, width: int, height: int) -> Dictionary:
+func _map_PATCHY(tiles: Array, shape_grid: Array, width: int, height: int, spawn_freq: int = 5) -> Dictionary:
 	var result = {}
-	if tiles.size() < 3: return result  # Нам потрібно мінімум 3 кольори
+	if tiles.size() < SHAPE_ELEMENT_COUNT[G.TerrainPattern.PATCHY]: return result
 	
-	# Визначаємо параметри для генерації квадратів
-	var max_square_size = mini(width, height) / 4  # Максимальний розмір квадрата
-	var min_square_size = maxi(2, max_square_size / 4)  # Мінімальний розмір квадрата
-	var square_count = width * height / (min_square_size * min_square_size * 2)  # Кількість квадратів
-	
-	for ew in range(square_count):
-		# Вибираємо випадковий розмір квадрата
-		var square_size = randi_range(min_square_size, max_square_size)
-		
-		# Вибираємо випадкову позицію (у ваших координатах)
-		var center_x = randi_range(0, width - 1)
-		var center_y = randi_range(0, height - 1)
-		
-		# Вибираємо випадковий колір з трьох доступних
-		var tile = tiles[randi() % 3]
-		
-		# Визначаємо межі квадрата
-		var start_x = maxi(0, center_x - square_size/2)
-		var end_x = mini(width - 1, center_x + square_size/2)
-		var start_y = maxi(0, center_y - square_size/2)
-		var end_y = mini(height - 1, center_y + square_size/2)
-		
-		# Заповнюємо квадрат
-		for y in range(start_y, end_y + 1):
-			for x in range(start_x, end_x + 1):
-				if shape_grid[y][x] != 0:  # Перевіряємо, чи можна розміщувати плитку
-					var x_ego = x * 2 + (1 if y % 2 == 1 else 0)  # Ваша система координат
-					result[Vector2i(x, y)] = tile
-	
-	# Заповнюємо решту простору першим кольором (фоном)
 	for y in range(height):
 		for x in range(width):
-			if shape_grid[y][x] != 0 and not result.has(Vector2i(x, y)):
+			if shape_grid[y][x] != 0:
 				result[Vector2i(x, y)] = tiles[0]
+	
+	var x_margin: int = width / 4
+	var y_margin: int = height / 4
+	var count = maxi(width, height) / spawn_freq
+	var tiles_trimmed = tiles.slice(1)
+	
+	var random_templates = []
+	for i in range(count):
+		var random_key = SQUARE_TEMPLATE_KEYS[randi_range(0, SQUARE_TEMPLATE_KEYS.size() - 1)]
+		random_templates.append(random_key)
+	
+	# 2. Сортуємо їх відповідно до порядку в SQUARE_TEMPLATE_KEYS
+	random_templates.sort_custom(func(a, b): 
+		return SQUARE_TEMPLATE_KEYS.find(a) > SQUARE_TEMPLATE_KEYS.find(b)
+	)
+	
+	
+	for i in range(count):
+		var center_x = randi_range(x_margin, width - x_margin - 1)
+		var center_y = randi_range(y_margin, height - y_margin - 1)
+		
+		var random_template = square_templates[random_templates[i]]
+		var template = random_template["even"] if center_y % 2 == 0 else random_template["odd"]
+		var selected_tile = tiles_trimmed[i % tiles_trimmed.size()]
+		
+		for rel_pos in template:
+			var px = center_x + rel_pos.x
+			var py = center_y + rel_pos.y
+			
+			if px >= 0 and px < width and py >= 0 and py < height:
+				if shape_grid[py][px] != 0:
+					result[Vector2i(px, py)] = selected_tile
 	
 	return result
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#NOT IMPLEMENTED ----------------------------------------------------------------------------
+#NOT USED ----------------------------------------------------------------------------
 
 #approved
 func _map_ARCHIPELAGO(tiles: Array, shape_grid: Array, width: int, height: int) -> Dictionary:
