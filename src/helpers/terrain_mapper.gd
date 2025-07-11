@@ -64,7 +64,7 @@ const SHAPE_ELEMENT_COUNT: Dictionary = {
 	G.TerrainPattern.BIG_HEART: 2,
 }
 
-#region Templates
+#region Shape Templates
 var heart_template_even: Array[Vector2i] = [
 	Vector2i(0, 0), 
 	Vector2i(-1, -1), 
@@ -192,6 +192,7 @@ var square_templates: Dictionary = {
 }
 #endregion
 
+#region Active Patterns
 #approved
 func _get_tiles_for_pattern(palette: Array, required_count: int) -> Array:
 	if palette.size() == 0:
@@ -396,8 +397,9 @@ func _map_PATCHY(tiles: Array, shape_grid: Array, width: int, height: int, spawn
 					result[Vector2i(px, py)] = selected_tile
 	
 	return result
+#endregion
 
-#NOT USED ----------------------------------------------------------------------------
+#region NOT USED patterns
 
 #approved
 func _map_ARCHIPELAGO(tiles: Array, shape_grid: Array, width: int, height: int) -> Dictionary:
@@ -455,12 +457,18 @@ func _map_ZEBRA_H(tiles: Array, shape_grid: Array, width: int, height: int, zebr
 				var index = (y / corrected_zebra_size) % tile_count
 				result[Vector2i(x, y)] = tiles[index]
 	return result
+#endregion
 
+#region Suggested Patterns / Pattern Ideas
+# - Spiral
+# - QUINCUNX
+# - harlequin
+# - Barberpole (r/l)
+# - Jimmies (2 by 1 pixels in diagonal)
+# - _map_PLAID_3X+
+# - _map_DOTTED_STRONG (without random)
 
-
-##NOT ADDED NOT OPTIMIZED ----------------------------------------------------------------------------
-#QUINCUNX, harlequin pattern, Barberpole, WORMS
-##need research
+#need research
 #func _map_PLAID_3X(tiles: Array, shape_grid: Array, width: int, height: int) -> Dictionary:
 	#var result = {}
 	#if tiles.size() < SHAPE_ELEMENT_COUNT[G.TerrainPattern.PLAID]: return result
@@ -484,7 +492,8 @@ func _map_ZEBRA_H(tiles: Array, shape_grid: Array, width: int, height: int, zebr
 				#else:
 					#result[Vector2i(x, y)] = tiles[0]
 	#return result
-##not sure
+
+#need research
 #func _map_DOTTED_STRONG(tiles: Array, shape_grid: Array, width: int, height: int) -> Dictionary:
 	#var result = {}
 	#if tiles.size() < 2: return result
@@ -497,3 +506,4 @@ func _map_ZEBRA_H(tiles: Array, shape_grid: Array, width: int, height: int, zebr
 				#else:
 					#result[Vector2i(x, y)] = tiles[0]
 	#return result
+#endregion
