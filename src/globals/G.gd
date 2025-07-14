@@ -39,7 +39,7 @@ const CHALK_RESOURCES = {
 	
 }
 
-enum ShapePattern { RECTANGLE, DIAMOND, CIRCLE, CROSS, HEXAGON }
+enum ShapePattern { RECTANGLE, DIAMOND, CIRCLE, CROSS, ISLAND }
 enum TerrainPattern { 
 	SOLID, 
 	CHECKERED, 
