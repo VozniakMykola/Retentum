@@ -1,3 +1,4 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://cu6i1qlbvc26q"]
 
 [resource]
+transparency = 1

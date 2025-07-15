@@ -83,16 +83,20 @@ var tile_config := {
 @onready var area: Area3D = $Area3D
 @onready var collision_shape: CollisionShape3D = $Area3D/CollisionShape3D
 
+
+#anim_fall
+const ROTATION_RATE: float = 0.5
+const ROTATION_SPEED: float = 1
+const FALL_DURATION: float = 0.8
+const FALL_DISTANCE: float = 10.0
+#anim_tile_down #anim_tile_up
+const LIFT_HEIGHT: float = 0.4
+const LIFT_SPEED: float = 0.2
 const LIFT_OVERSHOOT: float = 0.25
 const DROP_OVERSHOOT: float = 0.05
 const BOUNCE_DURATION: float = 0.2
-const LIFT_HEIGHT: float = 0.4
-const LIFT_SPEED: float = 0.2
-
+#anim_floating
 const TICK_TACK_SPEED: float = 0.25
-#var hover_height: float = 0.5  # Висота коливання
-#var hover_speed: float = 1  # Швидкість коливання
-
 
 var original_mesh_position: Vector3
 var lifted_mesh_position: Vector3
@@ -163,9 +167,38 @@ func _get_current_actions() -> Dictionary:
 	)
 #endregion
 
-#region Interractions HOVER
+#region Interractions NORMAL
 
 func _on_mouse_entered_normal():
+	anim_tile_up()
+	
+func _on_mouse_exited_normal():
+	anim_tile_down()
+
+func _on_click_normal():
+	set_tile_type(G.TileType.DEAD)
+	#collision_shape.disabled = true
+	anim_fall()
+	pass
+#endregion
+
+#region Interractions CHALKED & BLOCKED
+func _on_click_chalked():
+	set_tile_type(G.TileType.NORMAL)
+	pass
+
+func _on_click_blocked():
+	#shaking
+	pass
+#endregion
+
+#region Animations
+func new_tween() -> void:
+	if current_tween and current_tween.is_running():
+		current_tween.kill()
+	current_tween = create_tween()
+
+func anim_tile_up():
 	new_tween()
 	
 	current_tween.set_trans(Tween.TRANS_BACK)
@@ -176,16 +209,16 @@ func _on_mouse_entered_normal():
 		lifted_mesh_position + Vector3(0, LIFT_OVERSHOOT, 0), 
 		LIFT_SPEED
 	)
-	#
+	
 	#current_tween.tween_property(
 		#mesh_instance, 
 		#"position", 
 		#lifted_mesh_position, 
 		#BOUNCE_DURATION
 	#)
-	current_tween.tween_callback(_start_hover_animation)
+	current_tween.tween_callback(anim_floating)
 	
-func _on_mouse_exited_normal():
+func anim_tile_down():
 	new_tween()
 	
 	current_tween.set_trans(Tween.TRANS_BACK)
@@ -204,14 +237,13 @@ func _on_mouse_exited_normal():
 		BOUNCE_DURATION
 	)
 
-func _start_hover_animation():
+func anim_floating():
 	new_tween()
 	
 	current_tween.set_loops()
 	current_tween.set_trans(Tween.TRANS_EXPO)
 	current_tween.set_ease(Tween.EASE_OUT)
 	
-	# Рух вниз
 	current_tween.tween_property(
 		mesh_instance, 
 		"position:y", 
@@ -226,33 +258,27 @@ func _start_hover_animation():
 		TICK_TACK_SPEED
 	)
 	
-	current_tween.tween_callback(_start_hover_animation)
-#endregion
+	current_tween.tween_callback(anim_floating)
 
-#region Interaction CLICK
-func _on_click_normal():
-	set_tile_type(G.TileType.DEAD)
-	collapse()
-	pass
-
-func _on_click_chalked():
-	#clear chalk
-	pass
-
-func _on_click_blocked():
-	#shaking
-	pass
-#endregion
-
-#region Auxiliary
-func new_tween() -> void:
-	if current_tween and current_tween.is_running():
-		current_tween.kill()
-	current_tween = create_tween()
-
-func collapse() -> void:
-	pass
-
+func anim_fall() -> void:
+	new_tween()
+	current_tween.set_parallel(true)
+	
+	#falling
+	current_tween.tween_property(mesh_instance, "position:y", 
+		mesh_instance.position.y - FALL_DISTANCE, FALL_DURATION).set_trans(Tween.TRANS_LINEAR)
+	
+	#Euler's Disk effect
+	current_tween.tween_property(mesh_instance, "rotation", 
+		Vector3(mesh_instance.rotation.x + PI * ROTATION_RATE, 
+				mesh_instance.rotation.y, 
+				mesh_instance.rotation.z + PI * ROTATION_RATE), 
+		randf_range(ROTATION_SPEED-0.5, ROTATION_SPEED+0.5)).set_trans(Tween.TRANS_LINEAR)
+	
+	#Disappearing
+	var new_material = mesh_instance.material_override.duplicate()
+	mesh_instance.material_override = new_material
+	current_tween.tween_property(new_material, "albedo_color:a", 0.0, 0.5).set_delay(0.2)
 #endregion
 
 #region States logic

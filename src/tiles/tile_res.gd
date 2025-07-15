@@ -14,6 +14,6 @@ func get_material() -> StandardMaterial3D:
 		return load("res://src/tiles/list/test.tres") as StandardMaterial3D
 	if ignore_albedo:
 		return base_material
-	var mat = base_material.duplicate()
+	var mat = base_material
 	mat.albedo_color = G.get_color(albedo_color)
 	return mat
