@@ -53,8 +53,8 @@ enum TerrainPattern {
 	ARCHIPELAGO,
 	BIG_HEART,
 	}
-enum TileState { NORMAL, DEAD, CHALKED, ENDGAME }
-enum GameplayState { EMPTY, OCCUPIED }
+enum TileType { NORMAL, DEAD, CHALKED, ENDGAME }
+enum TileState { EMPTY, OCCUPIED }
 
 enum ColorType {
 	BLACK, BLUE, BROWN, CYAN, DARK_GRAY, GRAY, GREEN, NAVY, OLIVE, 

@@ -98,8 +98,6 @@ func _create_CROSS(size: Vector2i) -> Array[Array]:
 	
 	return grid
 
-
-
 #region Suggested Patterns / Pattern Ideas
 # - ISLAND
 # - STAR
