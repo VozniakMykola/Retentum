@@ -19,20 +19,20 @@ var hitbox_size: Vector3
 var hitbox_y_offset: float
 
 #Functionality
-var current_tile_type: G.TileType = G.TileType.NORMAL:
+var current_tile_type: G.TileType = G.TileType.DEAD:
 	set(value):
 		current_tile_type = value
-		#match current_tile_type:
-			#G.TileType.NORMAL:
-				#pass
-			#G.TileType.CHALKED:
-				#pass
-			#G.TileType.ENDGAME:
-				#pass
-			#G.TileType.DEAD:
-				#pass
-			#_:
-				#pass
+		match current_tile_type:
+			G.TileType.NORMAL:
+				collision_shape.disabled = false
+			G.TileType.CHALKED:
+				pass
+			G.TileType.ENDGAME:
+				pass
+			G.TileType.DEAD:
+				collision_shape.disabled = true
+			_:
+				pass
 var current_tile_state: G.TileState = G.TileState.EMPTY:
 	set(value):
 		current_tile_state = value
@@ -87,7 +87,7 @@ var tile_config := {
 const ROTATION_RATE: float = 0.5
 const ROTATION_SPEED: float = 1
 const FALL_DURATION: float = 0.65
-const FALL_DISTANCE: float = 10.0
+const FALL_DISTANCE: float = 8.0 #10?
 #anim_tile_down #anim_tile_up
 const LIFT_HEIGHT: float = 0.4
 const LIFT_SPEED: float = 0.2
@@ -96,6 +96,10 @@ const DROP_OVERSHOOT: float = 0.05
 const BOUNCE_DURATION: float = 0.2
 #anim_floating
 const TICK_TACK_SPEED: float = 0.25
+#anim_appear
+const APPEAR_SPEED: float = 0.2
+const APPEAR_HEIGHT: float = 0.4
+const APPEAR_OVERSHOOT: float = 0.2
 
 var original_mesh_position: Vector3
 var lifted_mesh_position: Vector3
@@ -105,6 +109,7 @@ var current_tween: Tween
 
 #region Setup
 func _ready() -> void:
+	current_tile_type = G.TileType.DEAD
 	hitbox_y_offset = LIFT_HEIGHT/2
 	hitbox_size = Vector3(tile_size.x, tile_size.y + LIFT_HEIGHT, tile_size.z)
 	
@@ -120,6 +125,8 @@ func _ready() -> void:
 	area.mouse_entered.connect(_on_mouse_entered)
 	area.mouse_exited.connect(_on_mouse_exited)
 	area.input_event.connect(_on_input_event)
+	await anim_appear()
+	current_tile_type = G.TileType.NORMAL
 
 func _apply_tile_settings() -> void:
 	if !tile_data:
@@ -177,7 +184,6 @@ func _on_mouse_exited_normal():
 func _on_click_normal():
 	set_tile_type(G.TileType.DEAD)
 	anim_fall()
-	collision_shape.disabled = true
 	pass
 #endregion
 
@@ -197,7 +203,7 @@ func new_tween() -> void:
 		current_tween.kill()
 	current_tween = create_tween()
 
-func anim_tile_up():
+func anim_tile_up() -> void:
 	new_tween()
 	
 	current_tween.set_trans(Tween.TRANS_BACK)
@@ -217,7 +223,7 @@ func anim_tile_up():
 	#)
 	current_tween.tween_callback(anim_floating)
 	
-func anim_tile_down():
+func anim_tile_down() -> void:
 	new_tween()
 	
 	current_tween.set_trans(Tween.TRANS_BACK)
@@ -236,7 +242,7 @@ func anim_tile_down():
 		BOUNCE_DURATION
 	)
 
-func anim_floating():
+func anim_floating() -> void:
 	new_tween()
 	
 	current_tween.set_loops()
@@ -272,17 +278,52 @@ func anim_fall() -> void:
 	var dir_y = 1 if randf() > 0.5 else -1
 	var dir_z = 1 if randf() > 0.5 else -1
 	current_tween.tween_property(mesh_instance, "rotation", 
-		Vector3(mesh_instance.rotation.x + dir_x + ROTATION_RATE, 
+		Vector3(mesh_instance.rotation.x + dir_x * ROTATION_RATE, 
 				mesh_instance.rotation.y + dir_y * ROTATION_RATE, 
 				mesh_instance.rotation.z + dir_z * ROTATION_RATE),
 		randf_range(ROTATION_SPEED-0.5, ROTATION_SPEED+0.5)).set_trans(Tween.TRANS_LINEAR)
 	
 	#Disappearing
-	var new_material = mesh_instance.material_override.duplicate()
+	var new_material = mesh_instance.material_override
 	mesh_instance.material_override = new_material
 	current_tween.tween_property(new_material, "albedo_color:a", 0.0, FALL_DURATION*0.70).set_delay(FALL_DURATION*0.25)
-#endregion
 
+func anim_appear() -> void:
+	new_tween()
+	
+	current_tween.tween_property(mesh_instance, "scale", Vector3.ONE, APPEAR_SPEED * 1.5)\
+		.from(Vector3.ZERO)\
+		.set_ease(Tween.EASE_OUT)
+
+	current_tween.set_parallel(true)
+	
+	current_tween.tween_property(
+		mesh_instance, 
+		"position:y", 
+		original_mesh_position.y + APPEAR_HEIGHT, 
+		APPEAR_SPEED * 0.5
+	).from_current().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+	var tween_down = create_tween()
+	tween_down.tween_property(
+		mesh_instance, 
+		"position:y", 
+		original_mesh_position.y - APPEAR_OVERSHOOT, 
+		APPEAR_SPEED * 0.5
+	).set_delay(APPEAR_SPEED * 0.5)
+	tween_down.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	
+	tween_down.tween_property(
+		mesh_instance, 
+		"position:y", 
+		original_mesh_position.y, 
+		APPEAR_SPEED * 0.5
+	)
+	
+	
+	
+	await current_tween.finished
+#endregion
 
 #region States logic
 
