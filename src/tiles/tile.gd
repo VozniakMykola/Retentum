@@ -87,7 +87,7 @@ var tile_config := {
 #anim_fall
 const ROTATION_RATE: float = 0.5
 const ROTATION_SPEED: float = 1
-const FALL_DURATION: float = 0.8
+const FALL_DURATION: float = 0.65
 const FALL_DISTANCE: float = 10.0
 #anim_tile_down #anim_tile_up
 const LIFT_HEIGHT: float = 0.4
@@ -270,15 +270,15 @@ func anim_fall() -> void:
 	
 	#Euler's Disk effect
 	current_tween.tween_property(mesh_instance, "rotation", 
-		Vector3(mesh_instance.rotation.x + PI * ROTATION_RATE, 
-				mesh_instance.rotation.y, 
-				mesh_instance.rotation.z + PI * ROTATION_RATE), 
+		Vector3(mesh_instance.rotation.x + ROTATION_RATE, 
+				mesh_instance.rotation.y + PI * ROTATION_RATE * 1.5, 
+				mesh_instance.rotation.z + ROTATION_RATE),
 		randf_range(ROTATION_SPEED-0.5, ROTATION_SPEED+0.5)).set_trans(Tween.TRANS_LINEAR)
 	
 	#Disappearing
 	var new_material = mesh_instance.material_override.duplicate()
 	mesh_instance.material_override = new_material
-	current_tween.tween_property(new_material, "albedo_color:a", 0.0, 0.5).set_delay(0.2)
+	current_tween.tween_property(new_material, "albedo_color:a", 0.0, 0.5).set_delay(0.15)
 #endregion
 
 #region States logic
