@@ -83,7 +83,6 @@ var tile_config := {
 @onready var area: Area3D = $Area3D
 @onready var collision_shape: CollisionShape3D = $Area3D/CollisionShape3D
 
-
 #anim_fall
 const ROTATION_RATE: float = 0.5
 const ROTATION_SPEED: float = 1
@@ -106,8 +105,8 @@ var current_tween: Tween
 
 #region Setup
 func _ready() -> void:
-	hitbox_size = Vector3(tile_size.x, tile_size.y, tile_size.z)
-	hitbox_y_offset = LIFT_HEIGHT
+	hitbox_y_offset = LIFT_HEIGHT/2
+	hitbox_size = Vector3(tile_size.x, tile_size.y + LIFT_HEIGHT, tile_size.z)
 	
 	original_mesh_position = mesh_instance.position
 	lifted_mesh_position = original_mesh_position + Vector3(0, LIFT_HEIGHT, 0)
@@ -177,8 +176,8 @@ func _on_mouse_exited_normal():
 
 func _on_click_normal():
 	set_tile_type(G.TileType.DEAD)
-	#collision_shape.disabled = true
 	anim_fall()
+	collision_shape.disabled = true
 	pass
 #endregion
 
@@ -269,29 +268,27 @@ func anim_fall() -> void:
 		mesh_instance.position.y - FALL_DISTANCE, FALL_DURATION).set_trans(Tween.TRANS_LINEAR)
 	
 	#Euler's Disk effect
+	var dir_x = 1 if randf() > 0.5 else -1
+	var dir_y = 1 if randf() > 0.5 else -1
+	var dir_z = 1 if randf() > 0.5 else -1
 	current_tween.tween_property(mesh_instance, "rotation", 
-		Vector3(mesh_instance.rotation.x + ROTATION_RATE, 
-				mesh_instance.rotation.y + PI * ROTATION_RATE * 1.5, 
-				mesh_instance.rotation.z + ROTATION_RATE),
+		Vector3(mesh_instance.rotation.x + dir_x + ROTATION_RATE, 
+				mesh_instance.rotation.y + dir_y * ROTATION_RATE, 
+				mesh_instance.rotation.z + dir_z * ROTATION_RATE),
 		randf_range(ROTATION_SPEED-0.5, ROTATION_SPEED+0.5)).set_trans(Tween.TRANS_LINEAR)
 	
 	#Disappearing
 	var new_material = mesh_instance.material_override.duplicate()
 	mesh_instance.material_override = new_material
-	current_tween.tween_property(new_material, "albedo_color:a", 0.0, 0.5).set_delay(0.15)
+	current_tween.tween_property(new_material, "albedo_color:a", 0.0, FALL_DURATION*0.70).set_delay(FALL_DURATION*0.25)
 #endregion
+
 
 #region States logic
 
 func set_tile_type(new_type: G.TileType):
-	call_deferred("_set_tile_type_deferred", new_type)
-
-func _set_tile_type_deferred(new_type: G.TileType):
 	current_tile_type = new_type
 
 func set_tile_state(new_state: G.TileState):
-	call_deferred("_set_tile_state_deferred", new_state)
-
-func _set_tile_state_deferred(new_state: G.TileState):
 	current_tile_state = new_state
 #endregion
