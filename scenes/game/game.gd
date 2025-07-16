@@ -2,7 +2,8 @@ extends Node3D
 
 @export_group("Game")
 var game_builder: GameBuilder = GameBuilder.new()
-var game_config: Dictionary
+var game_config: GameConfig
+var level_map: Dictionary
 
 @onready var grid_map: OrthoGridMap = $MainGridMap
 
@@ -14,32 +15,27 @@ func _ready() -> void:
 
 func initialize_game() -> void:
 	game_config = game_builder.start_new_game()
+	level_map = game_builder.generate_level(game_config)
 	generate_level()
 
+#need randomize pattern or start from center
 func generate_level():
-	var diagonals = {}
-	for coord in game_config:
-		var diag_index = coord.x * 2 + (coord.y % 2) + coord.y
-		if not diagonals.has(diag_index):
-			diagonals[diag_index] = []
-		diagonals[diag_index].append(coord)
+	var all_coords = level_map.keys()
+	all_coords.shuffle()
 	
-	# 2. Отримуємо відсортовані індекси діагоналей
-	var sorted_diag_indices = diagonals.keys()
-	sorted_diag_indices.sort()  # Сортуємо за зростанням
+	var batch_size: int = game_config.world_size.x / 1
+	var delay_between_batches = 0.01
 	
-	# 3. Заповнюємо діагоналі в правильному порядку
-	for diag_index in sorted_diag_indices:
-		# Сортуємо тайли всередині діагоналі (за Y або X за потребою)
-		diagonals[diag_index].sort_custom(func(a, b): return a.y < b.y)
-		
-		# Створюємо всі тайли діагоналі
-		for coord in diagonals[diag_index]:
+	for i in range(0, all_coords.size(), batch_size):
+		var end_index = min(i + batch_size, all_coords.size())
+		var batch_coords = all_coords.slice(i, end_index)
+		for coord in batch_coords:
 			var tile = TILE_SCENE.instantiate()
-			tile.tile_data = game_config[coord]
+			tile.tile_data = level_map[coord]
 			grid_map.set_cell_item(coord, tile)
-		
-		await get_tree().create_timer(0.1).timeout  # Затримка між діагоналями
+
+		await get_tree().create_timer(delay_between_batches).timeout
+
 func restart_game() -> void:
 	var new_game = GAME_SCENE.instantiate()
 	get_tree().root.add_child(new_game)

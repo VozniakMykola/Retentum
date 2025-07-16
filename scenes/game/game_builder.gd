@@ -9,9 +9,9 @@ func _init():
 	shape_mapper = ShapeMapper.new()
 	terrain_mapper = TerrainMapper.new()
 
-func start_new_game() -> Dictionary:
+func start_new_game() -> GameConfig:
 	current_config = GameConfig.generate_config()
-	return generate_level(current_config)
+	return current_config
 	
 func generate_level(config: GameConfig) -> Dictionary:
 	#var biome = G.BIOME_RESOURCES[config.biome]

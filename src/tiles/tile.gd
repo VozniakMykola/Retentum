@@ -86,8 +86,8 @@ var tile_config := {
 #anim_fall
 const ROTATION_RATE: float = 0.5
 const ROTATION_SPEED: float = 1
-const FALL_DURATION: float = 0.65
-const FALL_DISTANCE: float = 8.0 #10?
+const FALL_DURATION: float = 0.45
+const FALL_DISTANCE: float = 5.0
 #anim_tile_down #anim_tile_up
 const LIFT_HEIGHT: float = 0.4
 const LIFT_SPEED: float = 0.2
@@ -96,7 +96,9 @@ const DROP_OVERSHOOT: float = 0.05
 const BOUNCE_DURATION: float = 0.2
 #anim_floating
 const TICK_TACK_SPEED: float = 0.25
-#anim_appear
+#anim_appear_1
+const APPEAR_SPEED_1: float = 0.2
+#anim_appear_2
 const APPEAR_SPEED: float = 0.2
 const APPEAR_HEIGHT: float = 0.4
 const APPEAR_OVERSHOOT: float = 0.2
@@ -125,7 +127,7 @@ func _ready() -> void:
 	area.mouse_entered.connect(_on_mouse_entered)
 	area.mouse_exited.connect(_on_mouse_exited)
 	area.input_event.connect(_on_input_event)
-	await anim_appear()
+	await anim_appear_1()
 	current_tile_type = G.TileType.NORMAL
 
 func _apply_tile_settings() -> void:
@@ -288,7 +290,7 @@ func anim_fall() -> void:
 	mesh_instance.material_override = new_material
 	current_tween.tween_property(new_material, "albedo_color:a", 0.0, FALL_DURATION*0.70).set_delay(FALL_DURATION*0.25)
 
-func anim_appear() -> void:
+func anim_appear_2() -> void:
 	new_tween()
 	
 	current_tween.tween_property(mesh_instance, "scale", Vector3.ONE, APPEAR_SPEED * 1.5)\
@@ -320,9 +322,20 @@ func anim_appear() -> void:
 		APPEAR_SPEED * 0.5
 	)
 	
-	
-	
 	await current_tween.finished
+
+
+func anim_appear_1() -> void:
+	new_tween()
+	
+	current_tween.tween_property(mesh_instance, "scale", Vector3.ONE, APPEAR_SPEED_1)\
+		.from(Vector3.ZERO)\
+		.set_ease(Tween.EASE_OUT)
+
+	#current_tween.set_parallel(true)
+
+	await current_tween.finished
+
 #endregion
 
 #region States logic
