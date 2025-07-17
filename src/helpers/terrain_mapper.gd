@@ -1,7 +1,7 @@
 extends Node
 class_name TerrainMapper
 
-func map_terrain(terrain_name: G.TerrainPattern, palette: Array, shape_grid: Array) -> Dictionary:
+func map_terrain(terrain_name: G.TerrainPattern, palette: Array, shape_grid: Array, is_sequentially: bool) -> Dictionary:
 	var result = {}
 	var height = shape_grid.size()
 	if height == 0: return result
@@ -10,44 +10,44 @@ func map_terrain(terrain_name: G.TerrainPattern, palette: Array, shape_grid: Arr
 	print("_terrain_", G.TerrainPattern.keys()[terrain_name])
 	match terrain_name:
 		G.TerrainPattern.SOLID:
-			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name])
+			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name], is_sequentially)
 			return _map_SOLID(pattern_tiles, shape_grid, width, height)
 		G.TerrainPattern.CHECKERED:
-			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name])
+			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name], is_sequentially)
 			return _map_CHECKERED(pattern_tiles, shape_grid, width, height)
 		G.TerrainPattern.DOTTED:
-			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name])
+			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name], is_sequentially)
 			return _map_DOTTED(pattern_tiles, shape_grid, width, height)
 		G.TerrainPattern.PLAID:
-			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name])
+			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name], is_sequentially)
 			return _map_PLAID(pattern_tiles, shape_grid, width, height)
 		G.TerrainPattern.PATCHY:
-			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name])
+			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name], is_sequentially)
 			return _map_PATCHY(pattern_tiles, shape_grid, width, height)
 		G.TerrainPattern.ARCHIPELAGO:
-			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name])
+			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name], is_sequentially)
 			return _map_ARCHIPELAGO(pattern_tiles, shape_grid, width, height)
 		G.TerrainPattern.ZEBRA_V:
 			var zebra_size = randi_range(1, 3)
-			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name])
+			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name], is_sequentially)
 			return _map_ZEBRA_V(pattern_tiles, shape_grid, width, height, zebra_size)
 		G.TerrainPattern.ZEBRA_H:
 			var zebra_size = randi_range(1, 3)
-			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name])
+			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name], is_sequentially)
 			return _map_ZEBRA_H(pattern_tiles, shape_grid, width, height, zebra_size)
 		G.TerrainPattern.NOISE:
 			var palette_size = palette.size()
 			var random_tile_count = randi_range(2, palette_size)
-			pattern_tiles = _get_tiles_for_pattern(palette, random_tile_count)
+			pattern_tiles = _get_tiles_for_pattern(palette, random_tile_count, is_sequentially)
 			return _map_NOISE(pattern_tiles, shape_grid, width, height)
 		G.TerrainPattern.BIG_HEART:
-			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name])
+			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name], is_sequentially)
 			return _map_shape_single(pattern_tiles, shape_grid, width, height, big_heart_template_even, big_heart_template_odd)
 		G.TerrainPattern.HEARTS:
-			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name])
+			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name], is_sequentially)
 			return _map_shape(pattern_tiles, shape_grid, width, height, heart_template_even, heart_template_odd, Vector2i(1,2), Vector2i(3,6), false)
 		_:
-			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name])
+			pattern_tiles = _get_tiles_for_pattern(palette, SHAPE_ELEMENT_COUNT[terrain_name], is_sequentially)
 			return _map_SOLID(pattern_tiles, shape_grid, width, height)
 
 const SHAPE_ELEMENT_COUNT: Dictionary = {
@@ -194,19 +194,21 @@ var square_templates: Dictionary = {
 
 #region Active Patterns
 #approved
-func _get_tiles_for_pattern(palette: Array, required_count: int) -> Array:
-	if palette.size() == 0:
+func _get_tiles_for_pattern(palette: Array, required_count: int, is_sequentially: bool) -> Array:
+	if palette.is_empty():
 		return []
-	var tiles = []
+	
+	var tiles = palette.duplicate()
+	
+	if !is_sequentially:
+		tiles.shuffle()
+	
 	if palette.size() < required_count:
-		tiles = palette.duplicate()
 		while tiles.size() < required_count:
 			tiles.append(palette[randi() % palette.size()])
 	else:
-		var indices = range(palette.size())
-		indices.shuffle()
-		for i in range(required_count):
-			tiles.append(palette[indices[i]])
+		tiles.slice(0, required_count)
+	
 	return tiles
 
 #approved

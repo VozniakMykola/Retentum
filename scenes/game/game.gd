@@ -18,12 +18,11 @@ func initialize_game() -> void:
 	level_map = game_builder.generate_level(game_config)
 	generate_level()
 
-#need randomize pattern or start from center
 func generate_level():
 	var all_coords = level_map.keys()
 	all_coords.shuffle()
 	
-	var batch_size: int = game_config.world_size.x / 1
+	var batch_size: int = game_config.world_x / 1
 	var delay_between_batches = 0.01
 	
 	for i in range(0, all_coords.size(), batch_size):

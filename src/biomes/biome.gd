@@ -6,6 +6,7 @@ class_name Biome
 @export_group("Visual")
 @export var tiles_palette: Array[TileResource] = []
 @export var terrain_patterns: Array[G.TerrainPattern] = []
+@export var is_sequentially: bool = false
 @export_group("Visual 2")
 @export var biome_decor: Array[PackedScene] = [] 
 @export var biome_environment: Array[PackedScene] = []

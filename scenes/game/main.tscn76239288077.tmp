@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://qpjnak42xxk3"]
+
+[ext_resource type="Script" uid="uid://c4vgr5pean83t" path="res://scenes/game/main.gd" id="1_llaio"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_llaio")
+
+[node name="Play" type="Button" parent="."]
+offset_left = 518.0
+offset_top = 261.0
+offset_right = 723.0
+offset_bottom = 421.0
+text = "PLAY"
+
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]

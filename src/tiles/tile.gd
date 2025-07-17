@@ -44,7 +44,7 @@ var current_tile_state: G.TileState = G.TileState.EMPTY:
 			#_:
 				#pass
 
-var tile_config := {
+var tile_config: Dictionary = {
 	G.TileState.EMPTY: {
 		G.TileType.NORMAL: {
 			"click": _on_click_normal,
@@ -323,7 +323,6 @@ func anim_appear_2() -> void:
 	)
 	
 	await current_tween.finished
-
 
 func anim_appear_1() -> void:
 	new_tween()

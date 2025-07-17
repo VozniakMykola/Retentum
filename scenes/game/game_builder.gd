@@ -14,13 +14,10 @@ func start_new_game() -> GameConfig:
 	return current_config
 	
 func generate_level(config: GameConfig) -> Dictionary:
-	#var biome = G.BIOME_RESOURCES[config.biome]
-	var biome = G.BIOME_RESOURCES[G.BiomeType.PLAZA]
+	var biome = G.BIOME_RESOURCES[config.biome]
+	#var biome = G.BIOME_RESOURCES[G.BiomeType.PLAZA] #DELETE THIS
 	var shaped_raw = shape_mapper.create_shape(config.world_shape, config.world_size)
 	var random_pattern = biome.get_random_pattern()
 	var palette = biome.tiles_palette
-	var patterned_raw = terrain_mapper.map_terrain(random_pattern, palette, shaped_raw)
+	var patterned_raw = terrain_mapper.map_terrain(random_pattern, palette, shaped_raw, biome.is_sequentially)
 	return patterned_raw
-
-#func end_session(is_win: bool):
-	#var unlocks = P.record_session_result(is_win)
