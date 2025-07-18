@@ -22,9 +22,10 @@ func generate_level():
 	var all_coords = level_map.keys()
 	all_coords.shuffle()
 	
-	var batch_size: int = game_config.world_x / 1
+	#game_config.world_x * (game_config.world_x * 2) / 10
+	var batch_size: int = game_config.world_x
 	var delay_between_batches = 0.01
-	
+
 	for i in range(0, all_coords.size(), batch_size):
 		var end_index = min(i + batch_size, all_coords.size())
 		var batch_coords = all_coords.slice(i, end_index)
