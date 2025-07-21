@@ -5,13 +5,23 @@ signal tile_hovered(tile: Tile)
 signal tile_unhovered(tile: Tile)
 signal tile_clicked(tile: Tile, mouse_button: int)
 
-@export var tile_data: TileResource:
+#From export
+@export var tile_config: TileConfig:
 	set(value):
-		if tile_data == value:
+		tile_config = value
+		tile_res = tile_config.tile_res
+		current_tile_state = tile_config.tile_state
+		current_tile_type = tile_config.tile_type
+		current_chalk = tile_config.chalk_type
+		current_guidance_vec = tile_config.guidance_vec
+
+var tile_res: TileResource:
+	set(value):
+		if tile_res == value:
 			return
-		tile_data = value
+		tile_res = value
 		if is_inside_tree():
-			_apply_tile_settings()
+			_apply_tile_res()
 
 #Settings
 var tile_size: Vector3 = Vector3(1.0, 0.2, 1.0)
@@ -22,17 +32,28 @@ var hitbox_y_offset: float
 var current_tile_type: G.TileType = G.TileType.DEAD:
 	set(value):
 		current_tile_type = value
-		match current_tile_type:
-			G.TileType.NORMAL:
-				collision_shape.disabled = false
-			G.TileType.CHALKED:
-				pass
-			G.TileType.ENDGAME:
-				pass
-			G.TileType.DEAD:
-				collision_shape.disabled = true
-			_:
-				pass
+		if is_inside_tree():
+			match current_tile_type:
+				G.TileType.NORMAL:
+					collision_shape.disabled = false
+					chalk.visible = false
+				G.TileType.CHALKED:
+					collision_shape.disabled = false
+					chalk.visible = true
+					print 
+					chalk.texture = G.CHALK_RESOURCES[current_chalk]
+					if current_chalk == G.ChalkType.GUIDANCE:
+						chalk.rotation_degrees = DIR_ROTATIONS.get(current_guidance_vec, Vector3.ZERO)
+						print(chalk.rotation_degrees)
+				G.TileType.ENDGAME:
+					collision_shape.disabled = false
+					chalk.visible = false
+				G.TileType.DEAD:
+					collision_shape.disabled = true
+					chalk.visible = false
+				_:
+					pass
+
 var current_tile_state: G.TileState = G.TileState.EMPTY:
 	set(value):
 		current_tile_state = value
@@ -44,7 +65,10 @@ var current_tile_state: G.TileState = G.TileState.EMPTY:
 			#_:
 				#pass
 
-var tile_config: Dictionary = {
+var current_chalk = null
+var current_guidance_vec: Vector2i
+
+var tile_behavior: Dictionary = {
 	G.TileState.EMPTY: {
 		G.TileType.NORMAL: {
 			"click": _on_click_normal,
@@ -79,10 +103,14 @@ var tile_config: Dictionary = {
 	}
 }
 
-@onready var mesh_instance: MeshInstance3D = $MeshInstance3D
 @onready var area: Area3D = $Area3D
 @onready var collision_shape: CollisionShape3D = $Area3D/CollisionShape3D
 
+@onready var sprite: Node3D = $Sprite
+@onready var chalk: Sprite3D = $Sprite/Chalk
+@onready var mesh: MeshInstance3D = $Sprite/Mesh
+
+#region Consts
 #anim_fall
 const ROTATION_RATE: float = 0.5
 const ROTATION_SPEED: float = 1
@@ -102,12 +130,23 @@ const APPEAR_SPEED_1: float = 0.2
 const APPEAR_SPEED: float = 0.2
 const APPEAR_HEIGHT: float = 0.4
 const APPEAR_OVERSHOOT: float = 0.2
+#endregion
 
-var original_mesh_position: Vector3
-var lifted_mesh_position: Vector3
+const DIR_ROTATIONS = {
+	Vector2i.UP: Vector3(-90.0, 45.0, 0.0),
+	Vector2i.DOWN: Vector3(90.0, 45.0, 0.0),
+	Vector2i.LEFT: Vector3(90.0, -45.0, 0.0),
+	Vector2i.RIGHT: Vector3(-90.0, -45.0, 0.0),
+	Vector2i.UP + Vector2i.LEFT: Vector3(90.0, -90.0, 0.0),
+	Vector2i.UP + Vector2i.RIGHT: Vector3(-90.0, 0.0, 0.0),
+	Vector2i.DOWN + Vector2i.LEFT: Vector3(90.0, 0.0, 0.0),
+	Vector2i.DOWN + Vector2i.RIGHT: Vector3(-90.0, -90.0, 0.0)
+}
+
+var original_sprite_position: Vector3
+var lifted_sprite_position: Vector3
 var is_hovered: bool = false
 var current_tween: Tween
-
 
 #region Setup
 func _ready() -> void:
@@ -115,32 +154,31 @@ func _ready() -> void:
 	hitbox_y_offset = LIFT_HEIGHT/2
 	hitbox_size = Vector3(tile_size.x, tile_size.y + LIFT_HEIGHT, tile_size.z)
 	
-	original_mesh_position = mesh_instance.position
-	lifted_mesh_position = original_mesh_position + Vector3(0, LIFT_HEIGHT, 0)
+	original_sprite_position = sprite.position
+	lifted_sprite_position = original_sprite_position + Vector3(0, LIFT_HEIGHT, 0)
 	
-	if tile_data:
-		_apply_tile_settings()
-	if mesh_instance:
-		var random_rotation = randi() % 4 * 90
-		mesh_instance.rotation_degrees.y = random_rotation
-		#mesh_instance.rotation.y = randf() * TAU  # TAU = 2*PI
+	if tile_res:
+		_apply_tile_res()
+	var random_rotation = randi() % 4 * 90
+	mesh.rotation_degrees.y = random_rotation
+	#mesh_instance.rotation.y = randf() * TAU  # TAU = 2*PI
 	area.mouse_entered.connect(_on_mouse_entered)
 	area.mouse_exited.connect(_on_mouse_exited)
 	area.input_event.connect(_on_input_event)
+	
 	await anim_appear_1()
-	current_tile_type = G.TileType.NORMAL
+	tile_config = tile_config
 
-func _apply_tile_settings() -> void:
-	if !tile_data:
+func _apply_tile_res() -> void:
+	if !tile_res:
 		return
-	if mesh_instance.material_override != tile_data.get_material():
-		mesh_instance.material_override = tile_data.get_material()
-	if mesh_instance:
-		mesh_instance.mesh.size = tile_size
-		mesh_instance.material_override = tile_data.get_material()
-	if collision_shape:
-		collision_shape.shape.size = hitbox_size
-		collision_shape.position.y = hitbox_y_offset
+	if mesh.material_override != tile_res.get_material():
+		mesh.material_override = tile_res.get_material()
+	mesh.mesh.size = tile_size
+	mesh.material_override = tile_res.get_material()
+	chalk.position.y = tile_size.y / 2
+	collision_shape.shape.size = hitbox_size
+	collision_shape.position.y = hitbox_y_offset
 #endregion
 
 #region Interractions BASE
@@ -168,7 +206,7 @@ func _on_input_event(_camera: Camera3D, event: InputEvent, _position: Vector3, _
 			click_action.call()
 
 func _get_current_actions() -> Dictionary:
-	var config = tile_config.get(current_tile_state, {})
+	var config = tile_behavior.get(current_tile_state, {})
 	return config.get(
 		current_tile_type if current_tile_state != G.TileState.OCCUPIED else "_default", 
 		{}
@@ -211,16 +249,16 @@ func anim_tile_up() -> void:
 	current_tween.set_trans(Tween.TRANS_BACK)
 	current_tween.set_ease(Tween.EASE_OUT)
 	current_tween.tween_property(
-		mesh_instance, 
+		sprite, 
 		"position", 
-		lifted_mesh_position + Vector3(0, LIFT_OVERSHOOT, 0), 
+		lifted_sprite_position + Vector3(0, LIFT_OVERSHOOT, 0), 
 		LIFT_SPEED
 	)
 	
 	#current_tween.tween_property(
-		#mesh_instance, 
+		#sprite, 
 		#"position", 
-		#lifted_mesh_position, 
+		#lifted_sprite_position, 
 		#BOUNCE_DURATION
 	#)
 	current_tween.tween_callback(anim_floating)
@@ -231,16 +269,16 @@ func anim_tile_down() -> void:
 	current_tween.set_trans(Tween.TRANS_BACK)
 	current_tween.set_ease(Tween.EASE_OUT)
 	current_tween.tween_property(
-		mesh_instance, 
+		sprite, 
 		"position", 
-		original_mesh_position - Vector3(0, DROP_OVERSHOOT, 0), 
+		original_sprite_position - Vector3(0, DROP_OVERSHOOT, 0), 
 		LIFT_SPEED
 	)
 	
 	current_tween.tween_property(
-		mesh_instance, 
+		sprite, 
 		"position", 
-		original_mesh_position, 
+		original_sprite_position, 
 		BOUNCE_DURATION
 	)
 
@@ -252,16 +290,16 @@ func anim_floating() -> void:
 	current_tween.set_ease(Tween.EASE_OUT)
 	
 	current_tween.tween_property(
-		mesh_instance, 
+		sprite, 
 		"position:y", 
-		lifted_mesh_position.y, 
+		lifted_sprite_position.y, 
 		TICK_TACK_SPEED
 	)
 	
 	current_tween.tween_property(
-		mesh_instance, 
+		sprite, 
 		"position:y", 
-		lifted_mesh_position.y + LIFT_OVERSHOOT, 
+		lifted_sprite_position.y + LIFT_OVERSHOOT, 
 		TICK_TACK_SPEED
 	)
 	
@@ -272,53 +310,53 @@ func anim_fall() -> void:
 	current_tween.set_parallel(true)
 	
 	#falling
-	current_tween.tween_property(mesh_instance, "position:y", 
-		mesh_instance.position.y - FALL_DISTANCE, FALL_DURATION).set_trans(Tween.TRANS_LINEAR)
+	current_tween.tween_property(sprite, "position:y", 
+		sprite.position.y - FALL_DISTANCE, FALL_DURATION).set_trans(Tween.TRANS_LINEAR)
 	
 	#Euler's Disk effect
 	var dir_x = 1 if randf() > 0.5 else -1
 	var dir_y = 1 if randf() > 0.5 else -1
 	var dir_z = 1 if randf() > 0.5 else -1
-	current_tween.tween_property(mesh_instance, "rotation", 
-		Vector3(mesh_instance.rotation.x + dir_x * ROTATION_RATE, 
-				mesh_instance.rotation.y + dir_y * ROTATION_RATE, 
-				mesh_instance.rotation.z + dir_z * ROTATION_RATE),
+	current_tween.tween_property(sprite, "rotation", 
+		Vector3(sprite.rotation.x + dir_x * ROTATION_RATE, 
+				sprite.rotation.y + dir_y * ROTATION_RATE, 
+				sprite.rotation.z + dir_z * ROTATION_RATE),
 		randf_range(ROTATION_SPEED-0.5, ROTATION_SPEED+0.5)).set_trans(Tween.TRANS_LINEAR)
 	
 	#Disappearing
-	var new_material = mesh_instance.material_override
-	mesh_instance.material_override = new_material
+	var new_material = mesh.material_override
+	mesh.material_override = new_material
 	current_tween.tween_property(new_material, "albedo_color:a", 0.0, FALL_DURATION*0.70).set_delay(FALL_DURATION*0.25)
 
 func anim_appear_2() -> void:
 	new_tween()
 	
-	current_tween.tween_property(mesh_instance, "scale", Vector3.ONE, APPEAR_SPEED * 1.5)\
+	current_tween.tween_property(sprite, "scale", Vector3.ONE, APPEAR_SPEED * 1.5)\
 		.from(Vector3.ZERO)\
 		.set_ease(Tween.EASE_OUT)
 
 	current_tween.set_parallel(true)
 	
 	current_tween.tween_property(
-		mesh_instance, 
+		sprite, 
 		"position:y", 
-		original_mesh_position.y + APPEAR_HEIGHT, 
+		original_sprite_position.y + APPEAR_HEIGHT, 
 		APPEAR_SPEED * 0.5
 	).from_current().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 	var tween_down = create_tween()
 	tween_down.tween_property(
-		mesh_instance, 
+		sprite, 
 		"position:y", 
-		original_mesh_position.y - APPEAR_OVERSHOOT, 
+		original_sprite_position.y - APPEAR_OVERSHOOT, 
 		APPEAR_SPEED * 0.5
 	).set_delay(APPEAR_SPEED * 0.5)
 	tween_down.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 	
 	tween_down.tween_property(
-		mesh_instance, 
+		sprite, 
 		"position:y", 
-		original_mesh_position.y, 
+		original_sprite_position.y, 
 		APPEAR_SPEED * 0.5
 	)
 	
@@ -327,7 +365,7 @@ func anim_appear_2() -> void:
 func anim_appear_1() -> void:
 	new_tween()
 	
-	current_tween.tween_property(mesh_instance, "scale", Vector3.ONE, APPEAR_SPEED_1)\
+	current_tween.tween_property(sprite, "scale", Vector3.ONE, APPEAR_SPEED_1)\
 		.from(Vector3.ZERO)\
 		.set_ease(Tween.EASE_OUT)
 

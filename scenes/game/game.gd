@@ -14,8 +14,8 @@ func _ready() -> void:
 	initialize_game()
 
 func initialize_game() -> void:
-	game_config = game_builder.start_new_game()
-	level_map = game_builder.generate_level(game_config)
+	game_config = game_builder.generate_config()
+	level_map = game_builder.generate_level()
 	generate_level()
 
 func generate_level():
@@ -23,15 +23,15 @@ func generate_level():
 	all_coords.shuffle()
 	
 	#game_config.world_x * (game_config.world_x * 2) / 10
-	var batch_size: int = game_config.world_x
-	var delay_between_batches = 0.01
+	var batch_size: int = game_config.world_x / 2
+	var delay_between_batches = 0.02
 
 	for i in range(0, all_coords.size(), batch_size):
 		var end_index = min(i + batch_size, all_coords.size())
 		var batch_coords = all_coords.slice(i, end_index)
 		for coord in batch_coords:
 			var tile = TILE_SCENE.instantiate()
-			tile.tile_data = level_map[coord]
+			tile.tile_config = level_map[coord]
 			grid_map.set_cell_item(coord, tile)
 
 		await get_tree().create_timer(delay_between_batches).timeout

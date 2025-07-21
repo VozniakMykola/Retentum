@@ -20,12 +20,6 @@ func get_random_palette_tile() -> TileResource:
 func get_random_pattern() -> G.TerrainPattern:
 	return terrain_patterns.pick_random()
 
-#func generate_field() -> Array:
-	#terrain_patterns.pick_random()
-	#if terrain_pattern:
-		#return terrain_pattern.generate()
-	#return []
-
 #@export_group("Visuals")
 #@export var voidbox: Texture
 #@export var radiance_color: Color = Color.WHITE

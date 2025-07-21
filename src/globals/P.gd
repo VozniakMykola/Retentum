@@ -15,6 +15,7 @@ extends Node
 @export var unlocked_chalks: Array[G.ChalkType] = []
 @export var unlocked_biomes: Array[G.BiomeType] =  [G.BiomeType.PLAZA]
 @export var last_unlocked_biome: Variant = null
+@export var last_unlocked_chalk: Variant = null
 @export var is_last_unlocked_biome_played: bool = false
 
 enum PacingState {
@@ -57,14 +58,15 @@ const CHALK_REQUIREMENTS = {
 	G.ChalkType.HOPSCOTCH: 3,
 	G.ChalkType.SCOTOMA: 3, 
 	G.ChalkType.SIGIL: 4, 
-	G.ChalkType.SUPERPOSITION: 4, 
-	G.ChalkType.ITINERARIUM: 5
 }
+#G.ChalkType.SUPERPOSITION: 4, 
+#G.ChalkType.ITINERARIUM: 5
 
 func get_current_pacing_state() -> PacingState:
 	return PACING_SEQUENCE[current_sequence_index]
 
 func record_session_result(is_win: bool) -> Array[String]:
+	last_unlocked_chalk = null #a new chalk is shown for one game and then a random ones
 	_update_game_stat(is_win)
 	var unlocks: Array[String] = []
 	current_sequence_index = (current_sequence_index + 1) % PACING_SEQUENCE.size()
@@ -109,6 +111,7 @@ func _check_chalk_unlocks() -> Array[String]:
 		var required_middles = CHALK_REQUIREMENTS[chalk_type]
 		if chalk_type not in unlocked_chalks and middles_completed >= required_middles:
 			unlocked_chalks.append(chalk_type)
+			last_unlocked_chalk = chalk_type
 			new_unlocks.append(G.ChalkType.keys()[chalk_type])
 	
 	return new_unlocks

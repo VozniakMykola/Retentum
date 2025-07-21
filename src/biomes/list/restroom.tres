@@ -10,6 +10,7 @@ script = ExtResource("1_6kwa1")
 biome_id = 1
 tiles_palette = Array[ExtResource("2_lr23a")]([ExtResource("3_6cvc0"), ExtResource("4_ckkep")])
 terrain_patterns = Array[int]([1, 0])
+is_sequentially = false
 biome_decor = Array[PackedScene]([])
 biome_environment = Array[PackedScene]([])
 is_unlocked = false

@@ -4,37 +4,46 @@ extends Resource
 @export var biome: G.BiomeType
 @export var world_shape: G.ShapePattern
 @export var chalk_tiles_rate: float
-@export var chalk_inventory_rate: int
+@export var chalk_inventory_count: int
 
+const CHALK_RATES: Array = [
+	{ "range": Vector2(0, 0),   "weight": 1.0/50 },    # 2%
+	{ "range": Vector2(90, 100), "weight": 1.0/100 },  # 1%
+	{ "range": Vector2(10, 35),  "weight": 1.0 }       # (97%)
+]
+
+const CHALK_COUNTS: Array = [
+	{ "range": Vector2(0, 2),   "weight": 1.0/50 },  # 2%
+	{ "range": Vector2(15, 25), "weight": 1.0/110 }, # 0.9%
+	{ "range": Vector2(10, 15), "weight": 1.0/25 },  # 4%
+	{ "range": Vector2(6, 10), "weight": 1.0/5 },    # 20%
+	{ "range": Vector2(3, 6),  "weight": 1.0 }       # (73%)
+]
 
 static func get_data() -> NarrationAdjuster:
 	var config = NarrationAdjuster.new()
 	
 	config.biome = _select_biome()
 	config.world_shape = randi() % G.ShapePattern.size()
-	config.chalk_tiles_rate = _set_chalk_rate()
-	config.chalk_inventory_rate = _set_chalk_rate() # NOOOO NOOOO LA POLICIA
+	config.chalk_tiles_rate = _set_rate(CHALK_RATES)
+	config.chalk_inventory_count = _set_rate(CHALK_COUNTS)
 	return config
 
-static func _set_chalk_rate() -> float:
-	var outcomes = [
-		[0.02, 0.0, 0.0],      # 1/50 шанс отримати 0
-		[0.01, 90.0, 100.0],    # 1/100 шанс отримати 90-100
-		[0.97, 2.0, 10.0]       # Основний діапазон
-	]
+static func _set_rate(rates: Array) -> float:
+	var total_weight: float = 0.0
+	for rate in rates:
+		total_weight += rate["weight"]
 	
-	var rand = randf()
-	var cumulative_prob = 0.0
+	var random_selection = randf() * total_weight
+	var cumulative_weight: float = 0.0
 
-	for outcome in outcomes:
-		cumulative_prob += outcome[0]
-		if rand < cumulative_prob:
-			if outcome[1] == outcome[2]:
-				return outcome[1]
-			else:
-				return randf_range(outcome[1], outcome[2])
-
-	return randf_range(2.0, 10.0)
+	for rate in rates:
+		cumulative_weight += rate["weight"]
+		if random_selection <= cumulative_weight:
+			return randf_range(rate["range"].x, rate["range"].y)
+	
+	var last_range = rates.back()["range"]
+	return randf_range(last_range.x, last_range.y)
 
 #even if the sequence has been completed, the new biome will still only be visible to the player after a successful game
 #a new biome is shown for half of the pacing sequence and then a random one

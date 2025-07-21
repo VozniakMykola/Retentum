@@ -211,6 +211,11 @@ func _get_tiles_for_pattern(palette: Array, required_count: int, is_sequentially
 	
 	return tiles
 
+func _put_res_in_config(tile_res: TileResource) -> TileConfig:
+	var config = TileConfig.new()
+	config.tile_res = tile_res
+	return config
+
 #approved
 func _map_SOLID(tiles: Array, shape_grid: Array, width: int, height: int) -> Dictionary:
 	var result = {}
@@ -219,8 +224,8 @@ func _map_SOLID(tiles: Array, shape_grid: Array, width: int, height: int) -> Dic
 	
 	for y in range(height):
 		for x in range(width):
-			if shape_grid[y][x] != 0:
-				result[Vector2i(x, y)] = tiles[0]
+			if shape_grid[y][x] != G.GenCellType.VOID:
+				result[Vector2i(x, y)] = _put_res_in_config(tiles[0])
 	return result
 
 #approved
@@ -230,9 +235,9 @@ func _map_NOISE(tiles: Array, shape_grid: Array, width: int, height: int) -> Dic
 	
 	for y in range(height):
 		for x in range(width):
-			if shape_grid[y][x] != 0:
+			if shape_grid[y][x] != G.GenCellType.VOID:
 				var random_index = randi() % tiles.size() #cr: randi_range(0, tiles.size() - 1)
-				result[Vector2i(x, y)] = tiles[random_index]
+				result[Vector2i(x, y)] = _put_res_in_config(tiles[random_index])
 	return result
 
 #approved
@@ -242,9 +247,9 @@ func _map_CHECKERED(tiles: Array, shape_grid: Array, width: int, height: int) ->
 	
 	for y in range(height):
 		for x in range(width):
-			if shape_grid[y][x] != 0:
+			if shape_grid[y][x] != G.GenCellType.VOID:
 				var index = y % 2
-				result[Vector2i(x, y)] = tiles[index]
+				result[Vector2i(x, y)] = _put_res_in_config(tiles[index])
 	return result
 
 #approved
@@ -263,12 +268,12 @@ func _map_PLAID(tiles: Array, shape_grid: Array, width: int, height: int) -> Dic
 	
 	for y in range(height):
 		for x in range(width):
-			if shape_grid[y][x] != 0:
+			if shape_grid[y][x] != G.GenCellType.VOID:
 				var x_ego = x * 2 + (1 if y % 2 == 1 else 0)
 				if random_set.has(x_ego + y) or random_set.has(x_ego - y):
-					result[Vector2i(x, y)] = tiles[1]
+					result[Vector2i(x, y)] = _put_res_in_config(tiles[1])
 				else:
-					result[Vector2i(x, y)] = tiles[0]
+					result[Vector2i(x, y)] = _put_res_in_config(tiles[0])
 	return result
 
 #approved
@@ -281,15 +286,15 @@ func _map_DOTTED(tiles: Array, shape_grid: Array, width: int, height: int) -> Di
 	for y in range(height):
 		for x in range(width):
 			var pos = Vector2i(x, y)
-			if shape_grid[y][x] != 0:
+			if shape_grid[y][x] != G.GenCellType.VOID:
 				if not used_cords.has(pos):
-					result[pos] = tiles[0]
+					result[pos] = _put_res_in_config(tiles[0])
 				if (x - 1) % 3 == 0 and (y - 2) % 6 == 0:
 					var new_x = x + randi_range(-1, 0)
 					var new_y = y + randi_range(-1, 1)
 					var new_pos = Vector2i(new_x, new_y)
-					if new_x >= 0 and new_x < width and new_y >= 0 and new_y < height and shape_grid[new_y][new_x] != 0:
-							result[new_pos] = tiles[1]
+					if new_x >= 0 and new_x < width and new_y >= 0 and new_y < height and shape_grid[new_y][new_x] != G.GenCellType.VOID:
+							result[new_pos] = _put_res_in_config(tiles[1])
 							used_cords[new_pos] = true
 	return result
 
@@ -301,8 +306,8 @@ func _map_shape(tiles: Array, shape_grid: Array, width: int, height: int, templa
 
 	for y in range(height):
 		for x in range(width):
-			if shape_grid[y][x] != 0:
-				result[Vector2i(x, y)] = tiles[0]
+			if shape_grid[y][x] != G.GenCellType.VOID:
+				result[Vector2i(x, y)] = _put_res_in_config(tiles[0])
 	
 	for center_y in range(coord_offset.y, height, spacing.y):
 		for center_x in range(coord_offset.x, width, spacing.x):
@@ -318,8 +323,8 @@ func _map_shape(tiles: Array, shape_grid: Array, width: int, height: int, templa
 				var py = center_y + rel_pos.y
 				
 				if px >= 0 and px < width and py >= 0 and py < height:
-					if shape_grid[py][px] != 0:
-						result[Vector2i(px, py)] = tiles[1]
+					if shape_grid[py][px] != G.GenCellType.VOID:
+						result[Vector2i(px, py)] = _put_res_in_config(tiles[1])
 	
 	return result
 
@@ -331,8 +336,8 @@ func _map_shape_single(tiles: Array, shape_grid: Array, width: int, height: int,
 
 	for y in range(height):
 		for x in range(width):
-			if shape_grid[y][x] != 0:
-				result[Vector2i(x, y)] = tiles[0]
+			if shape_grid[y][x] != G.GenCellType.VOID:
+				result[Vector2i(x, y)] = _put_res_in_config(tiles[0])
 	
 	var center: Vector2i
 	
@@ -352,8 +357,8 @@ func _map_shape_single(tiles: Array, shape_grid: Array, width: int, height: int,
 		var py = center.y + rel_pos.y
 		
 		if px >= 0 and px < width and py >= 0 and py < height:
-			if shape_grid[py][px] != 0:
-				result[Vector2i(px, py)] = tiles[1]
+			if shape_grid[py][px] != G.GenCellType.VOID:
+				result[Vector2i(px, py)] = _put_res_in_config(tiles[1])
 	
 	return result
 
@@ -363,8 +368,8 @@ func _map_PATCHY(tiles: Array, shape_grid: Array, width: int, height: int, spawn
 	
 	for y in range(height):
 		for x in range(width):
-			if shape_grid[y][x] != 0:
-				result[Vector2i(x, y)] = tiles[0]
+			if shape_grid[y][x] != G.GenCellType.VOID:
+				result[Vector2i(x, y)] = _put_res_in_config(tiles[0])
 	
 	var x_margin: int = width / 4
 	var y_margin: int = height / 4
@@ -395,8 +400,8 @@ func _map_PATCHY(tiles: Array, shape_grid: Array, width: int, height: int, spawn
 			var py = center_y + rel_pos.y
 			
 			if px >= 0 and px < width and py >= 0 and py < height:
-				if shape_grid[py][px] != 0:
-					result[Vector2i(px, py)] = selected_tile
+				if shape_grid[py][px] != G.GenCellType.VOID:
+					result[Vector2i(px, py)] = _put_res_in_config(selected_tile)
 	
 	return result
 #endregion
@@ -420,11 +425,11 @@ func _map_ARCHIPELAGO(tiles: Array, shape_grid: Array, width: int, height: int) 
 	
 	for y in range(height):
 		for x in range(width):
-			if shape_grid[y][x] != 0:
+			if shape_grid[y][x] != G.GenCellType.VOID:
 				if random_set.has(x + y) or random_set.has(x - y):
-					result[Vector2i(x, y)] = tiles[0]
+					result[Vector2i(x, y)] = _put_res_in_config(tiles[0])
 				else:
-					result[Vector2i(x, y)] = tiles[1]
+					result[Vector2i(x, y)] = _put_res_in_config(tiles[1])
 	return result
 
 #approved
@@ -438,9 +443,9 @@ func _map_ZEBRA_V(tiles: Array, shape_grid: Array, width: int, height: int, zebr
 	
 	for y in range(height):
 		for x in range(width):
-			if shape_grid[y][x] != 0:
+			if shape_grid[y][x] != G.GenCellType.VOID:
 				var index = (x / zebra_size) % tile_count
-				result[Vector2i(x, y)] = tiles[index]
+				result[Vector2i(x, y)] = _put_res_in_config(tiles[index])
 	return result
 
 #approved
@@ -455,9 +460,9 @@ func _map_ZEBRA_H(tiles: Array, shape_grid: Array, width: int, height: int, zebr
 	
 	for y in range(height):
 		for x in range(width):
-			if shape_grid[y][x] != 0:
+			if shape_grid[y][x] != G.GenCellType.VOID:
 				var index = (y / corrected_zebra_size) % tile_count
-				result[Vector2i(x, y)] = tiles[index]
+				result[Vector2i(x, y)] = _put_res_in_config(tiles[index])
 	return result
 #endregion
 
@@ -508,4 +513,5 @@ func _map_ZEBRA_H(tiles: Array, shape_grid: Array, width: int, height: int, zebr
 				#else:
 					#result[Vector2i(x, y)] = tiles[0]
 	#return result
+
 #endregion

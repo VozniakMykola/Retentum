@@ -7,8 +7,6 @@ enum ChalkType {
 	REVELATION, 
 	SIGIL, 
 	GUIDANCE, 
-	ITINERARIUM, 
-	SUPERPOSITION 
 	}
 	
 enum BiomeType {
@@ -36,10 +34,23 @@ const BIOME_RESOURCES = {
 }
 
 const CHALK_RESOURCES = {
-	
+	ChalkType.DECOY: preload("res://assets/chalks/decoy.png"), 
+	ChalkType.HOPSCOTCH: preload("res://assets/chalks/hopscotch.png"), 
+	ChalkType.SCOTOMA: preload("res://assets/chalks/scotoma.png"), 
+	ChalkType.REVELATION: preload("res://assets/chalks/revelation.png"), 
+	ChalkType.SIGIL: preload("res://assets/chalks/sigil.png"), 
+	ChalkType.GUIDANCE: preload("res://assets/chalks/guidance.png"),
 }
 
 enum ShapePattern { RECTANGLE, DIAMOND, CIRCLE, CROSS, ISLAND }
+
+enum GenCellType {
+	VOID = 0,
+	SHORE = 1,
+	LAND = 2,
+	CENTER = 3
+}
+
 enum TerrainPattern { 
 	SOLID, 
 	CHECKERED, 
@@ -53,6 +64,7 @@ enum TerrainPattern {
 	ARCHIPELAGO,
 	BIG_HEART,
 	}
+
 enum TileType { NORMAL, DEAD, CHALKED, ENDGAME }
 enum TileState { EMPTY, OCCUPIED }
 
@@ -83,3 +95,16 @@ const COLOR_MODULE_1 = {
 
 func get_color(color_enum: ColorType) -> Color:
 	return active_color_module.get(color_enum, Color.WHITE)
+
+func get_random_direction() -> Vector2i:
+	var directions: Array[Vector2i] = [
+		Vector2i.UP,        # (0, -1)
+		Vector2i.DOWN,      # (0, 1)
+		Vector2i.LEFT,      # (-1, 0)
+		Vector2i.RIGHT,     # (1, 0)
+		Vector2i.UP + Vector2i.LEFT,    # (-1, -1)
+		Vector2i.UP + Vector2i.RIGHT,   # (1, -1)
+		Vector2i.DOWN + Vector2i.LEFT,  # (-1, 1)
+		Vector2i.DOWN + Vector2i.RIGHT  # (1, 1)
+	]
+	return directions[randi() % directions.size()]
