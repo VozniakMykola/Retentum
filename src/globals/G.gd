@@ -1,5 +1,7 @@
 extends Node
 
+const Y_RATIO : int = 2
+
 enum ChalkType { 
 	DECOY, 
 	HOPSCOTCH, 
@@ -46,9 +48,10 @@ enum ShapePattern { RECTANGLE, DIAMOND, CIRCLE, CROSS, ISLAND }
 
 enum GenCellType {
 	VOID = 0,
-	SHORE = 1,
-	LAND = 2,
-	CENTER = 3
+	EDGE = 1,
+	SHORE = 2,
+	LAND = 3,
+	CENTER = 4
 }
 
 enum TerrainPattern { 
@@ -63,6 +66,7 @@ enum TerrainPattern {
 	ZEBRA_H,
 	ARCHIPELAGO,
 	BIG_HEART,
+	SQUARES
 	}
 
 enum TileType { NORMAL, DEAD, CHALKED, ENDGAME }

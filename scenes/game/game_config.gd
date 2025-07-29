@@ -13,6 +13,9 @@ extends Resource
 @export var world_shape: G.ShapePattern
 @export var chalk_tiles_rate: float
 @export var chalk_inventory_count: int
+@export_category("Other")
+@export var world_center_tile: Vector2i
+@export var world_center: Vector3
 
 static func generate_config() -> GameConfig:
 	var config = GameConfig.new()
@@ -21,13 +24,12 @@ static func generate_config() -> GameConfig:
 	var difficulty = DifficultyAdjuster.get_data()
 
 	config.world_x = randi_range(difficulty.world_x_size_range.x, difficulty.world_x_size_range.y)
-	config.world_size = Vector2i(config.world_x, config.world_x*2)
+	config.world_size = Vector2i(config.world_x, config.world_x*G.Y_RATIO)
 	config.endgame_shore = difficulty.endgame_shore
 	config.monke_spawn_area = difficulty.monke_spawn_area
 
-	config.missing_tiles_rate = randi_range(difficulty.missing_tiles_rate.x, difficulty.missing_tiles_rate.y)
-	config.endgame_tiles_rate = randi_range(difficulty.endgame_tiles_rate.x, difficulty.endgame_tiles_rate.y)
-	
+	config.missing_tiles_rate = randf_range(difficulty.missing_tiles_rate.x, difficulty.missing_tiles_rate.y)
+	config.endgame_tiles_rate = randf_range(difficulty.endgame_tiles_rate.x, difficulty.endgame_tiles_rate.y)
 	#From Narration Adjuster
 	var narration = NarrationAdjuster.get_data()
 	config.biome = narration.biome

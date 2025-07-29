@@ -18,17 +18,17 @@ func create_shape(shape_name: G.ShapePattern, size: Vector2i, shore_thickness: i
 func _create_RECTANGLE(size: Vector2i, shore_thickness: int, center_size: int) -> Array[Array]:
 	var grid: Array[Array] = []
 	var corrected_size_y = size.y - 1 #always -1 because size.y always == size.x*2 (even)
-	var corrected_size_x = size.x - 1
+	var corrected_size_x
 	
 	for y in range(corrected_size_y):
 		var row: Array = []
-		for x in range(size.x):
-			if y % 2 != 0 and x == corrected_size_x:
-				row.append(G.GenCellType.VOID)
-			elif y % 2 != 0 and x >= corrected_size_x - shore_thickness:
-				row.append(G.GenCellType.SHORE)
-			elif (x < shore_thickness or x >= size.x - shore_thickness or \
-				  y < shore_thickness*2 or y >= corrected_size_y - shore_thickness*2):
+		corrected_size_x = (size.x - 1 if y % 2 != 0 else size.x)
+		for x in range(corrected_size_x):
+			if x == 0 or x == size.x - 1 or \
+				y < G.Y_RATIO or y >= corrected_size_y - G.Y_RATIO:
+				row.append(G.GenCellType.EDGE)
+			elif x < shore_thickness or x >= size.x - shore_thickness or \
+				y < shore_thickness * G.Y_RATIO or y >= corrected_size_y - shore_thickness * G.Y_RATIO:
 				row.append(G.GenCellType.SHORE)
 			else:
 				row.append(G.GenCellType.LAND)

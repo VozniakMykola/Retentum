@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b4kdmhic4mr1h"]
+[gd_scene load_steps=5 format=3 uid="uid://b4kdmhic4mr1h"]
 
 [ext_resource type="Script" uid="uid://dm02qk28362ba" path="res://scenes/game/game.gd" id="1_sul5r"]
 [ext_resource type="Script" uid="uid://cjugr2pl114e2" path="res://libs/ortho_grid_map/grid_map/ortho_grid_map.gd" id="2_7h61r"]
+[ext_resource type="PackedScene" uid="uid://okosgi80rqdv" path="res://assets/monke/Monkeglb.glb" id="3_0sr1o"]
 
 [sub_resource type="Environment" id="Environment_0sr1o"]
 background_mode = 2
@@ -40,6 +41,9 @@ text = "LOSE"
 script = ExtResource("2_7h61r")
 cell_size = Vector2(1.05, 1.05)
 metadata/_custom_type_script = "uid://cjugr2pl114e2"
+
+[node name="Monkeglb" parent="." instance=ExtResource("3_0sr1o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.91475, 0, 0.116237)
 
 [connection signal="pressed" from="Win" to="." method="_on_win_pressed"]
 [connection signal="pressed" from="Lose" to="." method="_on_lose_pressed"]

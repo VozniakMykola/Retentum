@@ -38,9 +38,14 @@ func generate_level() -> Dictionary:
 func scatter_game_objects(tile_configs: Dictionary, markup: Array) -> Dictionary:
 	for y in range(markup.size()):
 		for x in range(markup[y].size()):
-			if markup[y][x] == G.GenCellType.SHORE:
-				if randf() < current_config.chalk_tiles_rate:
-					tile_configs[Vector2i(x, y)].tile_type = G.TileType.ENDGAME
+			if markup[y][x] == G.GenCellType.EDGE:
+				if randf_range(0.0, 1.0) <= current_config.endgame_tiles_rate:
+					var rand_y_offset = randi_range(current_config.endgame_shore * -G.Y_RATIO, current_config.endgame_shore * G.Y_RATIO)
+					var rand_x_offset = randi_range(-current_config.endgame_shore, current_config.endgame_shore)
+					if  tile_configs.has(Vector2i(x+rand_x_offset, y+rand_y_offset)):
+						tile_configs[Vector2i(x+rand_x_offset, y+rand_y_offset)].tile_type = G.TileType.ENDGAME
+					else:
+						tile_configs[Vector2i(x, y)].tile_type = G.TileType.ENDGAME
 			elif markup[y][x] == G.GenCellType.LAND && P.unlocked_chalks.size() != 0:
 				if randf_range(0.0, 100.0) <= current_config.chalk_tiles_rate:
 					tile_configs[Vector2i(x, y)].tile_type = G.TileType.CHALKED

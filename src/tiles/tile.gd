@@ -37,9 +37,11 @@ var current_tile_type: G.TileType = G.TileType.DEAD:
 				G.TileType.NORMAL:
 					collision_shape.disabled = false
 					chalk.visible = false
+					endgame.visible = false
 				G.TileType.CHALKED:
 					collision_shape.disabled = false
 					chalk.visible = true
+					endgame.visible = false
 					print 
 					chalk.texture = G.CHALK_RESOURCES[current_chalk]
 					if current_chalk == G.ChalkType.GUIDANCE:
@@ -48,9 +50,11 @@ var current_tile_type: G.TileType = G.TileType.DEAD:
 				G.TileType.ENDGAME:
 					collision_shape.disabled = false
 					chalk.visible = false
+					endgame.visible = true
 				G.TileType.DEAD:
 					collision_shape.disabled = true
 					chalk.visible = false
+					endgame.visible = false
 				_:
 					pass
 
@@ -84,8 +88,8 @@ var tile_behavior: Dictionary = {
 		},
 		G.TileType.ENDGAME: {
 			"click": _on_click_blocked,
-			"on_mouse_enter": _on_mouse_entered_normal,
-			"on_mouse_exit": _on_mouse_exited_normal,
+			"on_mouse_enter": func(): pass,
+			"on_mouse_exit": func(): pass,
 			#"on_hover": _tile_hover_blocked
 		},
 		G.TileType.DEAD: {
@@ -109,6 +113,7 @@ var tile_behavior: Dictionary = {
 @onready var sprite: Node3D = $Sprite
 @onready var chalk: Sprite3D = $Sprite/Chalk
 @onready var mesh: MeshInstance3D = $Sprite/Mesh
+@onready var endgame: Node3D = $Sprite/Endgame
 
 #region Consts
 #anim_fall
@@ -161,7 +166,6 @@ func _ready() -> void:
 		_apply_tile_res()
 	var random_rotation = randi() % 4 * 90
 	mesh.rotation_degrees.y = random_rotation
-	#mesh_instance.rotation.y = randf() * TAU  # TAU = 2*PI
 	area.mouse_entered.connect(_on_mouse_entered)
 	area.mouse_exited.connect(_on_mouse_exited)
 	area.input_event.connect(_on_input_event)
@@ -177,6 +181,8 @@ func _apply_tile_res() -> void:
 	mesh.mesh.size = tile_size
 	mesh.material_override = tile_res.get_material()
 	chalk.position.y = tile_size.y / 2
+	endgame.position.y = tile_size.y / 2
+	endgame.rotation.y = randf() * TAU  # TAU = 2*PI
 	collision_shape.shape.size = hitbox_size
 	collision_shape.position.y = hitbox_y_offset
 #endregion
