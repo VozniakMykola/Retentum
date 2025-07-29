@@ -19,8 +19,7 @@ func generate_level() -> Dictionary:
 		return {}
 	
 	#stage 1 - Shape
-	var shaped_island = shape_mapper.create_shape(G.ShapePattern.RECTANGLE, current_config.world_size, current_config.endgame_shore, current_config.monke_spawn_area)
-	#current_config.world_shape NOOO LA POLICIA
+	var shaped_island = shape_mapper.create_shape(current_config.world_shape, current_config.world_size, current_config.endgame_shore, current_config.monke_spawn_area)
 	#stage 2 - Biome
 	#var biome = G.BIOME_RESOURCES[G.BiomeType.PLAZA] #DELETE THIS
 	var biome = G.BIOME_RESOURCES[current_config.biome]

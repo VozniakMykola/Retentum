@@ -54,6 +54,7 @@ const SHAPE_ELEMENT_COUNT: Dictionary = {
 	G.TerrainPattern.ZEBRA_H: 2,
 	G.TerrainPattern.ARCHIPELAGO: 2,
 	G.TerrainPattern.BIG_HEART: 2,
+	G.TerrainPattern.SQUARES: 2,
 }
 
 #region Shape Templates

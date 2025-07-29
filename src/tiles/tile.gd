@@ -46,7 +46,6 @@ var current_tile_type: G.TileType = G.TileType.DEAD:
 					chalk.texture = G.CHALK_RESOURCES[current_chalk]
 					if current_chalk == G.ChalkType.GUIDANCE:
 						chalk.rotation_degrees = DIR_ROTATIONS.get(current_guidance_vec, Vector3.ZERO)
-						print(chalk.rotation_degrees)
 				G.TileType.ENDGAME:
 					collision_shape.disabled = false
 					chalk.visible = false

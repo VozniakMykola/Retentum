@@ -1,6 +1,7 @@
 extends Node
 
-const Y_RATIO : int = 2
+const Y_RATIO : int = 2 #y/x
+const X_RATIO : float = 0.5 #x/y
 
 enum ChalkType { 
 	DECOY, 
