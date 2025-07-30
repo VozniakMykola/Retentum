@@ -5,20 +5,19 @@ func create_shape(shape_name: G.ShapePattern, size: Vector2i, shore_thickness: i
 	print("_create_", G.ShapePattern.keys()[shape_name], ", shore:", shore_thickness, ", center:", center_size)
 	center_size = center_size / 2
 	match shape_name:
-		#G.ShapePattern.RECTANGLE:
-			#return _create_RECTANGLE(size, shore_thickness, center_size)
-		#G.ShapePattern.DIAMOND:
-			#return _create_DIAMOND(size, shore_thickness, center_size)
-		#G.ShapePattern.CIRCLE:
-			#return _create_CIRCLE(size, shore_thickness, center_size)
-		#G.ShapePattern.CROSS:
-			#return _create_CROSS(size, shore_thickness, center_size)
-		#G.ShapePattern.ISLAND:
-			#return _create_ISLAND(size, shore_thickness, center_size)
-		_:
+		G.ShapePattern.RECTANGLE:
+			return _create_RECTANGLE(size, shore_thickness, center_size)
+		G.ShapePattern.DIAMOND:
+			return _create_DIAMOND(size, shore_thickness, center_size)
+		G.ShapePattern.CIRCLE:
+			return _create_CIRCLE(size, shore_thickness, center_size)
+		G.ShapePattern.CROSS:
+			return _create_CROSS(size, shore_thickness, center_size)
+		G.ShapePattern.ISLAND:
 			var island = _create_ISLAND(size, shore_thickness, center_size)
 			return _post_process(island)
-			return island
+		_:
+			return _create_RECTANGLE(size, shore_thickness, center_size)
 
 func _create_RECTANGLE(size: Vector2i, shore_thickness: int, center_size: int) -> Array[Array]:
 	var grid: Array[Array] = []
