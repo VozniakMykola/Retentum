@@ -128,10 +128,6 @@ func _ready() -> void:
 	#MAY BE DELETED
 	original_sprite_position = sprite.position
 	lifted_sprite_position = original_sprite_position + Vector3(0, LIFT_HEIGHT, 0)
-	#------------
-	tile_core = tile_config
-	is_tile_core_allow_recording = true
-	#------------
 	_update_material()
 	var random_rotation: int = randi() % 4 * 90
 	mesh.mesh.size = TILE_SIZE
@@ -139,6 +135,9 @@ func _ready() -> void:
 	collision_shape.shape.size = hitbox_size
 	collision_shape.position.y = hitbox_y_offset
 	_apply_tile_type_NULL()
+	#------------
+	is_tile_core_allow_recording = true
+	#------------
 
 func _update_material() -> void:
 	if  !tile_core.tile_res._are_materials_same(mesh.material_override):
