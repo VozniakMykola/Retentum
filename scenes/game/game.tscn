@@ -19,10 +19,12 @@ transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75
 shadow_enabled = true
 
 [node name="IsoCamera" type="Camera3D" parent="."]
-transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 20, 13, 10)
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 0, 0)
 projection = 1
 current = true
-size = 14.0
+size = 15.948
+near = 0.466
+far = 165.86
 
 [node name="Win" type="Button" parent="."]
 offset_right = 206.0

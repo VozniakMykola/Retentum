@@ -13,9 +13,9 @@ extends Resource
 @export var world_shape: G.ShapePattern
 @export var chalk_tiles_rate: float
 @export var chalk_inventory_count: int
-@export_category("Other")
-@export var world_center_tile: Vector2i
-@export var world_center: Vector3
+#@export_category("Other")
+#@export var world_center_tile: Vector2i
+#@export var world_center: Vector3
 
 static func generate_config() -> GameConfig:
 	var config = GameConfig.new()

@@ -338,7 +338,7 @@ func set_tile_type(new_type: G.TileType , old_type = tile_core.tile_type) -> voi
 			_apply_tile_type_NULL()
 		_:
 			pass
-	print("from ", G.TileType.keys()[old_type]  , " to " , G.TileType.keys()[new_type])
+	#print("from ", G.TileType.keys()[old_type]  , " to " , G.TileType.keys()[new_type])
 
 func _disconnect_tile() -> void:
 	area.mouse_entered.disconnect(_on_mouse_entered)

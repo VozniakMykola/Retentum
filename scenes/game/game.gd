@@ -5,8 +5,10 @@ var game_builder: GameBuilder = GameBuilder.new()
 var game_config: GameConfig
 var level_map: Dictionary
 const GAME_SCENE = preload("res://scenes/game/game.tscn") 
+var game_center: Vector3 = Vector3.ZERO
 
 @onready var grid_map = POOLGRID.grid_map
+@onready var iso_camera: Camera3D = $IsoCamera
 
 func _ready() -> void:
 	initialize_game()
@@ -14,6 +16,7 @@ func _ready() -> void:
 func initialize_game() -> void:
 	game_config = game_builder.generate_config()
 	level_map = game_builder.generate_field()
+	setup_camera()
 	pre_generate()
 	post_generate()
 
@@ -57,6 +60,27 @@ func post_generate():
 		
 		var tile = grid_map.get_cell_item(coord) as Tile
 		tile.tile_config = level_map[coord]
+
+func setup_camera():
+	#tmp but works
+	var matrix_size = grid_map.get_true_from_staggered(game_config.world_size)
+	var grid_size = Vector2(matrix_size.x-1, (matrix_size.y-1)/2) * grid_map.cell_size
+	
+	var game_center = Vector3(grid_size.x/2, grid_map.y_index, grid_size.y/2)
+
+	var diagonal = Vector2(grid_size.x, grid_size.y).length()
+	var camera_height = diagonal * 0.71
+	var camera_offset = diagonal * 0.5
+	var size_offset = diagonal * 0.55
+
+	iso_camera.position = Vector3(
+		game_center.x + camera_offset -0.5,
+		camera_height,
+		game_center.z + camera_offset
+	)
+	iso_camera.size = size_offset
+	iso_camera.rotation_degrees = Vector3(-45, 45, 0)
+
 
 func restart_game() -> void:
 	remove_child(grid_map)
