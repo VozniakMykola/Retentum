@@ -70,7 +70,7 @@ enum TerrainPattern {
 	SQUARES
 	}
 
-enum TileType { NORMAL, DEAD, CHALKED, ENDGAME }
+enum TileType { NORMAL, DEAD, CHALKED, ENDGAME, NULL }
 enum TileState { EMPTY, OCCUPIED }
 
 enum ColorType {

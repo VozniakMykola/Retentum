@@ -17,3 +17,17 @@ func get_material() -> StandardMaterial3D:
 	var mat = base_material.duplicate()
 	mat.albedo_color = G.get_color(albedo_color)
 	return mat
+
+func _are_materials_same(mat_b: StandardMaterial3D) -> bool:
+	if !base_material || !mat_b:
+		return false
+	if !ignore_albedo:
+		return (
+			mat_b.albedo_texture == base_material.albedo_texture
+			and mat_b.albedo_color == G.get_color(albedo_color)
+			)
+	else:
+		return (
+			mat_b.albedo_texture == base_material.albedo_texture
+			and mat_b.albedo_color == base_material.albedo_color
+			)

@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 G="*res://src/globals/G.gd"
 P="*res://src/globals/P.gd"
+POOLGRID="*res://src/globals/POOLGRID.gd"
 
 [editor]
 

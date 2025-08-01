@@ -4,39 +4,62 @@ extends Node3D
 var game_builder: GameBuilder = GameBuilder.new()
 var game_config: GameConfig
 var level_map: Dictionary
-
-@onready var grid_map: OrthoGridMap = $MainGridMap
-
-const TILE_SCENE = preload("res://src/tiles/tile.tscn")
 const GAME_SCENE = preload("res://scenes/game/game.tscn") 
+
+@onready var grid_map = POOLGRID.grid_map
 
 func _ready() -> void:
 	initialize_game()
 
 func initialize_game() -> void:
 	game_config = game_builder.generate_config()
-	level_map = game_builder.generate_level()
-	generate_level()
+	level_map = game_builder.generate_field()
+	pre_generate()
+	post_generate()
 
-func generate_level():
+func pre_generate():
+	add_child(grid_map)
+	POOLGRID.reset_tiles()
+
+func post_generate():
 	var all_coords = level_map.keys()
-	all_coords.shuffle()
+	var row_delay = 0.05
+	var sort_direction = randi() % 4
 	
-	#game_config.world_x * (game_config.world_x * 2) / 10
-	var batch_size: int = game_config.world_x / 2
-	var delay_between_batches = 0.02
-
-	for i in range(0, all_coords.size(), batch_size):
-		var end_index = min(i + batch_size, all_coords.size())
-		var batch_coords = all_coords.slice(i, end_index)
-		for coord in batch_coords:
-			var tile = TILE_SCENE.instantiate()
-			tile.tile_config = level_map[coord]
-			grid_map.set_cell_item(coord, tile)
-
-		await get_tree().create_timer(delay_between_batches).timeout
+	var sort_functions = [
+		func(a, b): return a.y < b.y,  # top to bottom
+		func(a, b): return a.y > b.y,  # bottom to top
+		func(a, b): 
+			if a.x != b.x: return a.x < b.x
+			return a.y % 2 == 0,  # left to right (X with even Y)
+		func(a, b): 
+			if a.x != b.x: return a.x > b.x
+			return a.y % 2 != 0   # right to left (X with odd Y)
+	]
+	all_coords.sort_custom(sort_functions[sort_direction])
+	
+	var current_row = null
+	var first_half_done = false
+	
+	for coord in all_coords:
+		var row_key = coord.y if sort_direction < 2 else coord.x
+		
+		if current_row != row_key:
+			current_row = row_key
+			first_half_done = false
+			await get_tree().create_timer(row_delay).timeout
+		
+		if sort_direction >= 2:
+			var is_first_half = (coord.y % 2 == 0) == (sort_direction == 2)
+			if is_first_half != first_half_done:
+				first_half_done = is_first_half
+				await get_tree().create_timer(row_delay * 0.5).timeout
+		
+		var tile = grid_map.get_cell_item(coord) as Tile
+		tile.tile_config = level_map[coord]
 
 func restart_game() -> void:
+	remove_child(grid_map)
 	var new_game = GAME_SCENE.instantiate()
 	get_tree().root.add_child(new_game)
 	get_tree().current_scene = new_game

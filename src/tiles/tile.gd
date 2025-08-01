@@ -10,20 +10,22 @@ extends GridObject
 @onready var endgame: Node3D = $Sprite/Endgame
 
 #Export
-@export var tile_config: TileConfig
+@export var tile_config: TileConfig:
+	set(value):
+		if value == null:
+			return
+		tile_config = value
+		if is_tile_core_allow_recording:
+			tile_core = tile_config
 
 var tile_core: TileConfig = TileConfig.new():
 	set(new_tile_core):
 		if is_inside_tree():
-			var old_tile_core = tile_core
+			var old_tile_core: TileConfig = tile_core
 			tile_core = new_tile_core
 			set_tile_type(new_tile_core.tile_type, old_tile_core.tile_type)
 			_update_material()
 
-#Settings
-const TILE_SIZE: Vector3 = Vector3(1.0, 0.2, 1.0)
-var hitbox_size: Vector3
-var hitbox_y_offset: float
 
 #region Tile Type FSM
 var tile_behavior: Dictionary = {
@@ -55,6 +57,12 @@ var tile_behavior: Dictionary = {
 			"on_mouse_exit": func(): pass,
 			"on_hover": func(): pass,
 			#cat_on_it
+		},
+		G.TileType.NULL: { #NULL
+			"click": func(): pass, #NULL
+			"on_mouse_enter": func(): pass, #NULL
+			"on_mouse_exit": func(): pass, #NULL
+			"on_hover": func(): pass, #NULL
 		}
 	},
 	G.TileState.OCCUPIED: {
@@ -107,37 +115,36 @@ var current_tween: Tween
 #endregion
 #endregion
 
+#MAY BE DELETED
+const TILE_SIZE: Vector3 = Vector3(1.0, 0.2, 1.0)
+var hitbox_size: Vector3 = Vector3(TILE_SIZE.x, TILE_SIZE.y + LIFT_HEIGHT, TILE_SIZE.z)
+var hitbox_y_offset: float = LIFT_HEIGHT/2
+#------------
+
+var is_tile_core_allow_recording: bool = false
+
 #region Setup
 func _ready() -> void:
-	#NO TILE CORE
-	hitbox_y_offset = LIFT_HEIGHT/2
-	hitbox_size = Vector3(TILE_SIZE.x, TILE_SIZE.y + LIFT_HEIGHT, TILE_SIZE.z)
+	#MAY BE DELETED
 	original_sprite_position = sprite.position
 	lifted_sprite_position = original_sprite_position + Vector3(0, LIFT_HEIGHT, 0)
 	#------------
-	
-	if !is_inside_tree():
-		return
 	tile_core = tile_config
-	_apply_settings()
-	
-	await anim_appear_1()
-	
-	area.mouse_entered.connect(_on_mouse_entered)
-	area.mouse_exited.connect(_on_mouse_exited)
-	area.input_event.connect(_on_input_event)
-	
-func _apply_settings() -> void:
+	is_tile_core_allow_recording = true
+	#------------
 	_update_material()
+	var random_rotation: int = randi() % 4 * 90
 	mesh.mesh.size = TILE_SIZE
-	var random_rotation = randi() % 4 * 90
 	mesh.rotation_degrees.y = random_rotation
 	collision_shape.shape.size = hitbox_size
 	collision_shape.position.y = hitbox_y_offset
+	_apply_tile_type_NULL()
 
-func _update_material():
-	if mesh.material_override != tile_core.tile_res.get_material():
+func _update_material() -> void:
+	if  !tile_core.tile_res._are_materials_same(mesh.material_override):
 		mesh.material_override = tile_core.tile_res.get_material()
+		return
+
 #endregion
 
 #region Interractions BASE
@@ -257,9 +264,9 @@ func anim_fall() -> void:
 		randf_range(ROTATION_SPEED-0.5, ROTATION_SPEED+0.5)).set_trans(Tween.TRANS_LINEAR)
 	
 	#Disappearing
-	var new_material = mesh.material_override
-	mesh.material_override = new_material
-	current_tween.tween_property(new_material, "albedo_color:a", 0.0, FALL_DURATION*0.70).set_delay(FALL_DURATION*0.25)
+	current_tween.tween_property(mesh.material_override, "albedo_color:a", 0.0, FALL_DURATION*0.70).set_delay(FALL_DURATION*0.25)
+
+	await current_tween.finished
 
 func anim_appear_2() -> void:
 	new_tween()
@@ -302,63 +309,111 @@ func anim_appear_1() -> void:
 		.from(Vector3.ZERO)\
 		.set_ease(Tween.EASE_OUT)
 
-	#current_tween.set_parallel(true)
-
 	await current_tween.finished
 
 #endregion
 
 #region States logic
 
-func set_tile_type(new_type: G.TileType , old_type = tile_core.tile_type):
+func set_tile_type(new_type: G.TileType , old_type = tile_core.tile_type) -> void:
+	if new_type == old_type:
+		return
 	tile_core.tile_type = new_type
 	
 	match new_type:
 		G.TileType.NORMAL:
-			_apply_tile_type_NORMAL(old_type)
+			_on_tile_visibility()
+			await _apply_tile_type_NORMAL(old_type)
+			_reconnect_tile()
 		G.TileType.CHALKED:
-			_apply_tile_type_CHALKED(old_type)
+			_on_tile_visibility()
+			await _apply_tile_type_CHALKED(old_type)
+			_reconnect_tile()
 		G.TileType.ENDGAME:
-			_apply_tile_type_ENDGAME(old_type)
+			_on_tile_visibility()
+			await _apply_tile_type_ENDGAME(old_type)
+			_reconnect_tile()
 		G.TileType.DEAD:
 			_apply_tile_type_DEAD(old_type)
+		G.TileType.NULL:
+			_apply_tile_type_NULL()
 		_:
 			pass
 	print("from ", G.TileType.keys()[old_type]  , " to " , G.TileType.keys()[new_type])
 
-func _apply_tile_type_NORMAL(previous_type: G.TileType):
+func _disconnect_tile() -> void:
+	area.mouse_entered.disconnect(_on_mouse_entered)
+	area.mouse_exited.disconnect(_on_mouse_exited)
+	area.input_event.disconnect(_on_input_event)
+	
+func _off_tile_visibility() -> void:
+	collision_shape.disabled = true
+	self.visible = false
+
+func _on_tile_visibility() -> void:
 	collision_shape.disabled = false
+	self.visible = true
+
+func _reconnect_tile() -> void:
+	area.mouse_entered.connect(_on_mouse_entered)
+	area.mouse_exited.connect(_on_mouse_exited)
+	area.input_event.connect(_on_input_event)
+
+func _apply_tile_type_NORMAL(previous_type: G.TileType) -> void:
 	chalk.visible = false
 	endgame.visible = false
+	match previous_type:
+		G.TileType.DEAD, G.TileType.NULL:
+			await anim_appear_1()
+		_:
+			pass
 
-func _apply_tile_type_CHALKED(previous_type: G.TileType):
-	collision_shape.disabled = false
+func _apply_tile_type_CHALKED(previous_type: G.TileType) -> void:
 	endgame.visible = false
 
 	chalk.texture = G.CHALK_RESOURCES[tile_core.chalk_type]
-	if tile_core.chalk_type == G.ChalkType.GUIDANCE:
-		chalk.rotation_degrees = DIR_ROTATIONS.get(tile_core.guidance_vec, Vector3.ZERO)
+	chalk.rotation_degrees = DIR_ROTATIONS.get(tile_core.guidance_vec, Vector3.ZERO)
 	chalk.position.y = TILE_SIZE.y / 2
 	chalk.visible = true
-
-func _apply_tile_type_ENDGAME(previous_type: G.TileType):
-	collision_shape.disabled = false
-	chalk.visible = false
 	
+	match previous_type:
+		G.TileType.DEAD, G.TileType.NULL:
+			await anim_appear_1()
+		_:
+			pass
+
+func _apply_tile_type_ENDGAME(previous_type: G.TileType) -> void:
+	chalk.visible = false
 	endgame.position.y = TILE_SIZE.y / 2
 	endgame.rotation.y = randf() * TAU  # TAU = 2*PI
 	endgame.visible = true
 	
-func _apply_tile_type_DEAD(previous_type: G.TileType):
-	collision_shape.disabled = true
-	chalk.visible = false
-	endgame.visible = false
 	match previous_type:
-		G.TileType.NORMAL:
-			anim_fall()
+		G.TileType.DEAD, G.TileType.NULL:
+			await anim_appear_1()
 		_:
 			pass
+	
+func _apply_tile_type_DEAD(previous_type: G.TileType) -> void:
+	_disconnect_tile()
+	match previous_type:
+		G.TileType.NORMAL:
+			var original_pos = original_sprite_position
+			var original_rot = sprite.rotation
+			var original_alpha: float = 1.0
+			await anim_fall()
+			_off_tile_visibility()
+			sprite.position = original_pos
+			sprite.rotation = original_rot
+			mesh.material_override.albedo_color.a = original_alpha
+		_:
+			pass
+	_off_tile_visibility()
 
-func set_tile_state(new_state: G.TileState):
+func _apply_tile_type_NULL() -> void:
+	_disconnect_tile()
+	_off_tile_visibility()
+
+func set_tile_state(new_state: G.TileState) -> void:
 	tile_core.tile_state = new_state
 #endregion

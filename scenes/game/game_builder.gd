@@ -13,7 +13,7 @@ func generate_config() -> GameConfig:
 	current_config = GameConfig.generate_config()
 	return current_config
 	
-func generate_level() -> Dictionary:
+func generate_field() -> Dictionary:
 	if !current_config:
 		print("[!] Use generate_config() before generate_level()")
 		return {}
@@ -61,8 +61,6 @@ func scatter_game_objects(tile_configs: Dictionary, markup: Array) -> Dictionary
 					tile_configs[Vector2i(x, y)].tile_type = G.TileType.NORMAL
 			elif markup[y][x] != G.GenCellType.VOID:
 				tile_configs[Vector2i(x, y)].tile_type = G.TileType.NORMAL
-			#else:
-				#tile_configs.erase(Vector2i(x, y))
 	return tile_configs
 
 #@export_category("From Difficulty Adjuster")
