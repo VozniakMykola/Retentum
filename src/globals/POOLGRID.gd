@@ -1,41 +1,48 @@
 extends Node
 
-const GRID_X_MAX = 20
+const GRID_X_MAX: int = 20
+const GRID_Y_MAX: int = GRID_X_MAX * G.Y_RATIO
 const TILE_SCENE = preload("res://src/tiles/tile.tscn")
-const WORLD_PATH = "user://saved_world.tscn"
 
 var grid_map: OrthoGridMap = null
 var thread: Thread = null
-var is_generating = false
+var is_generating: bool = false
 
 func _ready():
+	is_generating = true
 	initialize_grid()
 
 func initialize_grid():
-	if grid_map == null:
-		grid_map = OrthoGridMap.new()
-		grid_map.cell_size = Vector2(1.05, 1.05)
+	if grid_map != null:
+		return
+	grid_map = OrthoGridMap.new()
+	grid_map.cell_size = Vector2(1.05, 1.05)
+	if thread == null or not thread.is_started():
 		thread = Thread.new()
 		thread.start(_generate_tiles_in_thread)
 
 func _generate_tiles_in_thread():
-	is_generating = true
-	for y in GRID_X_MAX * G.Y_RATIO:
+	var tiles_to_add: Array = []
+	for y in GRID_Y_MAX:
 		for x in GRID_X_MAX:
 			var tile = TILE_SCENE.instantiate()
-			tile.tile_config = TileConfig.new()
-			call_deferred("_add_tile_to_grid", Vector2i(x, y), tile)
+			tiles_to_add.append({
+				position = Vector2i(x, y),
+				instance = tile
+			})
+	call_deferred("_add_batch", tiles_to_add)
 	thread.wait_to_finish()
 	thread = null
 	is_generating = false
 
-func _add_tile_to_grid(position: Vector2i, tile: Node):
-	grid_map.set_cell_item(position, tile)
-	print("punk")
+func _add_batch(tiles: Array) -> void:
+	for item in tiles:
+		grid_map.set_cell_item(item.position, item.instance)
 
 func _exit_tree():
-	if thread != null && thread.is_active():
+	if thread != null and thread.is_active():
 		thread.wait_to_finish()
+		thread = null
 
 func reset_tiles():
 	for position in grid_map._grid_objects:
