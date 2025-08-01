@@ -29,7 +29,7 @@ func _ready():
 	child_exiting_tree.connect(_on_child_exiting)
 
 func _on_child_exiting(node: Node):
-	if node is GridObject:
+	if node is GridObject and not is_instance_valid(node.get_parent()):
 		_grid_objects.erase(node.cell_position)
 
 #region Transformations between coordinate systems
@@ -78,7 +78,10 @@ func world_to_grid_true(world_pos: Vector3) -> Vector2i:
 
 #region Grid object manipulations
 ## Places a grid object at specified position (staggered coords)
-func set_cell_item(pos: Vector2i, grid_object: GridObject) -> void:
+func set_cell_item(pos: Vector2i, grid_object: Node) -> void:
+	if grid_object is not GridObject:
+		return
+	
 	if has_cell_item(pos):
 		remove_cell_item(pos)
 		
@@ -88,11 +91,14 @@ func set_cell_item(pos: Vector2i, grid_object: GridObject) -> void:
 	grid_object.position = world_pos
 	grid_object._world_position = Vector2(world_pos.x, world_pos.z)
 	grid_object.name = "GridObject_%d_%d" % [pos.x, pos.y]
-	_grid_objects[pos] = grid_object
 	add_child(grid_object)
+	_grid_objects[pos] = grid_object
 
 ## Places a grid object at specified position (true isometric coords)
-func set_cell_item_true(pos: Vector2i, grid_object: GridObject) -> void:
+func set_cell_item_true(pos: Vector2i, grid_object: Node) -> void:
+	if grid_object is not GridObject:
+		return
+	
 	var staggered_pos = get_staggered_from_true(pos)
 	set_cell_item(staggered_pos, grid_object)
 
@@ -107,9 +113,10 @@ func remove_cell_item_true(pos: Vector2i) -> void:
 func _remove_cell_item_impl(pos: Vector2i) -> void:
 	if has_cell_item(pos):
 		var obj = _grid_objects[pos]
-		remove_child(obj)
-		obj.queue_free()
-		_grid_objects.erase(pos)
+		if obj is GridObject and not is_instance_valid(obj.get_parent()):
+			_on_child_exiting(obj)
+			remove_child(obj)
+			obj.queue_free()
 
 ## Checks if cell contains an object (staggered coords)
 func has_cell_item(pos: Vector2i) -> bool:
@@ -120,11 +127,11 @@ func has_cell_item_true(pos: Vector2i) -> bool:
 	return has_cell_item(get_staggered_from_true(pos))
 
 ## Gets object at cell position (staggered coords)
-func get_cell_item(pos: Vector2i) -> GridObject:
+func get_cell_item(pos: Vector2i) -> Node:
 	return _grid_objects.get(pos)
 
 ## Gets object at cell position (true isometric coords)
-func get_cell_item_true(pos: Vector2i) -> GridObject:
+func get_cell_item_true(pos: Vector2i) -> Node:
 	return get_cell_item(get_staggered_from_true(pos))
 
 ## Updates all children positions when cell size changes

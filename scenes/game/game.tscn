@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4kdmhic4mr1h"]
+[gd_scene load_steps=4 format=3 uid="uid://b4kdmhic4mr1h"]
 
 [ext_resource type="Script" uid="uid://dm02qk28362ba" path="res://scenes/game/game.gd" id="1_sul5r"]
-[ext_resource type="Script" uid="uid://cjugr2pl114e2" path="res://libs/ortho_grid_map/grid_map/ortho_grid_map.gd" id="2_7h61r"]
 [ext_resource type="PackedScene" uid="uid://okosgi80rqdv" path="res://assets/monke/Monkeglb.glb" id="3_0sr1o"]
 
 [sub_resource type="Environment" id="Environment_0sr1o"]
@@ -20,7 +19,7 @@ transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75
 shadow_enabled = true
 
 [node name="IsoCamera" type="Camera3D" parent="."]
-transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 25, 15, 8)
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 20, 13, 10)
 projection = 1
 current = true
 size = 14.0
@@ -36,11 +35,6 @@ offset_top = 63.0
 offset_right = 207.0
 offset_bottom = 126.0
 text = "LOSE"
-
-[node name="MainGridMap" type="Node3D" parent="."]
-script = ExtResource("2_7h61r")
-cell_size = Vector2(1.05, 1.05)
-metadata/_custom_type_script = "uid://cjugr2pl114e2"
 
 [node name="Monkeglb" parent="." instance=ExtResource("3_0sr1o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.91475, 0, 0.116237)
