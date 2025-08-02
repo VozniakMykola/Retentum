@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://vehhxxbdjcvg"]
+
+[ext_resource type="Script" uid="uid://chycp8jnvkpao" path="res://scenes/monke/monke.gd" id="1_qh1jl"]
+[ext_resource type="PackedScene" uid="uid://okosgi80rqdv" path="res://assets/monke/Monkeglb.glb" id="2_ej74p"]
+
+[node name="Monke" type="Node3D"]
+script = ExtResource("1_qh1jl")
+
+[node name="Monkeglb" parent="." instance=ExtResource("2_ej74p")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)

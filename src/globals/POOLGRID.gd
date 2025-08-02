@@ -2,7 +2,7 @@ extends Node
 
 const GRID_X_MAX: int = 20
 const GRID_Y_MAX: int = GRID_X_MAX * G.Y_RATIO
-const TILE_SCENE = preload("res://src/tiles/tile.tscn")
+const TILE_SCENE = preload("res://scenes/tile/tile.tscn")
 
 var grid_map: OrthoGridMap = null
 var thread: Thread = null
