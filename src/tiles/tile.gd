@@ -109,6 +109,7 @@ const APPEAR_OVERSHOOT: float = 0.2
 #endregion
 #region Anim Helpers
 var original_sprite_position: Vector3
+var original_sprite_rotation: Vector3
 var lifted_sprite_position: Vector3
 var is_hovered: bool = false
 var current_tween: Tween
@@ -127,6 +128,7 @@ var is_tile_core_allow_recording: bool = false
 func _ready() -> void:
 	#MAY BE DELETED
 	original_sprite_position = sprite.position
+	original_sprite_rotation = sprite.rotation
 	lifted_sprite_position = original_sprite_position + Vector3(0, LIFT_HEIGHT, 0)
 	_update_material()
 	var random_rotation: int = randi() % 4 * 90
@@ -138,6 +140,7 @@ func _ready() -> void:
 	#------------
 	is_tile_core_allow_recording = true
 	#------------
+
 
 func _update_material() -> void:
 	if  !tile_core.tile_res._are_materials_same(mesh.material_override):
@@ -319,6 +322,10 @@ func set_tile_type(new_type: G.TileType , old_type = tile_core.tile_type) -> voi
 		return
 	tile_core.tile_type = new_type
 	
+	sprite.position = original_sprite_position
+	sprite.rotation = original_sprite_rotation
+	mesh.material_override.albedo_color.a = 1
+	
 	match new_type:
 		G.TileType.NORMAL:
 			_on_tile_visibility()
@@ -397,17 +404,10 @@ func _apply_tile_type_DEAD(previous_type: G.TileType) -> void:
 	_disconnect_tile()
 	match previous_type:
 		G.TileType.NORMAL:
-			var original_pos = original_sprite_position
-			var original_rot = sprite.rotation
-			var original_alpha: float = 1.0
 			await anim_fall()
 			_off_tile_visibility()
-			sprite.position = original_pos
-			sprite.rotation = original_rot
-			mesh.material_override.albedo_color.a = original_alpha
 		_:
-			pass
-	_off_tile_visibility()
+			_off_tile_visibility()
 
 func _apply_tile_type_NULL() -> void:
 	_disconnect_tile()
