@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4kdmhic4mr1h"]
+[gd_scene load_steps=4 format=3 uid="uid://b4kdmhic4mr1h"]
 
 [ext_resource type="Script" uid="uid://dm02qk28362ba" path="res://scenes/game/game.gd" id="1_sul5r"]
+[ext_resource type="PackedScene" uid="uid://vehhxxbdjcvg" path="res://scenes/monke/monke.tscn" id="2_7h61r"]
 
 [sub_resource type="Environment" id="Environment_0sr1o"]
 background_mode = 2
@@ -36,6 +37,8 @@ offset_top = 63.0
 offset_right = 207.0
 offset_bottom = 126.0
 text = "LOSE"
+
+[node name="Monke" parent="." instance=ExtResource("2_7h61r")]
 
 [connection signal="pressed" from="Win" to="." method="_on_win_pressed"]
 [connection signal="pressed" from="Lose" to="." method="_on_lose_pressed"]

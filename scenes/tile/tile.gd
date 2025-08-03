@@ -419,6 +419,6 @@ func _apply_tile_type_DEAD(previous_type: G.TileType) -> void:
 func _apply_tile_type_NULL() -> void:
 	_off_tile_visibility()
 
-#func set_tile_state(new_state: G.TileState) -> void:
-	#tile_core.tile_state = new_state
+func set_tile_state(new_state: G.TileState) -> void:
+	tile_core.tile_state = new_state
 #endregion

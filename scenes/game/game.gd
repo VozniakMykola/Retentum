@@ -9,6 +9,7 @@ var game_center: Vector3 = Vector3.ZERO
 
 @onready var grid_map = POOLGRID.grid_map
 @onready var iso_camera: Camera3D = $IsoCamera
+@onready var monke: Monke = $Monke
 
 func _ready() -> void:
 	initialize_game()
@@ -19,6 +20,9 @@ func initialize_game() -> void:
 	setup_camera()
 	pre_generate()
 	post_generate()
+	monke.grid_map = grid_map
+	monke.current_cell = game_builder.centers.pick_random()
+	monke.init()
 
 func pre_generate():
 	add_child(grid_map)
@@ -64,9 +68,9 @@ func post_generate():
 func setup_camera():
 	#tmp but works
 	var matrix_size = grid_map.get_true_from_staggered(game_config.world_size)
-	var grid_size = Vector2(matrix_size.x-1, (matrix_size.y-1)/2) * grid_map.cell_size
+	var grid_size = Vector2(matrix_size.x-1, (matrix_size.y-1) / G.Y_RATIO) * grid_map.cell_size
 	
-	var game_center = Vector3(grid_size.x/2, grid_map.y_index, grid_size.y/2)
+	var game_center = Vector3(grid_size.x/2 - 0.5, grid_map.y_index, grid_size.y/2)
 
 	var diagonal = Vector2(grid_size.x, grid_size.y).length()
 	var camera_height = diagonal * 0.71
@@ -74,13 +78,12 @@ func setup_camera():
 	var size_offset = diagonal * 0.55
 
 	iso_camera.position = Vector3(
-		game_center.x + camera_offset -0.5,
+		game_center.x + camera_offset,
 		camera_height,
 		game_center.z + camera_offset
 	)
 	iso_camera.size = size_offset
 	iso_camera.rotation_degrees = Vector3(-45, 45, 0)
-
 
 func restart_game() -> void:
 	remove_child(grid_map)

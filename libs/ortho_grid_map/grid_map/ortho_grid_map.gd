@@ -143,16 +143,40 @@ func _update_children() -> void:
 			obj.position = grid_to_world(pos)
 			obj._world_position = Vector2(obj.position.x, obj.position.z)
 
-## Returns 8 neighboring cells (orthogonal + diagonal) (staggered and true isometric)
-func get_neighbors_any(pos: Vector2i) -> Array[Vector2i]:
-	return [
-		Vector2i(pos.x,   pos.y-1),  # top
-		Vector2i(pos.x+1, pos.y-1),  # top-right
-		Vector2i(pos.x+1, pos.y),    # right
-		Vector2i(pos.x+1, pos.y+1),  # bottom-right
-		Vector2i(pos.x,   pos.y+1),  # bottom
-		Vector2i(pos.x-1, pos.y+1),  # bottom-left
-		Vector2i(pos.x-1, pos.y),    # left
-		Vector2i(pos.x-1, pos.y-1)   # top-left
+## Returns 8 neighboring cells (orthogonal + diagonal) (staggered)
+func get_neighbors(pos: Vector2i) -> Array[Vector2i]:
+	var neighbors: Array[Vector2i] = []
+
+	var offsets_odd: Array[Vector2i] = [
+		Vector2i(0, -1), 
+		Vector2i(1, -1), 
+		Vector2i(0, -2),
+		
+		Vector2i(0, 2),
+		Vector2i(0, 1), 
+		Vector2i(1, 1),
+		Vector2i(1, 0),
+		Vector2i(-1, 0),
 	]
+	var offsets_even: Array[Vector2i] = [
+		Vector2i(0, -1), 
+		Vector2i(-1, -1),
+		Vector2i(0, -2),
+		
+		Vector2i(0, 2),
+		Vector2i(0, 1), 
+		Vector2i(-1, 1),
+		Vector2i(1, 0),
+		Vector2i(-1, 0),
+	]
+	
+	var offsets = offsets_even if pos.y % 2 == 0 else offsets_odd
+	
+	for offset in offsets:
+		var neighbor_pos = pos + offset
+		if has_cell_item(neighbor_pos):
+			neighbors.append(neighbor_pos)
+	
+	return neighbors
+
 #endregion
