@@ -41,6 +41,7 @@ text = "LOSE"
 [node name="Monke" parent="." instance=ExtResource("2_7h61r")]
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
 
 [connection signal="pressed" from="Win" to="." method="_on_win_pressed"]
 [connection signal="pressed" from="Lose" to="." method="_on_lose_pressed"]

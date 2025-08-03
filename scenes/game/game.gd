@@ -10,6 +10,7 @@ var game_center: Vector3 = Vector3.ZERO
 @onready var grid_map = POOLGRID.grid_map
 @onready var iso_camera: Camera3D = $IsoCamera
 @onready var monke: Monke = $Monke
+@onready var timer: Timer = $Timer
 
 func _ready() -> void:
 	initialize_game()
@@ -19,10 +20,11 @@ func initialize_game() -> void:
 	level_map = game_builder.generate_field()
 	setup_camera()
 	pre_generate()
-	post_generate()
+	await post_generate()
 	monke.grid_map = grid_map
 	monke.current_cell = game_builder.centers.pick_random()
 	monke.init()
+	timer.start()
 
 func pre_generate():
 	add_child(grid_map)
@@ -99,3 +101,6 @@ func _on_win_pressed() -> void:
 func _on_lose_pressed() -> void:
 	P.record_session_result(false)
 	restart_game()
+
+func _on_timer_timeout() -> void:
+	monke.monke_turn()
