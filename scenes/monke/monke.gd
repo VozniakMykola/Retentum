@@ -5,12 +5,21 @@ extends Node3D
 @export var current_cell: Vector2i
 
 var endgame_tiles: Array[Vector2i] = []
-
+var path_thread: Thread
+var calculated_path: Array
+var is_calculating: bool = false
 const MOVE_SPEED: float = 2.0
+
+func _ready():
+	path_thread = Thread.new()
 
 func init() -> void:
 	set_world_position()
 	find_endgames()
+
+func _exit_tree():
+	if path_thread.is_started():
+		path_thread.wait_to_finish()
 
 func set_world_position(cell: Vector2i = current_cell) -> void:
 	position = grid_map.grid_to_world(current_cell)
@@ -23,12 +32,24 @@ func find_endgames() -> void:
 			endgame_tiles.append(cell)
 
 func monke_turn() -> void:
-	move_to_endgame()
+	if is_calculating:
+		return
+	is_calculating = true
+	calculated_path = []
+	
+	if path_thread.is_started():
+		path_thread.wait_to_finish()
+	
+	path_thread.start(_threaded_find_closest_endgame)
+
+func _threaded_find_closest_endgame() -> void:
+	calculated_path = find_closest_endgame_with_path_A_STAR()
+	is_calculating = false
+	call_deferred("move_to_endgame")
 
 func move_to_endgame():
-	var path = find_closest_endgame_with_path_A_STAR()
-	if path.size() > 1:
-		move_to(path[1])
+	if calculated_path.size() > 1:
+		move_to(calculated_path[1])
 	else:
 		print("A2")
 		move_random()
