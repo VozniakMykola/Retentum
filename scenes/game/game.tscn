@@ -44,4 +44,18 @@ far = 165.86
 
 [node name="Timer" type="Timer" parent="."]
 
+[node name="Win" type="Button" parent="."]
+offset_right = 309.0
+offset_bottom = 157.0
+text = "WIN
+"
+
+[node name="Lose" type="Button" parent="."]
+offset_top = 157.0
+offset_right = 309.0
+offset_bottom = 314.0
+text = "LOSE"
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="Win" to="." method="_on_win_pressed"]
+[connection signal="pressed" from="Lose" to="." method="_on_lose_pressed"]

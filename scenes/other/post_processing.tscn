@@ -11,18 +11,6 @@ center_offset = Vector3(960, 540, 0)
 
 [node name="CanvasLayer" type="CanvasLayer"]
 
-[node name="Win" type="Button" parent="."]
-offset_right = 206.0
-offset_bottom = 63.0
-text = "WIN"
-
-[node name="Lose" type="Button" parent="."]
-offset_left = 1.0
-offset_top = 63.0
-offset_right = 207.0
-offset_bottom = 126.0
-text = "LOSE"
-
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 material = SubResource("ShaderMaterial_kelw5")
 mesh = SubResource("QuadMesh_lfrn8")

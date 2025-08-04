@@ -345,9 +345,12 @@ func set_tile_type(new_type: G.TileType , old_type = tile_core.tile_type) -> voi
 	#print("from ", G.TileType.keys()[old_type]  , " to " , G.TileType.keys()[new_type])
 
 func _disconnect_tile() -> void:
-	area.mouse_entered.disconnect(_on_mouse_entered)
-	area.mouse_exited.disconnect(_on_mouse_exited)
-	area.input_event.disconnect(_on_input_event)
+	if area.mouse_entered.is_connected(_on_mouse_entered):
+		area.mouse_entered.disconnect(_on_mouse_entered)
+	if area.mouse_exited.is_connected(_on_mouse_exited):
+		area.mouse_exited.disconnect(_on_mouse_exited)
+	if area.input_event.is_connected(_on_input_event):
+		area.input_event.disconnect(_on_input_event)
 	
 func _off_tile_visibility() -> void:
 	collision_shape.disabled = true
@@ -358,9 +361,12 @@ func _on_tile_visibility() -> void:
 	self.visible = true
 
 func _reconnect_tile() -> void:
-	area.mouse_entered.connect(_on_mouse_entered)
-	area.mouse_exited.connect(_on_mouse_exited)
-	area.input_event.connect(_on_input_event)
+	if not area.mouse_entered.is_connected(_on_mouse_entered):
+		area.mouse_entered.connect(_on_mouse_entered)
+	if not area.mouse_exited.is_connected(_on_mouse_exited):
+		area.mouse_exited.connect(_on_mouse_exited)
+	if not area.input_event.is_connected(_on_input_event):
+		area.input_event.connect(_on_input_event)
 
 func _reset_tile() -> void:
 	sprite.position = original_sprite_position

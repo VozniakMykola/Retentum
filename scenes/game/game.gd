@@ -25,10 +25,11 @@ func initialize_game() -> void:
 	monke.grid_map = grid_map
 	monke.current_cell = game_builder.centers.pick_random()
 	monke.init()
-	#timer.start()
+	timer.start()
 
 func pre_generate():
-	add_child(grid_map)
+	if not is_instance_valid(grid_map) or grid_map.get_parent() != self:
+		add_child(grid_map)
 	POOLGRID.reset_tiles()
 
 func post_generate():
@@ -37,14 +38,24 @@ func post_generate():
 	var sort_direction = randi() % 4
 	
 	var sort_functions = [
-		func(a, b): return a.y < b.y,  # top to bottom
-		func(a, b): return a.y > b.y,  # bottom to top
+		# top to bottom
+		func(a, b): 
+			if a.y < b.y: return true
+			if a.y > b.y: return false
+			return false,
+		# bottom to top
+		func(a, b): 
+			if a.y > b.y: return true
+			if a.y < b.y: return false
+			return false,
+		# left to right (X with even Y)
 		func(a, b): 
 			if a.x != b.x: return a.x < b.x
-			return a.y % 2 == 0,  # left to right (X with even Y)
+			return a.y % 2 < b.y % 2,  # Спершу парні Y
+		# right to left (X with odd Y)
 		func(a, b): 
 			if a.x != b.x: return a.x > b.x
-			return a.y % 2 != 0   # right to left (X with odd Y)
+			return a.y % 2 > b.y % 2   # Спершу непарні Y
 	]
 	all_coords.sort_custom(sort_functions[sort_direction])
 	
@@ -89,7 +100,8 @@ func setup_camera():
 	iso_camera.rotation_degrees = Vector3(-45, 45, 0)
 
 func restart_game() -> void:
-	remove_child(grid_map)
+	if grid_map.get_parent() == self:
+		remove_child(grid_map)
 	var new_game = GAME_SCENE.instantiate()
 	get_tree().root.add_child(new_game)
 	get_tree().current_scene = new_game

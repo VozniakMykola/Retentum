@@ -17,6 +17,7 @@ func initialize_grid():
 		return
 	grid_map = OrthoGridMap.new()
 	grid_map.cell_size = Vector2(1.05, 1.05)
+	grid_map.name = "GameField"
 	if thread == null or not thread.is_started():
 		thread = Thread.new()
 		thread.start(_generate_tiles_in_thread)
@@ -31,13 +32,14 @@ func _generate_tiles_in_thread():
 				instance = tile
 			})
 	call_deferred("_add_batch", tiles_to_add)
-	thread.wait_to_finish()
-	thread = null
-	is_generating = false
 
 func _add_batch(tiles: Array) -> void:
 	for item in tiles:
 		grid_map.set_cell_item(item.position, item.instance)
+	if thread != null:
+		thread.wait_to_finish()
+		thread = null
+	is_generating = false
 
 func _exit_tree():
 	if thread != null and thread.is_active():
