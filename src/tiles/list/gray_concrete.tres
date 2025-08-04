@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="TileResource" load_steps=3 format=3 uid="uid://crn68ij1j1lji"]
 
-[ext_resource type="Material" uid="uid://dkxemod268n3n" path="res://assets/materials/concrete.tres" id="1_n20wq"]
+[ext_resource type="Material" uid="uid://dsew8mj2nvnnt" path="res://assets/materials/concrete.tres" id="1_n20wq"]
 [ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tiles/tile_res.gd" id="1_oouqr"]
 
 [resource]

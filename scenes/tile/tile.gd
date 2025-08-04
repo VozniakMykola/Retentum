@@ -6,6 +6,7 @@ extends GridObject
 @onready var collision_shape: CollisionShape3D = $Area3D/CollisionShape3D
 @onready var sprite: Node3D = $Sprite
 @onready var mesh: MeshInstance3D = $Sprite/Mesh
+
 @onready var chalk: Sprite3D = $Sprite/Chalk
 @onready var endgame: Node3D = $Sprite/Endgame
 
@@ -131,7 +132,9 @@ func _ready() -> void:
 	lifted_sprite_position = original_sprite_position + Vector3(0, LIFT_HEIGHT, 0)
 	_update_material()
 	var random_rotation: int = randi() % 4 * 90
-	mesh.mesh.size = TILE_SIZE
+	var random_flip_x: bool = (randi() % 2) == 0
+	#mesh.mesh.size = TILE_SIZE
+	mesh.rotation_degrees.x = 180 if random_flip_x else 0
 	mesh.rotation_degrees.y = random_rotation
 	collision_shape.shape.size = hitbox_size
 	collision_shape.position.y = hitbox_y_offset

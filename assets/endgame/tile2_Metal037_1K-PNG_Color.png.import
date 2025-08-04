@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://by18y6s13nl46"
+path.s3tc="res://.godot/imported/tile2_Metal037_1K-PNG_Color.png-14f5429ec0c5ce224016ef37f0de6210.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "f185048cfe1e6e4bf3625d50057c9271"
+}
+
+[deps]
+
+source_file="res://assets/endgame/tile2_Metal037_1K-PNG_Color.png"
+dest_files=["res://.godot/imported/tile2_Metal037_1K-PNG_Color.png-14f5429ec0c5ce224016ef37f0de6210.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

@@ -3,6 +3,12 @@ extends Node
 const Y_RATIO : int = 2 #y/x
 const X_RATIO : float = 0.5 #x/y
 
+const POST_PROCESSING = preload("res://scenes/other/post_processing.tscn")
+
+func _ready():
+	var eff = POST_PROCESSING.instantiate()
+	add_child(eff)
+
 enum ChalkType { 
 	DECOY, 
 	HOPSCOTCH, 

@@ -11,6 +11,7 @@ var game_center: Vector3 = Vector3.ZERO
 @onready var iso_camera: Camera3D = $IsoCamera
 @onready var monke: Monke = $Monke
 @onready var timer: Timer = $Timer
+@onready var light: DirectionalLight3D = $DirectionalLight3D
 
 func _ready() -> void:
 	initialize_game()
@@ -24,7 +25,7 @@ func initialize_game() -> void:
 	monke.grid_map = grid_map
 	monke.current_cell = game_builder.centers.pick_random()
 	monke.init()
-	timer.start()
+	#timer.start()
 
 func pre_generate():
 	add_child(grid_map)
@@ -73,7 +74,7 @@ func setup_camera():
 	var grid_size = Vector2(matrix_size.x-1, (matrix_size.y-1) / G.Y_RATIO) * grid_map.cell_size
 	
 	var game_center = Vector3(grid_size.x/2 - 0.5, grid_map.y_index, grid_size.y/2)
-
+	
 	var diagonal = Vector2(grid_size.x, grid_size.y).length()
 	var camera_height = diagonal * 0.71
 	var camera_offset = diagonal * 0.5
