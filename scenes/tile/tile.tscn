@@ -91,6 +91,7 @@ texture = ExtResource("2_2jaqc")
 
 [node name="Endgame" type="Node3D" parent="Sprite"]
 transform = Transform3D(0.353553, 0, 0.353553, 0, 0.5, 0, -0.353553, 0, 0.353553, 0, 0.544326, 0)
+visible = false
 
 [node name="Cylinder" type="MeshInstance3D" parent="Sprite/Endgame"]
 mesh = SubResource("ArrayMesh_2jaqc")
