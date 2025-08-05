@@ -9,6 +9,17 @@ func _ready():
 	var eff = POST_PROCESSING.instantiate()
 	add_child(eff)
 
+signal turn_next(turn: GameTurn)
+var current_turn: GameTurn = GameTurn.NONE_TURN
+enum GameTurn {
+	PLAYER_TURN,
+	MONKE_TURN,
+	NONE_TURN,
+}
+func set_turn(turn: GameTurn):
+	current_turn = turn
+	emit_signal("turn_next", current_turn)
+
 enum ChalkType { 
 	DECOY, 
 	HOPSCOTCH, 

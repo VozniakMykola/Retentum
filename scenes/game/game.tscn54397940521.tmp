@@ -41,6 +41,7 @@ near = 0.466
 far = 165.86
 
 [node name="Monke" parent="." instance=ExtResource("2_7h61r")]
+current_cell = null
 
 [node name="Win" type="Button" parent="."]
 offset_right = 309.0

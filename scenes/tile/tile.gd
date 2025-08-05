@@ -31,7 +31,7 @@ var tile_core: TileConfig = TileConfig.new():
 var tile_behavior: Dictionary = {
 	G.TileState.EMPTY: {
 		G.TileType.NORMAL: {
-			"click": set_tile_type.bind(G.TileType.DEAD),
+			"click": set_tile_type.bind(G.TileType.DEAD, G.TileType.NORMAL, true),
 			"on_mouse_enter": anim_tile_up,
 			"on_mouse_exit": anim_tile_down,
 			#"on_hover": 
@@ -126,6 +126,7 @@ var is_tile_core_allow_recording: bool = false
 
 #region Setup
 func _ready() -> void:
+	G.turn_next.connect(_on_turn_next)
 	#MAY BE DELETED
 	original_sprite_position = sprite.position
 	original_sprite_rotation = sprite.rotation
@@ -152,12 +153,18 @@ func _update_material() -> void:
 #endregion
 
 #region Interractions BASE
+func _on_turn_next(turn: G.GameTurn) -> void:
+	if turn == G.GameTurn.PLAYER_TURN and is_hovered:
+		_on_mouse_entered()
+
 func _on_mouse_entered() -> void:
+	is_hovered = true
 	var action = _get_current_actions().get("on_mouse_enter")
 	if action and action.is_valid():
 		action.call()
 	
 func _on_mouse_exited() -> void:
+	is_hovered = false
 	var action = _get_current_actions().get("on_mouse_exit")
 	if action and action.is_valid():
 		action.call()
@@ -170,12 +177,16 @@ func _on_input_event(_camera: Camera3D, event: InputEvent, _position: Vector3, _
 		if click_action and click_action.is_valid():
 			click_action.call()
 
-func _get_current_actions() -> Dictionary:
-	var config = tile_behavior.get(tile_core.tile_state, {})
-	return config.get(
-		tile_core.tile_type if tile_core.tile_state != G.TileState.OCCUPIED else "_default", 
-		{}
-	)
+func _get_current_actions(tile_state: G.TileState = tile_core.tile_state) -> Dictionary:
+	if G.current_turn == G.GameTurn.PLAYER_TURN:
+		var config = tile_behavior.get(tile_state, {})
+		return config.get(
+			tile_core.tile_type if tile_state != G.TileState.OCCUPIED else "_default",
+			{}
+		)
+		
+	else:
+		return tile_behavior.get(G.TileState.OCCUPIED, {}).get("_default", {})
 #endregion
 
 #region Animations
@@ -319,10 +330,11 @@ func anim_appear_1() -> void:
 
 #region States logic
 
-func set_tile_type(new_type: G.TileType , old_type = tile_core.tile_type) -> void:
+func set_tile_type(new_type: G.TileType , old_type = tile_core.tile_type, is_clicked: bool = false) -> void:
 	if new_type == old_type:
 		return
 	tile_core.tile_type = new_type
+	is_hovered = false
 	_disconnect_tile()
 	_reset_tile()
 	
@@ -337,7 +349,7 @@ func set_tile_type(new_type: G.TileType , old_type = tile_core.tile_type) -> voi
 			await _apply_tile_type_ENDGAME(old_type)
 			_reconnect_tile()
 		G.TileType.DEAD:
-			_apply_tile_type_DEAD(old_type)
+			_apply_tile_type_DEAD(old_type, is_clicked)
 		G.TileType.NULL:
 			_apply_tile_type_NULL()
 		_:
@@ -351,14 +363,6 @@ func _disconnect_tile() -> void:
 		area.mouse_exited.disconnect(_on_mouse_exited)
 	if area.input_event.is_connected(_on_input_event):
 		area.input_event.disconnect(_on_input_event)
-	
-func _off_tile_visibility() -> void:
-	collision_shape.disabled = true
-	self.visible = false
-
-func _on_tile_visibility() -> void:
-	collision_shape.disabled = false
-	self.visible = true
 
 func _reconnect_tile() -> void:
 	if not area.mouse_entered.is_connected(_on_mouse_entered):
@@ -367,6 +371,14 @@ func _reconnect_tile() -> void:
 		area.mouse_exited.connect(_on_mouse_exited)
 	if not area.input_event.is_connected(_on_input_event):
 		area.input_event.connect(_on_input_event)
+
+func _off_tile_visibility() -> void:
+	collision_shape.disabled = true
+	self.visible = false
+
+func _on_tile_visibility() -> void:
+	collision_shape.disabled = false
+	self.visible = true
 
 func _reset_tile() -> void:
 	sprite.position = original_sprite_position
@@ -416,10 +428,12 @@ func _apply_tile_type_ENDGAME(previous_type: G.TileType) -> void:
 		_:
 			pass
 	
-func _apply_tile_type_DEAD(previous_type: G.TileType) -> void:
+func _apply_tile_type_DEAD(previous_type: G.TileType, is_clicked: bool = false) -> void:
 	#_update_material() not needed??????
 	match previous_type:
 		G.TileType.NORMAL:
+			if is_clicked:
+				G.set_turn(G.GameTurn.MONKE_TURN)
 			await anim_fall()
 			_off_tile_visibility()
 		_:

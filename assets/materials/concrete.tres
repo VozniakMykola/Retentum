@@ -6,7 +6,7 @@
 
 [resource]
 resource_name = "tile"
-transparency = 1
+transparency = 4
 albedo_texture = ExtResource("1_i4ymh")
 metallic_texture = ExtResource("2_w4rk2")
 metallic_texture_channel = 2

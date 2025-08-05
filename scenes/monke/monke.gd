@@ -3,12 +3,13 @@ extends Node3D
 
 @export var grid_map: OrthoGridMap
 @export var current_cell: Vector2i
+@export var current_tile: Tile
 
 var endgame_tiles: Array[Vector2i] = []
 var path_thread: Thread
 var calculated_path: Array
 var is_calculating: bool = false
-const MOVE_SPEED: float = 2.0
+const MOVE_SPEED: float = 8
 
 func _ready():
 	path_thread = Thread.new()
@@ -22,7 +23,10 @@ func _exit_tree():
 		path_thread.wait_to_finish()
 
 func set_world_position(cell: Vector2i = current_cell) -> void:
-	position = grid_map.grid_to_world(current_cell)
+	position = grid_map.grid_to_world(cell)
+	if grid_map.has_cell_item(cell):
+		current_tile = grid_map.get_cell_item(cell) as Tile
+		current_tile.set_tile_state(G.TileState.OCCUPIED)
 
 func find_endgames() -> void:
 	endgame_tiles.clear()
@@ -53,6 +57,7 @@ func move_to_endgame():
 	else:
 		print("A2")
 		move_random()
+		
 
 func move_random():
 	var valid_neighbors = grid_map.get_neighbors(current_cell).filter(
@@ -62,25 +67,19 @@ func move_random():
 	)
 	
 	if valid_neighbors.size() > 0:
-		var next_cell = valid_neighbors.pick_random()
-		move_to(next_cell)
+		move_to(valid_neighbors.pick_random())
 	else:
 		get_parent()._on_win_pressed()
 
 #################################################################
-func move_to(grid_cell: Vector2i) -> void:
-	var tween = create_tween()
-	tween.tween_property(self, "position", grid_map.grid_to_world(grid_cell), 1.0 / MOVE_SPEED)
-	await tween.finished
-	
-	current_cell = grid_cell
-	handle_tile_type()
-
-func handle_tile_type():
-	if grid_map.has_cell_item(current_cell):
-		var tile = grid_map.get_cell_item(current_cell) as Tile
-		#tile.set_tile_state(G.TileState.OCCUPIED)
-		match tile.tile_core.tile_type:
+func move_to(next_cell: Vector2i) -> void:
+	if grid_map.has_cell_item(next_cell):
+		current_tile.set_tile_state(G.TileState.EMPTY)
+		current_cell = next_cell
+		current_tile = grid_map.get_cell_item(current_cell) as Tile
+		current_tile.set_tile_state(G.TileState.OCCUPIED)
+		await move_anim_1()
+		match current_tile.tile_core.tile_type:
 			G.TileType.CHALKED:
 				print("Monke stepped on chalked tile!")
 			G.TileType.ENDGAME:
@@ -88,6 +87,12 @@ func handle_tile_type():
 				get_parent()._on_lose_pressed()
 			_:
 				pass
+	G.set_turn(G.GameTurn.PLAYER_TURN)
+
+func move_anim_1():
+	var tween = create_tween()
+	tween.tween_property(self, "position", grid_map.grid_to_world(current_cell), 1.0 / MOVE_SPEED)
+	await tween.finished
 #################################################################
 
 func find_closest_endgame_with_path_A_STAR() -> Array:

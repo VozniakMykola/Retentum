@@ -1,38 +1,60 @@
 extends Node3D
 
-@export_group("Game")
+const GAME_SCENE = preload("res://scenes/game/game.tscn") 
+
 var game_builder: GameBuilder = GameBuilder.new()
 var game_config: GameConfig
 var level_map: Dictionary
-const GAME_SCENE = preload("res://scenes/game/game.tscn") 
 var game_center: Vector3 = Vector3.ZERO
 
 @onready var grid_map = POOLGRID.grid_map
 @onready var iso_camera: Camera3D = $IsoCamera
 @onready var monke: Monke = $Monke
-@onready var timer: Timer = $Timer
 @onready var light: DirectionalLight3D = $DirectionalLight3D
 
 func _ready() -> void:
+	G.turn_next.connect(_on_turn_next)
 	initialize_game()
 
 func initialize_game() -> void:
+	G.set_turn(G.GameTurn.NONE_TURN)
+	
 	game_config = game_builder.generate_config()
 	level_map = game_builder.generate_field()
+	
 	setup_camera()
-	pre_generate()
-	await post_generate()
-	monke.grid_map = grid_map
-	monke.current_cell = game_builder.centers.pick_random()
-	monke.init()
-	timer.start()
+	add_map_to_scene()
+	await map_fill()
+	add_monke()
+	
+	G.set_turn(G.GameTurn.PLAYER_TURN)
 
-func pre_generate():
+func setup_camera() -> void:
+	#tmp but works
+	var matrix_size = grid_map.get_true_from_staggered(game_config.world_size)
+	var grid_size = Vector2(matrix_size.x-1, (matrix_size.y-1) / G.Y_RATIO) * grid_map.cell_size
+	
+	var game_center = Vector3(grid_size.x/2 - 0.5, grid_map.y_index, grid_size.y/2)
+	
+	var diagonal = Vector2(grid_size.x, grid_size.y).length()
+	var camera_height = diagonal * 0.71
+	var camera_offset = diagonal * 0.5
+	var size_offset = diagonal * 0.55
+
+	iso_camera.position = Vector3(
+		game_center.x + camera_offset,
+		camera_height,
+		game_center.z + camera_offset
+	)
+	iso_camera.size = size_offset
+	iso_camera.rotation_degrees = Vector3(-45, 45, 0)
+
+func add_map_to_scene() -> void:
 	if not is_instance_valid(grid_map) or grid_map.get_parent() != self:
 		add_child(grid_map)
 	POOLGRID.reset_tiles()
 
-func post_generate():
+func map_fill() -> void:
 	var all_coords = level_map.keys()
 	var row_delay = 0.05
 	var sort_direction = randi() % 4
@@ -79,25 +101,10 @@ func post_generate():
 		var tile = grid_map.get_cell_item(coord) as Tile
 		tile.tile_config = level_map[coord]
 
-func setup_camera():
-	#tmp but works
-	var matrix_size = grid_map.get_true_from_staggered(game_config.world_size)
-	var grid_size = Vector2(matrix_size.x-1, (matrix_size.y-1) / G.Y_RATIO) * grid_map.cell_size
-	
-	var game_center = Vector3(grid_size.x/2 - 0.5, grid_map.y_index, grid_size.y/2)
-	
-	var diagonal = Vector2(grid_size.x, grid_size.y).length()
-	var camera_height = diagonal * 0.71
-	var camera_offset = diagonal * 0.5
-	var size_offset = diagonal * 0.55
-
-	iso_camera.position = Vector3(
-		game_center.x + camera_offset,
-		camera_height,
-		game_center.z + camera_offset
-	)
-	iso_camera.size = size_offset
-	iso_camera.rotation_degrees = Vector3(-45, 45, 0)
+func add_monke() -> void:
+	monke.grid_map = grid_map
+	monke.current_cell = game_builder.centers.pick_random()
+	monke.init()
 
 func restart_game() -> void:
 	if grid_map.get_parent() == self:
@@ -115,5 +122,6 @@ func _on_lose_pressed() -> void:
 	P.record_session_result(false)
 	restart_game()
 
-func _on_timer_timeout() -> void:
-	monke.monke_turn()
+func _on_turn_next(turn: G.GameTurn) -> void:
+	if turn == G.GameTurn.MONKE_TURN:
+		monke.monke_turn()
