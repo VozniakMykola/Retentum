@@ -102,7 +102,7 @@ const COLOR_MODULE_1 = {
 	ColorType.BLACK: Color("#2C3E50"),
 	ColorType.GREEN: Color("#27AE60"),
 	ColorType.NAVY: Color("#1A5276"),
-	ColorType.BROWN: Color("#A84300"),
+	ColorType.BROWN: Color("#a65b25"),
 	ColorType.OLIVE: Color("#8D6E63"),
 	ColorType.ORANGE: Color("#E67E22"),
 	ColorType.PINK: Color("#F8A5C2"),
