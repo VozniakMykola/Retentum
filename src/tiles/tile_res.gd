@@ -6,6 +6,7 @@ extends Resource
 @export var base_material: StandardMaterial3D
 @export var albedo_color: G.ColorType = G.ColorType.WHITE
 @export var ignore_albedo: bool = false
+@export var is_rotatable: bool = true
 @export_group("Journal")
 @export var is_unlocked: bool = false
 

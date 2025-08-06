@@ -16,7 +16,8 @@ func initialize_grid():
 	if grid_map != null:
 		return
 	grid_map = OrthoGridMap.new()
-	grid_map.cell_size = Vector2(1.05, 1.05)
+	#grid_map.cell_size = Vector2(1.05, 1.05)
+	grid_map.cell_size = Vector2(0.99, 0.99)
 	grid_map.name = "GameField"
 	if thread == null or not thread.is_started():
 		thread = Thread.new()

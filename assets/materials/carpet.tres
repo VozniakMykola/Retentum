@@ -1,8 +1,8 @@
-[gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://5i2c5nngyx1k"]
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://b3jdo0ihnrv22"]
 
-[ext_resource type="Texture2D" uid="uid://cqtibl60ri1a5" path="res://assets/materials/material_resources/carpet/carpet_Carpet012_8K-PNG_Color.png" id="1_y1x40"]
-[ext_resource type="Texture2D" uid="uid://dsmy3jdrio0k4" path="res://assets/materials/material_resources/carpet/carpet_Carpet012_8K-PNG_Roughness.png" id="2_j6pjd"]
-[ext_resource type="Texture2D" uid="uid://cjy3dv680x0nf" path="res://assets/materials/material_resources/carpet/carpet_Carpet012_8K-PNG_NormalGL.png" id="3_d377d"]
+[ext_resource type="Texture2D" uid="uid://dwtt0g0ye3ycv" path="res://assets/materials/material_resources/carpet/new_carpet_carpet_15_basecolor-2K.png" id="1_y1x40"]
+[ext_resource type="Texture2D" uid="uid://bfw6wo7mhlu7l" path="res://assets/materials/material_resources/carpet/new_carpet_carpet_15_roughness-2K.png" id="2_j6pjd"]
+[ext_resource type="Texture2D" uid="uid://ba3cwpe1lyxga" path="res://assets/materials/material_resources/carpet/new_carpet_carpet_15_normal-2K.png" id="3_d377d"]
 
 [resource]
 resource_name = "tile"

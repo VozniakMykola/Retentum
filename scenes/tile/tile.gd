@@ -132,11 +132,9 @@ func _ready() -> void:
 	original_sprite_rotation = sprite.rotation
 	lifted_sprite_position = original_sprite_position + Vector3(0, LIFT_HEIGHT, 0)
 	_update_material()
-	var random_rotation: int = randi() % 4 * 90
 	var random_flip_x: bool = (randi() % 2) == 0
 	#mesh.mesh.size = TILE_SIZE
 	mesh.rotation_degrees.x = 180 if random_flip_x else 0
-	mesh.rotation_degrees.y = random_rotation
 	collision_shape.shape.size = hitbox_size
 	collision_shape.position.y = hitbox_y_offset
 	_apply_tile_type_NULL()
@@ -148,7 +146,10 @@ func _ready() -> void:
 func _update_material() -> void:
 	if  !tile_core.tile_res._are_materials_same(mesh.material_override):
 		mesh.material_override = tile_core.tile_res.get_material()
-		return
+		if tile_core.tile_res.is_rotatable:
+			mesh.rotation_degrees.y = randi() % 4 * 90
+		else:
+			mesh.rotation_degrees.y = 0
 
 #endregion
 
