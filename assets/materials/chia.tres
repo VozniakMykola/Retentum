@@ -1,17 +1,4 @@
-[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://b66k7nd3xxya7"]
-
-[ext_resource type="Texture2D" uid="uid://bjd7l1j6wvm2n" path="res://assets/materials/material_resources/chia/32.png" id="1_ivmqo"]
-[ext_resource type="Texture2D" uid="uid://b2s1iiv23sr7p" path="res://assets/materials/material_resources/chia/3_ambient.png" id="2_1cyt1"]
-[ext_resource type="Texture2D" uid="uid://byddlyrkgyt0r" path="res://assets/materials/material_resources/chia/3_normal.png" id="3_08qlh"]
-[ext_resource type="Texture2D" uid="uid://7oqfhs7554i0" path="res://assets/materials/material_resources/chia/3_displacement.png" id="4_1cyt1"]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://b5cbqu2ol044g"]
 
 [resource]
 transparency = 1
-albedo_texture = ExtResource("1_ivmqo")
-roughness_texture = ExtResource("4_1cyt1")
-normal_enabled = true
-normal_texture = ExtResource("3_08qlh")
-ao_enabled = true
-ao_texture = ExtResource("2_1cyt1")
-uv1_scale = Vector3(2, 2, 1)
-uv2_scale = Vector3(2, 2, 1)

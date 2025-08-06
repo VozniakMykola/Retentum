@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="TileResource" load_steps=3 format=3 uid="uid://bwnmvwm0155kg"]
 
-[ext_resource type="Material" uid="uid://cmuepgvfi03n8" path="res://assets/materials/carpet.tres" id="1_f48pw"]
+[ext_resource type="Material" uid="uid://71076lkpvnuc" path="res://assets/materials/carpet.tres" id="1_f48pw"]
 [ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tiles/tile_res.gd" id="1_qp708"]
 
 [resource]
