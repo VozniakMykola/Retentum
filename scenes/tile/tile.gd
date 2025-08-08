@@ -38,7 +38,7 @@ var tile_behavior: Dictionary = {
 			#cat_on_it
 		},
 		G.TileType.CHALKED: {
-			"click": set_tile_type.bind(G.TileType.NORMAL),
+			"click": set_tile_type.bind(G.TileType.NORMAL, G.TileType.CHALKED, true),
 			"on_mouse_enter": anim_tile_up,
 			"on_mouse_exit": anim_tile_down,
 			#"on_hover": _tile_hover_chalked
@@ -341,7 +341,7 @@ func set_tile_type(new_type: G.TileType , old_type = tile_core.tile_type, is_cli
 	
 	match new_type:
 		G.TileType.NORMAL:
-			await _apply_tile_type_NORMAL(old_type)
+			await _apply_tile_type_NORMAL(old_type, is_clicked)
 			_reconnect_tile()
 		G.TileType.CHALKED:
 			await _apply_tile_type_CHALKED(old_type)
@@ -386,7 +386,7 @@ func _reset_tile() -> void:
 	sprite.rotation = original_sprite_rotation
 	mesh.material_override.albedo_color.a = 1
 
-func _apply_tile_type_NORMAL(previous_type: G.TileType) -> void:
+func _apply_tile_type_NORMAL(previous_type: G.TileType, is_clicked: bool = false) -> void:
 	_update_material()
 	_on_tile_visibility()
 	chalk.visible = false
@@ -395,6 +395,9 @@ func _apply_tile_type_NORMAL(previous_type: G.TileType) -> void:
 	match previous_type:
 		G.TileType.DEAD, G.TileType.NULL:
 			await anim_appear_1()
+		G.TileType.CHALKED:
+			if is_clicked:
+				G.set_turn(G.GameTurn.MONKE_TURN)
 		_:
 			pass
 
