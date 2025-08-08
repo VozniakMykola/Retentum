@@ -115,7 +115,7 @@ func find_path_A_STAR(start: Vector2i, end: Vector2i) -> Array:
 	var points = {}
 	var point_id = 0
 	
-	#Add all tiles, ignore NULL and DEAD)
+	#Add all tiles, ignore NULL and DEAD
 	for cell in grid_map._grid_objects:
 		var tile = grid_map.get_cell_item(cell)
 		if tile.tile_core.tile_type != G.TileType.NULL and tile.tile_core.tile_type != G.TileType.DEAD:
@@ -132,8 +132,8 @@ func find_path_A_STAR(start: Vector2i, end: Vector2i) -> Array:
 				var from_id = points[cell]
 				var to_id = points[neighbor]
 				if not astar.are_points_connected(from_id, to_id):
-					# Вартість переміщення = відстань між клітинками
 					var cost = Vector2(cell).distance_to(Vector2(neighbor))
+					cost += randf_range(-0.4, 0.4) #monke stupidity factor
 					astar.connect_points(from_id, to_id, cost)
 	
 	#Path find
