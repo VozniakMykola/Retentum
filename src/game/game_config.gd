@@ -27,15 +27,14 @@ static func generate_config() -> GameConfig:
 	config.world_size = Vector2i(config.world_x, config.world_x*G.Y_RATIO)
 	config.endgame_shore = difficulty.endgame_shore
 	config.monke_spawn_area = difficulty.monke_spawn_area
-
+	config.world_shape = difficulty.world_shape
+	
 	config.missing_tiles_rate = difficulty.missing_tiles_rate
 	config.endgame_tiles_rate = difficulty.endgame_tiles_rate
 	#From Narration Adjuster
 	var narration = NarrationAdjuster.get_data()
 	config.biome = narration.biome
-	config.world_shape = narration.world_shape
 	config.chalk_inventory_count = narration.chalk_inventory_count
-	
 	config.chalk_tiles_rate = narration.chalk_tiles_rate
 	
 	return config

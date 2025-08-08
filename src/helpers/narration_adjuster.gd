@@ -2,7 +2,6 @@ class_name NarrationAdjuster
 extends Resource
 
 @export var biome: G.BiomeType
-@export var world_shape: G.ShapePattern
 @export var chalk_tiles_rate: float
 @export var chalk_inventory_count: int
 
@@ -24,7 +23,7 @@ static func get_data() -> NarrationAdjuster:
 	var config = NarrationAdjuster.new()
 	
 	config.biome = _select_biome()
-	config.world_shape = randi() % G.ShapePattern.size()
+	
 	config.chalk_tiles_rate = _set_rate(CHALK_RATES)
 	config.chalk_inventory_count = _set_rate(CHALK_COUNTS)
 	return config

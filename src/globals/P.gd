@@ -52,12 +52,13 @@ const BIOME_REQUIREMENTS = {
 }
 
 const CHALK_REQUIREMENTS = {
-	G.ChalkType.DECOY: 1, 
-	G.ChalkType.REVELATION: 1, 
-	G.ChalkType.GUIDANCE: 2, 
-	G.ChalkType.HOPSCOTCH: 3,
-	G.ChalkType.SCOTOMA: 3, 
-	G.ChalkType.SIGIL: 4, 
+	G.ChalkType.SCRIBBLE: 1, 
+	G.ChalkType.DECOY: 2, 
+	G.ChalkType.REVELATION: 2, 
+	G.ChalkType.GUIDANCE: 3, 
+	G.ChalkType.HOPSCOTCH: 4,
+	G.ChalkType.SCOTOMA: 4, 
+	G.ChalkType.SIGIL: 5, 
 }
 #G.ChalkType.SUPERPOSITION: 4, 
 #G.ChalkType.ITINERARIUM: 5

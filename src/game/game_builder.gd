@@ -39,31 +39,37 @@ func generate_field() -> Dictionary:
 func scatter_game_objects(tile_configs: Dictionary, markup: Array) -> Dictionary:
 	for y in range(markup.size()):
 		for x in range(markup[y].size()):
-			if markup[y][x] == G.GenCellType.EDGE:
-				if randf_range(0.0, 1.0) <= current_config.endgame_tiles_rate:
-					var rand_y_offset = randi_range(current_config.endgame_shore * -G.Y_RATIO, current_config.endgame_shore * G.Y_RATIO)
-					var rand_x_offset = randi_range(-current_config.endgame_shore, current_config.endgame_shore)
-					if  tile_configs.has(Vector2i(x+rand_x_offset, y+rand_y_offset)):
-						tile_configs[Vector2i(x, y)].tile_type = G.TileType.NORMAL
-						tile_configs[Vector2i(x+rand_x_offset, y+rand_y_offset)].tile_type = G.TileType.ENDGAME
-					else:
-						tile_configs[Vector2i(x, y)].tile_type = G.TileType.ENDGAME
-				else:
-					tile_configs[Vector2i(x, y)].tile_type = G.TileType.NORMAL
-			elif markup[y][x] == G.GenCellType.LAND && P.unlocked_chalks.size() != 0:
-				if randf_range(0.0, 100.0) <= current_config.chalk_tiles_rate:
-					tile_configs[Vector2i(x, y)].tile_type = G.TileType.CHALKED
-					if P.last_unlocked_chalk != null:
-						tile_configs[Vector2i(x, y)].chalk_type = P.last_unlocked_chalk
-					else:
-						tile_configs[Vector2i(x, y)].chalk_type = P.unlocked_chalks.pick_random()
-					if tile_configs[Vector2i(x, y)].chalk_type == G.ChalkType.GUIDANCE:
-						tile_configs[Vector2i(x, y)].guidance_vec = G.get_random_direction()
-				else:
-					tile_configs[Vector2i(x, y)].tile_type = G.TileType.NORMAL
-			elif markup[y][x] != G.GenCellType.VOID:
-				tile_configs[Vector2i(x, y)].tile_type = G.TileType.NORMAL
-			
-			if markup[y][x] == G.GenCellType.CENTER:
-				centers.append(Vector2i(x, y))
+			var cell_type: int = markup[y][x]
+			var cell_pos: Vector2i = Vector2i(x, y)
+			if tile_configs.has(cell_pos):
+				var tile_conf = tile_configs[cell_pos]
+				tile_conf.tile_type = G.TileType.NORMAL
+				match cell_type:
+					G.GenCellType.VOID, G.GenCellType.SHORE:
+						pass
+					G.GenCellType.EDGE:
+						if randf() <= current_config.endgame_tiles_rate:
+							var rand_y_offset: int = randi_range(current_config.endgame_shore * -G.Y_RATIO, current_config.endgame_shore * G.Y_RATIO)
+							var rand_x_offset: int = randi_range(-current_config.endgame_shore, current_config.endgame_shore)
+							var target_pos: Vector2i = Vector2i(x + rand_x_offset, y + rand_y_offset)
+							
+							if tile_configs.has(target_pos) and markup[target_pos.y][target_pos.x] == G.GenCellType.SHORE:
+								tile_configs[target_pos].tile_type = G.TileType.ENDGAME
+							else:
+								tile_conf.tile_type = G.TileType.ENDGAME
+					G.GenCellType.LAND:
+						var random_modifier: bool = (randi() % 2) == 0
+						if random_modifier:
+							if P.unlocked_chalks.size() > 0 and randf_range(0.0, 100.0) <= current_config.chalk_tiles_rate:
+								tile_conf.tile_type = G.TileType.CHALKED
+								tile_conf.chalk_type = P.last_unlocked_chalk if P.last_unlocked_chalk != null else P.unlocked_chalks.pick_random()
+								if tile_conf.chalk_type == G.ChalkType.GUIDANCE or tile_conf.chalk_type == G.ChalkType.SCRIBBLE:
+									tile_conf.guidance_vec = G.get_random_direction()
+						else:
+							if randf() <= current_config.missing_tiles_rate:
+								tile_conf.tile_type = G.TileType.DEAD
+					G.GenCellType.CENTER:
+						centers.append(cell_pos)
+					_:
+						print("GameBuilder: Mapping Error")
 	return tile_configs

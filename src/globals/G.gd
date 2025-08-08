@@ -20,7 +20,8 @@ func set_turn(turn: GameTurn):
 	current_turn = turn
 	emit_signal("turn_next", current_turn)
 
-enum ChalkType { 
+enum ChalkType {  
+	SCRIBBLE,
 	DECOY, 
 	HOPSCOTCH, 
 	SCOTOMA, 
@@ -54,6 +55,7 @@ const BIOME_RESOURCES = {
 }
 
 const CHALK_RESOURCES = {
+	ChalkType.SCRIBBLE: preload("res://assets/chalks/scribble.png"), 
 	ChalkType.DECOY: preload("res://assets/chalks/decoy.png"), 
 	ChalkType.HOPSCOTCH: preload("res://assets/chalks/hopscotch.png"), 
 	ChalkType.SCOTOMA: preload("res://assets/chalks/scotoma.png"), 
