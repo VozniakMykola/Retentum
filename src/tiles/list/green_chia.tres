@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="TileResource" load_steps=3 format=3 uid="uid://cqtwpr3yawlhw"]
 
 [ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tiles/tile_res.gd" id="1_va41k"]
-[ext_resource type="Material" uid="uid://b5cbqu2ol044g" path="res://assets/materials/chia.tres" id="1_vrdx7"]
+[ext_resource type="Material" uid="uid://dsqem7ewj1sal" path="res://assets/materials/chia.tres" id="1_vrdx7"]
 
 [resource]
 script = ExtResource("1_va41k")
@@ -9,5 +9,6 @@ tile_id = "green_chia"
 base_material = ExtResource("1_vrdx7")
 albedo_color = 6
 ignore_albedo = false
+is_rotatable = true
 is_unlocked = false
 metadata/_custom_type_script = "uid://bcsf5g74r2jr5"

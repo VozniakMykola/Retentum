@@ -63,19 +63,7 @@ func scatter_game_objects(tile_configs: Dictionary, markup: Array) -> Dictionary
 					tile_configs[Vector2i(x, y)].tile_type = G.TileType.NORMAL
 			elif markup[y][x] != G.GenCellType.VOID:
 				tile_configs[Vector2i(x, y)].tile_type = G.TileType.NORMAL
+			
 			if markup[y][x] == G.GenCellType.CENTER:
 				centers.append(Vector2i(x, y))
 	return tile_configs
-
-#@export_category("From Difficulty Adjuster")
-#@export var world_x: int
-
-#@export var missing_tiles_count: int
-#@export var endgame_tiles_count: int
-#@export var deviation_threshold: int
-
-
-#@export var monke_center_spawn: bool
-#@export_category("From Narration Adjuster")
-#@export var chalk_tiles_count: int
-#@export var chalk_inventory_count: int

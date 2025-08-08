@@ -1,43 +1,24 @@
 class_name DifficultyAdjuster
 extends Resource
 
-@export var world_x_size_range: Vector2i = Vector2i(9, 9)
-@export var missing_tiles_rate: Vector2 = Vector2(0, 0.33)
-@export var endgame_tiles_rate: Vector2 = Vector2(0.8, 1.0)
+@export var world_x_size_range: int = 9
+@export var missing_tiles_rate: float = 0.3
+@export var endgame_tiles_rate: float = 0.5
 @export var endgame_shore: int = 1
 @export var monke_spawn_area: int = 1
 
 static func get_data() -> DifficultyAdjuster:
 	var config = DifficultyAdjuster.new()
-	
-	match P.get_current_pacing_state():
-		P.PacingState.EASY:
-			config.world_x_size_range = Vector2i(16, 20)
-			config.missing_tiles_rate = Vector2(0.15, 0.4)
-			config.endgame_tiles_rate = Vector2(0.3, 0.60)
-			config.endgame_shore = 1
-			config.monke_spawn_area = 1
-			
-		P.PacingState.MEDIUM:
-			config.world_x_size_range = Vector2i(12, 15)
-			config.missing_tiles_rate = Vector2(0.1, 0.33)
-			config.endgame_tiles_rate = Vector2(0.4, 0.70)
-			config.endgame_shore = 1
-			config.monke_spawn_area = 2
-			
-		P.PacingState.HARD:
-			config.world_x_size_range = Vector2i(9, 11)
-			config.missing_tiles_rate = Vector2(0, 0.2)
-			config.endgame_tiles_rate = Vector2(0.6, 0.8)
-			config.endgame_shore = 3
-			config.monke_spawn_area = 3
-			
-		P.PacingState.CLIMAX:
-			config.world_x_size_range = Vector2i(6, 9)
-			config.missing_tiles_rate = Vector2(0, 0.1)
-			config.endgame_tiles_rate = Vector2(0.7, 1.0)
-			config.endgame_shore = 2
-			config.monke_spawn_area = 3
-
+	config.world_x_size_range = 12 # norm
+	#config.world_x_size_range = 9 - smol very
+	config.missing_tiles_rate = 0.3
+	config.endgame_tiles_rate = 0.5
+	config.endgame_shore = 1
+	config.monke_spawn_area = 2
+	#match P.get_current_pacing_state():
+		#P.PacingState.EASY:
+		#P.PacingState.MEDIUM:
+		#P.PacingState.HARD:
+		#P.PacingState.CLIMAX:
 	
 	return config

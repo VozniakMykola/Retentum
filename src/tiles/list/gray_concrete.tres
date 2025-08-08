@@ -9,5 +9,6 @@ tile_id = "gray_concrete"
 base_material = ExtResource("1_n20wq")
 albedo_color = 5
 ignore_albedo = false
+is_rotatable = true
 is_unlocked = true
 metadata/_custom_type_script = "uid://bcsf5g74r2jr5"
