@@ -73,6 +73,11 @@ func move_random():
 
 #################################################################
 func move_to(next_cell: Vector2i) -> void:
+	var dir: Vector2i = (grid_map.get_true_from_staggered(next_cell) - grid_map.get_true_from_staggered(current_cell))
+	var normalized_dir: Vector2i = Direction2D.get_rotated(dir, -2)
+	var rotation_deg = Direction2D.direction_to_degrees(normalized_dir)
+	rotation_degrees = Vector3(0, rotation_deg, 0)
+	
 	if grid_map.has_cell_item(next_cell):
 		current_tile.set_tile_state(G.TileState.EMPTY)
 		current_cell = next_cell

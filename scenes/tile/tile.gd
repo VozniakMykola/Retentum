@@ -74,14 +74,14 @@ var tile_behavior: Dictionary = {
 }
 
 const DIR_ROTATIONS: Dictionary = {
-	Vector2i.UP: Vector3(-90.0, 45.0, 0.0),
-	Vector2i.DOWN: Vector3(90.0, 45.0, 0.0),
-	Vector2i.LEFT: Vector3(90.0, -45.0, 0.0),
-	Vector2i.RIGHT: Vector3(-90.0, -45.0, 0.0),
-	Vector2i.UP + Vector2i.LEFT: Vector3(90.0, -90.0, 0.0),
-	Vector2i.UP + Vector2i.RIGHT: Vector3(-90.0, 0.0, 0.0),
-	Vector2i.DOWN + Vector2i.LEFT: Vector3(90.0, 0.0, 0.0),
-	Vector2i.DOWN + Vector2i.RIGHT: Vector3(-90.0, -90.0, 0.0)
+	Direction2D.UP: Vector3(-90.0, 45.0, 0.0),
+	Direction2D.DOWN: Vector3(90.0, 45.0, 0.0),
+	Direction2D.LEFT: Vector3(90.0, -45.0, 0.0),
+	Direction2D.RIGHT: Vector3(-90.0, -45.0, 0.0),
+	Direction2D.UP_LEFT: Vector3(90.0, -90.0, 0.0),
+	Direction2D.UP_RIGHT: Vector3(-90.0, 0.0, 0.0),
+	Direction2D.DOWN_LEFT: Vector3(90.0, 0.0, 0.0),
+	Direction2D.DOWN_RIGHT: Vector3(-90.0, -90.0, 0.0)
 }
 #endregion
 

@@ -119,16 +119,3 @@ const COLOR_MODULE_1 = {
 
 func get_color(color_enum: ColorType) -> Color:
 	return active_color_module.get(color_enum, Color.WHITE)
-
-func get_random_direction() -> Vector2i:
-	var directions: Array[Vector2i] = [
-		Vector2i.UP,        # (0, -1)
-		Vector2i.DOWN,      # (0, 1)
-		Vector2i.LEFT,      # (-1, 0)
-		Vector2i.RIGHT,     # (1, 0)
-		Vector2i.UP + Vector2i.LEFT,    # (-1, -1)
-		Vector2i.UP + Vector2i.RIGHT,   # (1, -1)
-		Vector2i.DOWN + Vector2i.LEFT,  # (-1, 1)
-		Vector2i.DOWN + Vector2i.RIGHT  # (1, 1)
-	]
-	return directions[randi() % directions.size()]
