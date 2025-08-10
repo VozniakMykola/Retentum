@@ -7,8 +7,8 @@ extends Resource
 @export var albedo_color: G.ColorType = G.ColorType.WHITE
 @export var ignore_albedo: bool = false
 @export var is_rotatable: bool = true
-@export_group("Journal")
-@export var is_unlocked: bool = false
+#@export_group("Journal")
+#@export var is_unlocked: bool = false
 
 func get_material() -> StandardMaterial3D:
 	if !base_material:

@@ -6,7 +6,6 @@ extends GridObject
 @onready var collision_shape: CollisionShape3D = $Area3D/CollisionShape3D
 @onready var sprite: Node3D = $Sprite
 @onready var mesh: MeshInstance3D = $Sprite/Mesh
-
 @onready var chalk: Sprite3D = $Sprite/Chalk
 @onready var endgame: Node3D = $Sprite/Endgame
 
@@ -396,6 +395,7 @@ func _apply_tile_type_NORMAL(previous_type: G.TileType, is_clicked: bool = false
 		G.TileType.DEAD, G.TileType.NULL:
 			await anim_appear_1()
 		G.TileType.CHALKED:
+			anim_tile_down()
 			if is_clicked:
 				G.set_turn(G.GameTurn.MONKE_TURN)
 		_:
