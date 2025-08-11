@@ -66,7 +66,7 @@ func scatter_game_objects(tile_configs: Dictionary, markup: Array) -> Dictionary
 								if tile_conf.chalk_type == G.ChalkType.GUIDANCE:
 									tile_conf.guidance_vec = Direction2D.get_random()
 								elif tile_conf.chalk_type == G.ChalkType.SCRIBBLE:
-									tile_conf.guidance_vec = Direction2D.get_random_diagonal()
+									tile_conf.guidance_vec = Direction2D.get_random_main()
 						else:
 							if randf() <= current_config.missing_tiles_rate:
 								tile_conf.tile_type = G.TileType.DEAD

@@ -408,7 +408,6 @@ func _apply_tile_type_CHALKED(previous_type: G.TileType) -> void:
 
 	chalk.texture = G.CHALK_RESOURCES[tile_core.chalk_type]
 	chalk.rotation_degrees = DIR_ROTATIONS.get(tile_core.guidance_vec, Vector3.ZERO)
-	chalk.position.y = TILE_SIZE.y / 2
 	chalk.visible = true
 	
 	match previous_type:
@@ -422,7 +421,7 @@ func _apply_tile_type_ENDGAME(previous_type: G.TileType) -> void:
 	_on_tile_visibility()
 	chalk.visible = false
 	
-	endgame.position.y = TILE_SIZE.y / 2
+	#endgame.position.y = TILE_SIZE.y / 2 + randf_range(-0.02, 0.04) #maybe
 	endgame.rotation.y = randf() * TAU  # TAU = 2*PI
 	endgame.visible = true
 	
