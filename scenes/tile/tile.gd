@@ -71,17 +71,6 @@ var tile_behavior: Dictionary = {
 		}
 	}
 }
-
-const DIR_ROTATIONS: Dictionary = {
-	Direction2D.UP: Vector3(-90.0, 45.0, 0.0),
-	Direction2D.DOWN: Vector3(90.0, 45.0, 0.0),
-	Direction2D.LEFT: Vector3(90.0, -45.0, 0.0),
-	Direction2D.RIGHT: Vector3(-90.0, -45.0, 0.0),
-	Direction2D.UP_LEFT: Vector3(-90.0, 90.0, 0.0),
-	Direction2D.UP_RIGHT: Vector3(-90.0, 0.0, 0.0),
-	Direction2D.DOWN_LEFT: Vector3(90.0, 0.0, 0.0),
-	Direction2D.DOWN_RIGHT: Vector3(90.0, 90.0, 0.0)
-}
 #endregion
 
 #region Anim
@@ -388,7 +377,7 @@ func _reset_tile() -> void:
 func _apply_tile_type_NORMAL(previous_type: G.TileType, is_clicked: bool = false) -> void:
 	_update_material()
 	_on_tile_visibility()
-	chalk.visible = false
+	chalk.off()
 	endgame.visible = false
 	
 	match previous_type:
@@ -405,10 +394,8 @@ func _apply_tile_type_CHALKED(previous_type: G.TileType) -> void:
 	_update_material()
 	_on_tile_visibility()
 	endgame.visible = false
-
-	chalk.texture = G.CHALK_RESOURCES[tile_core.chalk_type]
-	chalk.rotation_degrees = DIR_ROTATIONS.get(tile_core.guidance_vec, Vector3.ZERO)
-	chalk.visible = true
+	
+	chalk.on(tile_core)
 	
 	match previous_type:
 		G.TileType.DEAD, G.TileType.NULL:
@@ -419,7 +406,7 @@ func _apply_tile_type_CHALKED(previous_type: G.TileType) -> void:
 func _apply_tile_type_ENDGAME(previous_type: G.TileType) -> void:
 	_update_material()
 	_on_tile_visibility()
-	chalk.visible = false
+	chalk.off()
 	
 	#endgame.position.y = TILE_SIZE.y / 2 + randf_range(-0.02, 0.04) #maybe
 	endgame.rotation.y = randf() * TAU  # TAU = 2*PI

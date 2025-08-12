@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://cys0c72c5dtqm"]
+[gd_scene load_steps=10 format=4 uid="uid://cys0c72c5dtqm"]
 
 [ext_resource type="Script" uid="uid://b3uwbkyiuqw2e" path="res://scenes/tile/tile.gd" id="1_bibkx"]
 [ext_resource type="Texture2D" uid="uid://fxr2vmaojy02" path="res://assets/chalks/test.png" id="2_2jaqc"]
@@ -34,6 +34,57 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_qfgw5")
+
+[sub_resource type="GDScript" id="GDScript_bibkx"]
+script/source = "extends Sprite3D
+
+const DEFAULT_UP_ROTATION = Vector3(-90.0, 45.0, 0.0)
+
+const ARROW_ROTATIONS: Dictionary = {
+	Direction2D.UP: DEFAULT_UP_ROTATION,
+	Direction2D.DOWN: Vector3(90.0, 45.0, 0.0),
+	Direction2D.LEFT: Vector3(90.0, -45.0, 0.0),
+	Direction2D.RIGHT: Vector3(-90.0, -45.0, 0.0),
+	Direction2D.UP_LEFT: Vector3(-90.0, 90.0, 0.0),
+	Direction2D.UP_RIGHT: Vector3(-90.0, 0.0, 0.0),
+	Direction2D.DOWN_LEFT: Vector3(90.0, 0.0, 0.0),
+	Direction2D.DOWN_RIGHT: Vector3(90.0, 90.0, 0.0)
+}
+
+const MIRROR_ROTATIONS = {
+	Direction2D.RIGHT: DEFAULT_UP_ROTATION,
+	Direction2D.LEFT: Vector3(90.0, 225.0, 0.0),
+}
+
+const HOPSCOTCH_ROTATIONS = {
+	Direction2D.RIGHT: DEFAULT_UP_ROTATION,
+	Direction2D.LEFT: Vector3(90.0, 225.0, 0.0),
+}
+
+func on(tile_core: TileConfig):
+	texture = G.CHALK_RESOURCES[tile_core.chalk_type]
+	var random_coef: bool = (randi() % 4) == 0
+	match tile_core.chalk_type:
+		G.ChalkType.SCRIBBLE:
+			rotation_degrees = ARROW_ROTATIONS.get(Direction2D.get_random_main(), Vector3.ZERO) 
+		G.ChalkType.DECOY:
+			rotation_degrees = DEFAULT_UP_ROTATION
+			rotation_degrees.y += randi_range(-35, 10)
+		G.ChalkType.HOPSCOTCH:
+			rotation_degrees = MIRROR_ROTATIONS.get(Direction2D.LEFT, Vector3.ZERO) if random_coef else MIRROR_ROTATIONS.get(Direction2D.RIGHT, Vector3.ZERO)
+		G.ChalkType.SCOTOMA:
+			rotation_degrees = MIRROR_ROTATIONS.get(Direction2D.LEFT, Vector3.ZERO) if random_coef else MIRROR_ROTATIONS.get(Direction2D.RIGHT, Vector3.ZERO)
+		G.ChalkType.REVELATION:
+			rotation_degrees = MIRROR_ROTATIONS.get(Direction2D.LEFT, Vector3.ZERO) if random_coef else MIRROR_ROTATIONS.get(Direction2D.RIGHT, Vector3.ZERO)
+		G.ChalkType.SIGIL:
+			rotation_degrees.y = Direction2D.direction_to_degrees(Direction2D.get_random_diagonal())
+		G.ChalkType.GUIDANCE:
+			rotation_degrees = ARROW_ROTATIONS.get(tile_core.guidance_vec, Vector3.ZERO)
+	visible = true
+
+func off():
+	visible = false
+"
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_gb3yw"]
 _surfaces = [{
@@ -88,6 +139,7 @@ modulate = Color(1, 1, 1, 0.784314)
 pixel_size = 0.001
 texture_filter = 0
 texture = ExtResource("2_2jaqc")
+script = SubResource("GDScript_bibkx")
 
 [node name="Endgame" type="Node3D" parent="Sprite"]
 transform = Transform3D(0.353553, 0, 0.353553, 0, 0.5, 0, -0.353553, 0, 0.353553, 0, 0.1, 0)
