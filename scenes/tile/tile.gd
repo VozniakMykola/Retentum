@@ -272,7 +272,7 @@ func anim_fall() -> void:
 
 	await current_tween.finished
 
-func anim_appear_1() -> void:
+func anim_appear() -> void:
 	new_tween()
 	
 	current_tween.tween_property(sprite, "scale", Vector3.ONE, APPEAR_SPEED_1)\
@@ -348,7 +348,7 @@ func _apply_tile_type_NORMAL(previous_type: G.TileType, is_clicked: bool = false
 	
 	match previous_type:
 		G.TileType.DEAD, G.TileType.NULL:
-			await anim_appear_1()
+			await anim_appear()
 		G.TileType.CHALKED:
 			anim_tile_down()
 			if is_clicked:
@@ -365,7 +365,7 @@ func _apply_tile_type_CHALKED(previous_type: G.TileType) -> void:
 	
 	match previous_type:
 		G.TileType.DEAD, G.TileType.NULL:
-			await anim_appear_1()
+			await anim_appear()
 		_:
 			pass
 
@@ -377,7 +377,8 @@ func _apply_tile_type_ENDGAME(previous_type: G.TileType) -> void:
 	
 	match previous_type:
 		G.TileType.DEAD, G.TileType.NULL:
-			await anim_appear_1()
+			await anim_appear()
+			endgame.anim_appear()
 		_:
 			pass
 	

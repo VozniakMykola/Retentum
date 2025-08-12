@@ -94,13 +94,16 @@ func appear_anim():
 script/source = "extends Node3D
 
 var current_tween: Tween
+var original_scale: Vector3
 
-const APPEAR_SPEED: float = 0.2
+func _ready():
+	original_scale = scale
 
 func on():
-	#endgame.position.y = TILE_SIZE.y / 2 + randf_range(-0.02, 0.04) #maybe
-	rotation.y = randf() * TAU  # TAU = 2*PI
 	visible = true
+	scale = Vector3.ZERO
+	#endgame.position.y = TILE_SIZE.y / 2 + randf_range(-0.02, 0.04) #maybe
+	rotation_degrees.y = randi_range(0, 360)
 
 func off():
 	visible = false
@@ -112,6 +115,20 @@ func new_tween() -> void:
 
 func anim_appear() -> void:
 	new_tween()
+	current_tween.set_parallel(true)
+	
+	var duration = randf_range(0.25, 1.1)
+	print(duration)
+	var rotation_direction = [-1, 1].pick_random()
+	scale = Vector3.ZERO
+
+	current_tween.tween_property(self, \"scale\", original_scale * 1.05, duration * 0.8)\\
+		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	current_tween.tween_property(self, \"scale\", original_scale, duration * 0.2)\\
+		.set_delay(duration * 0.8).set_ease(Tween.EASE_IN)
+	
+	current_tween.tween_property(self, \"rotation:y\", rotation.y + deg_to_rad(180) * rotation_direction, duration * 0.9)\\
+		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	
 "
 
