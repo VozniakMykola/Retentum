@@ -54,6 +54,8 @@ const BIOME_RESOURCES = {
 	BiomeType.SPACEYARD: preload("res://src/biomes/list/spaceyard.tres")
 }
 
+var chalk_textures: Dictionary = CHALK_RESOURCES_CH
+
 const CHALK_RESOURCES = {
 	ChalkType.SCRIBBLE: preload("res://assets/chalks/scribble.png"), 
 	ChalkType.DECOY: preload("res://assets/chalks/decoy.png"), 
@@ -62,6 +64,16 @@ const CHALK_RESOURCES = {
 	ChalkType.REVELATION: preload("res://assets/chalks/revelation.png"), 
 	ChalkType.SIGIL: preload("res://assets/chalks/sigil.png"), 
 	ChalkType.GUIDANCE: preload("res://assets/chalks/guidance.png"),
+}
+
+const CHALK_RESOURCES_CH = {
+	ChalkType.SCRIBBLE: preload("res://assets/chalks/scribble_ch.png"), 
+	ChalkType.DECOY: preload("res://assets/chalks/decoy_ch.png"), 
+	ChalkType.HOPSCOTCH: preload("res://assets/chalks/hopscotch_ch.png"), 
+	ChalkType.SCOTOMA: preload("res://assets/chalks/scotoma_ch.png"), 
+	ChalkType.REVELATION: preload("res://assets/chalks/revelation_ch.png"), 
+	ChalkType.SIGIL: preload("res://assets/chalks/sigil_ch.png"), 
+	ChalkType.GUIDANCE: preload("res://assets/chalks/guidance_ch.png"),
 }
 
 enum ShapePattern { RECTANGLE, DIAMOND, CIRCLE, CROSS, ISLAND }

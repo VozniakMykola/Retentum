@@ -272,40 +272,6 @@ func anim_fall() -> void:
 
 	await current_tween.finished
 
-func anim_appear_2() -> void:
-	new_tween()
-	
-	current_tween.tween_property(sprite, "scale", Vector3.ONE, APPEAR_SPEED * 1.5)\
-		.from(Vector3.ZERO)\
-		.set_ease(Tween.EASE_OUT)
-
-	current_tween.set_parallel(true)
-	
-	current_tween.tween_property(
-		sprite, 
-		"position:y", 
-		original_sprite_position.y + APPEAR_HEIGHT, 
-		APPEAR_SPEED * 0.5
-	).from_current().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-
-	var tween_down = create_tween()
-	tween_down.tween_property(
-		sprite, 
-		"position:y", 
-		original_sprite_position.y - APPEAR_OVERSHOOT, 
-		APPEAR_SPEED * 0.5
-	).set_delay(APPEAR_SPEED * 0.5)
-	tween_down.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	
-	tween_down.tween_property(
-		sprite, 
-		"position:y", 
-		original_sprite_position.y, 
-		APPEAR_SPEED * 0.5
-	)
-	
-	await current_tween.finished
-
 func anim_appear_1() -> void:
 	new_tween()
 	
@@ -378,7 +344,7 @@ func _apply_tile_type_NORMAL(previous_type: G.TileType, is_clicked: bool = false
 	_update_material()
 	_on_tile_visibility()
 	chalk.off()
-	endgame.visible = false
+	endgame.off()
 	
 	match previous_type:
 		G.TileType.DEAD, G.TileType.NULL:
@@ -393,7 +359,7 @@ func _apply_tile_type_NORMAL(previous_type: G.TileType, is_clicked: bool = false
 func _apply_tile_type_CHALKED(previous_type: G.TileType) -> void:
 	_update_material()
 	_on_tile_visibility()
-	endgame.visible = false
+	endgame.off()
 	
 	chalk.on(tile_core)
 	
@@ -407,10 +373,7 @@ func _apply_tile_type_ENDGAME(previous_type: G.TileType) -> void:
 	_update_material()
 	_on_tile_visibility()
 	chalk.off()
-	
-	#endgame.position.y = TILE_SIZE.y / 2 + randf_range(-0.02, 0.04) #maybe
-	endgame.rotation.y = randf() * TAU  # TAU = 2*PI
-	endgame.visible = true
+	endgame.on()
 	
 	match previous_type:
 		G.TileType.DEAD, G.TileType.NULL:
