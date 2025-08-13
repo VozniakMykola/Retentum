@@ -44,9 +44,9 @@ var tile_behavior: Dictionary = {
 			#cat_on_it
 		},
 		G.TileType.ENDGAME: {
-			"click": func(): pass,
-			"on_mouse_enter": func(): pass,
-			"on_mouse_exit": func(): pass,
+			"click": anim_wobble,
+			"on_mouse_enter": anim_tilt_start,
+			"on_mouse_exit": anim_tilt_stop,
 			#"on_hover": _tile_hover_blocked
 			#cat_on_it
 		},
@@ -66,7 +66,7 @@ var tile_behavior: Dictionary = {
 	},
 	G.TileState.OCCUPIED: {
 		"_default": {
-			"click": func(): pass,
+			"click": anim_wobble,
 			#"hover": _tile_hover_blocked
 		}
 	}
@@ -100,6 +100,8 @@ var original_sprite_position: Vector3
 var original_sprite_rotation: Vector3
 var lifted_sprite_position: Vector3
 var is_hovered: bool = false
+var mouse_ontile_pos: Vector3 = Vector3.ZERO
+var is_anim_tilt: bool = false
 var current_tween: Tween
 #endregion
 #endregion
@@ -159,6 +161,8 @@ func _on_mouse_exited() -> void:
 		action.call()
 	
 func _on_input_event(_camera: Camera3D, event: InputEvent, _position: Vector3, _normal: Vector3, _shape_idx: int) -> void:
+	if event is InputEventMouseMotion:
+		mouse_ontile_pos = _position
 	if not (event is InputEventMouseButton and event.pressed):
 		return
 	if event.button_index == MOUSE_BUTTON_LEFT:
@@ -184,6 +188,7 @@ func new_tween() -> void:
 		current_tween.kill()
 	current_tween = create_tween()
 
+#region Default
 func anim_tile_up() -> void:
 	new_tween()
 	
@@ -240,7 +245,6 @@ func anim_floating() -> void:
 	
 	current_tween.tween_interval(0.05)
 
-
 func anim_fall() -> void:
 	new_tween()
 	current_tween.set_parallel(true)
@@ -272,6 +276,95 @@ func anim_appear() -> void:
 		.set_ease(Tween.EASE_OUT)
 
 	await current_tween.finished
+#endregion
+
+#region Blocked
+func anim_wobble() -> void:
+	new_tween()
+	
+	var initial_rotation = original_sprite_rotation
+	var base_intensity = 0.4
+	var duration = 0.4
+	var steps = 6
+	
+	current_tween.set_trans(Tween.TRANS_SINE)
+	current_tween.set_ease(Tween.EASE_OUT)
+	
+	var directions = [
+		Vector3(1, 0, 0),   # X
+		Vector3(0, 0, 1),    # Z
+		Vector3(-1, 0, 0),   # -X
+		Vector3(0, 0, -1)    # -Z
+	]
+	
+	var start_dir = randi_range(0,3)
+	
+	for i in range(steps):
+		var intensity = base_intensity * (1.0 - float(i)/steps)
+		var step_duration = duration * (0.15 + 0.1 * i/steps)
+		
+		var dir = directions[(start_dir+i) % directions.size()]
+		var rotation_offset = dir * intensity
+		
+		if i == steps - 1:
+			current_tween.tween_property(sprite, "rotation", original_sprite_rotation, step_duration)
+		else:
+			current_tween.tween_property(sprite, "rotation", initial_rotation + rotation_offset, step_duration)
+
+func _process(delta):
+	if is_anim_tilt:
+		var max_tilt_angle: float = 15.0
+		var tilt_speed: float = 10.0
+		var dir_to_mouse = Vector3(
+			mouse_ontile_pos.x - global_position.x,
+			0,
+			mouse_ontile_pos.z - global_position.z
+		).normalized()
+		
+		var target_rotation_x = dir_to_mouse.z * deg_to_rad(max_tilt_angle)
+		var target_rotation_z = -dir_to_mouse.x * deg_to_rad(max_tilt_angle)
+		
+		sprite.rotation.x = lerp(sprite.rotation.x, target_rotation_x, delta * tilt_speed)
+		sprite.rotation.z = lerp(sprite.rotation.z, target_rotation_z, delta * tilt_speed)
+
+func anim_tilt_start():
+	is_anim_tilt = true
+	
+	new_tween()
+	
+	var duration = 0.1
+	var max_tilt_angle: float = 15.0
+	var dir_to_mouse = Vector3(
+		mouse_ontile_pos.x - global_position.x,
+		0,
+		mouse_ontile_pos.z - global_position.z
+	).normalized()
+		
+	var target_rotation_x = dir_to_mouse.z * deg_to_rad(max_tilt_angle)
+	var target_rotation_z = -dir_to_mouse.x * deg_to_rad(max_tilt_angle)
+	
+	
+	current_tween.set_parallel(true)
+	current_tween.set_trans(Tween.TRANS_SINE)
+	current_tween.set_ease(Tween.EASE_IN)
+	
+	current_tween.tween_property(sprite, "rotation", Vector3(target_rotation_x, 0, target_rotation_z), duration)
+	current_tween.tween_property(sprite, "position:y", original_sprite_position.y + 0.1, duration)
+
+func anim_tilt_stop():
+	is_anim_tilt = false
+	
+	new_tween()
+	
+	var duration = 0.2
+	
+	current_tween.set_parallel(true)
+	current_tween.set_trans(Tween.TRANS_SINE)
+	current_tween.set_ease(Tween.EASE_OUT)
+	
+	current_tween.tween_property(sprite, "rotation", original_sprite_rotation, duration)
+	current_tween.tween_property(sprite, "position", original_sprite_position, duration)
+#endregion
 
 #endregion
 
