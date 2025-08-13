@@ -187,14 +187,14 @@ func new_tween() -> void:
 func anim_tile_up() -> void:
 	new_tween()
 	
+	current_tween.set_parallel(true)
 	current_tween.set_trans(Tween.TRANS_BACK)
 	current_tween.set_ease(Tween.EASE_OUT)
-	current_tween.tween_property(
-		sprite, 
-		"position", 
-		lifted_sprite_position + Vector3(0, LIFT_OVERSHOOT, 0), 
-		LIFT_SPEED
-	)
+	
+	current_tween.tween_property(sprite, "position", lifted_sprite_position + Vector3(0, LIFT_OVERSHOOT, 0), LIFT_SPEED)
+	current_tween.tween_property(mesh.material_override, "emission_energy_multiplier", 0.02, LIFT_SPEED)
+	
+	current_tween.chain().tween_callback(anim_floating)
 	
 	#current_tween.tween_property(
 		#sprite, 
@@ -202,26 +202,18 @@ func anim_tile_up() -> void:
 		#lifted_sprite_position, 
 		#BOUNCE_DURATION
 	#)
-	current_tween.tween_callback(anim_floating)
-	
+
 func anim_tile_down() -> void:
 	new_tween()
 	
+	current_tween.set_parallel(true)
 	current_tween.set_trans(Tween.TRANS_BACK)
 	current_tween.set_ease(Tween.EASE_OUT)
-	current_tween.tween_property(
-		sprite, 
-		"position", 
-		original_sprite_position - Vector3(0, DROP_OVERSHOOT, 0), 
-		LIFT_SPEED
-	)
 	
-	current_tween.tween_property(
-		sprite, 
-		"position", 
-		original_sprite_position, 
-		BOUNCE_DURATION
-	)
+	current_tween.tween_property(sprite, "position", original_sprite_position - Vector3(0, DROP_OVERSHOOT, 0), LIFT_SPEED)
+	current_tween.tween_property(mesh.material_override, "emission_energy_multiplier", 0, LIFT_SPEED)
+	
+	current_tween.chain().tween_property(sprite, "position", original_sprite_position, BOUNCE_DURATION)
 
 func anim_floating() -> void:
 	new_tween()
@@ -339,6 +331,7 @@ func _reset_tile() -> void:
 	sprite.position = original_sprite_position
 	sprite.rotation = original_sprite_rotation
 	mesh.material_override.albedo_color.a = 1
+	mesh.material_override.emission_energy_multiplier = 0
 
 func _apply_tile_type_NORMAL(previous_type: G.TileType, is_clicked: bool = false) -> void:
 	_update_material()

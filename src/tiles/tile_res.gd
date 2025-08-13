@@ -12,7 +12,7 @@ extends Resource
 
 func get_material() -> StandardMaterial3D:
 	if !base_material:
-		return load("res://src/tiles/list/test.tres").duplicate() as StandardMaterial3D
+		return load("res://assets/materials/unused/test.tres").duplicate() as StandardMaterial3D
 	if ignore_albedo:
 		return base_material.duplicate()
 	var mat = base_material.duplicate()

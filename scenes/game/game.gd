@@ -11,6 +11,7 @@ var game_center: Vector3 = Vector3.ZERO
 @onready var iso_camera: Camera3D = $IsoCamera
 @onready var monke: Monke = $Monke
 @onready var light: DirectionalLight3D = $DirectionalLight3D
+@onready var void_bottom: MeshInstance3D = $VoidBottom
 
 func _ready() -> void:
 	G.turn_next.connect(_on_turn_next)
@@ -48,6 +49,8 @@ func setup_camera() -> void:
 	)
 	iso_camera.size = size_offset
 	iso_camera.rotation_degrees = Vector3(-45, 45, 0)
+	
+	void_bottom.position = Vector3(game_center.x - 6.5, -10, game_center.z - 6.5)
 
 func add_map_to_scene() -> void:
 	if not is_instance_valid(grid_map) or grid_map.get_parent() != self:
