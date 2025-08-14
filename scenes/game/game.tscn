@@ -150,10 +150,6 @@ text = "LOSE"
 
 [node name="EnviObjects" type="Node3D" parent="."]
 
-[node name="GodrayTimer" type="Timer" parent="EnviObjects"]
-one_shot = true
-autostart = true
-
 [node name="VoidBottom" type="MeshInstance3D" parent="EnviObjects"]
 transform = Transform3D(31.8198, -21.2132, -9.27259e-07, 0, -1.31134e-06, 30, -31.8198, -21.2132, -9.27259e-07, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_0sr1o")
@@ -162,4 +158,3 @@ skeleton = NodePath("../..")
 
 [connection signal="pressed" from="Front/Win" to="." method="_on_win_pressed"]
 [connection signal="pressed" from="Front/Lose" to="." method="_on_lose_pressed"]
-[connection signal="timeout" from="EnviObjects/GodrayTimer" to="." method="_on_godray_timer_timeout"]

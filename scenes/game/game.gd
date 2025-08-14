@@ -18,9 +18,6 @@ var game_diagonal: float
 
 func _ready() -> void:
 	G.turn_next.connect(_on_turn_next)
-	
-	for i in range(godray_pool.get_child_count()):
-		godray_pool.get_child(i).material.set_shader_parameter("alpha", 0)
 	initialize_game()
 
 func initialize_game() -> void:
