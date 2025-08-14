@@ -6,12 +6,14 @@ var game_builder: GameBuilder = GameBuilder.new()
 var game_config: GameConfig
 var level_map: Dictionary
 var game_center: Vector3 = Vector3.ZERO
+var game_diagonal: float
 
 @onready var grid_map = POOLGRID.grid_map
 @onready var iso_camera: Camera3D = $IsoCamera
 @onready var monke: Monke = $Monke
 @onready var light: DirectionalLight3D = $DirectionalLight3D
-@onready var void_bottom: MeshInstance3D = $VoidBottom
+@onready var envi_objects: Node3D = $EnviObjects
+
 
 func _ready() -> void:
 	G.turn_next.connect(_on_turn_next)
@@ -22,35 +24,36 @@ func initialize_game() -> void:
 	
 	game_config = game_builder.generate_config()
 	level_map = game_builder.generate_field()
-	
+	get_game_sizes(game_builder.true_map_size)
 	setup_camera()
+	setup_environment()
 	add_map_to_scene()
 	await map_fill()
 	add_monke()
 	
 	G.set_turn(G.GameTurn.PLAYER_TURN)
 
-func setup_camera() -> void:
-	#tmp but works
-	var matrix_size = grid_map.get_true_from_staggered(game_config.world_size)
-	var grid_size = Vector2(matrix_size.x-1, (matrix_size.y-1) / G.Y_RATIO) * grid_map.cell_size
+func get_game_sizes(map_size: Vector2i) -> void:
+	var map_center: Vector2 = grid_map.get_true_from_staggered_float(Vector2(map_size.x/2, map_size.y/2))
+	game_center = Vector3(map_center.x * grid_map.cell_size.x, grid_map.y_index, map_center.y * grid_map.cell_size.y)
 	
-	var game_center = Vector3(grid_size.x/2 - 0.5, grid_map.y_index, grid_size.y/2)
-	
-	var diagonal = Vector2(grid_size.x, grid_size.y).length()
-	var camera_height = diagonal * 0.71
-	var camera_offset = diagonal * 0.5
-	var size_offset = diagonal * 0.55
+	game_diagonal = (Vector2(map_size) * grid_map.cell_size).length()
 
-	iso_camera.position = Vector3(
-		game_center.x + camera_offset,
-		camera_height,
-		game_center.z + camera_offset
-	)
-	iso_camera.size = size_offset
-	iso_camera.rotation_degrees = Vector3(-45, 45, 0)
+func setup_camera() -> void:
+	var size_offset = 0.6
+	iso_camera.size = game_diagonal * size_offset
 	
-	void_bottom.position = Vector3(game_center.x - 6.5, -10, game_center.z - 6.5)
+	iso_camera.position = Vector3(
+		game_center.x + game_diagonal / 2,
+		game_diagonal / 1.4,
+		game_center.z + game_diagonal / 2
+	)
+	
+	iso_camera.rotation_degrees = Vector3(-45, 45, 0)
+
+func setup_environment() -> void:
+	envi_objects.position = Vector3(game_center.x - 6, game_center.y - 10, game_center.z - 6)
+	
 
 func add_map_to_scene() -> void:
 	if not is_instance_valid(grid_map) or grid_map.get_parent() != self:

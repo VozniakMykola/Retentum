@@ -350,6 +350,8 @@ func anim_tilt_start():
 	
 	current_tween.tween_property(sprite, "rotation", Vector3(target_rotation_x, 0, target_rotation_z), duration)
 	current_tween.tween_property(sprite, "position:y", original_sprite_position.y + 0.1, duration)
+	current_tween.tween_property(mesh.material_override, "emission_energy_multiplier", 0.02, duration)
+	
 
 func anim_tilt_stop():
 	is_anim_tilt = false
@@ -364,6 +366,8 @@ func anim_tilt_stop():
 	
 	current_tween.tween_property(sprite, "rotation", original_sprite_rotation, duration)
 	current_tween.tween_property(sprite, "position", original_sprite_position, duration)
+	current_tween.tween_property(mesh.material_override, "emission_energy_multiplier", 0, duration)
+	
 #endregion
 
 #endregion

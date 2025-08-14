@@ -5,6 +5,7 @@ var shape_mapper: ShapeMapper
 var terrain_mapper: TerrainMapper
 var current_config: GameConfig
 var centers: Array
+var true_map_size: Vector2i
 
 func _init():
 	shape_mapper = ShapeMapper.new()
@@ -37,10 +38,16 @@ func generate_field() -> Dictionary:
 	return gamified_island
 
 func scatter_game_objects(tile_configs: Dictionary, markup: Array) -> Dictionary:
+	
 	for y in range(markup.size()):
 		for x in range(markup[y].size()):
 			var cell_type: int = markup[y][x]
 			var cell_pos: Vector2i = Vector2i(x, y)
+			
+			if cell_type != G.GenCellType.VOID:
+				true_map_size.x = max(true_map_size.x, x)
+				true_map_size.y = max(true_map_size.y, y)
+			
 			if tile_configs.has(cell_pos):
 				var tile_conf = tile_configs[cell_pos]
 				tile_conf.tile_type = G.TileType.NORMAL

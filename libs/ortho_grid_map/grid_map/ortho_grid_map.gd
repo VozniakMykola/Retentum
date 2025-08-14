@@ -52,6 +52,26 @@ func get_true_from_staggered(grid_pos: Vector2i) -> Vector2i:
 	if z % 2 != 0: 
 		new_z -= 1
 	return Vector2i(new_x, new_z)
+	
+## Converts true isometric coordinates to staggered isometric
+func get_staggered_from_true_float(grid_pos: Vector2) -> Vector2:
+	#[not tested]
+	var x = grid_pos.x
+	var z = grid_pos.y
+	var new_z = x + z
+	var z_corrected = z + (1.0 if fmod(new_z, 2.0) != 0.0 else 0.0)
+	var new_x = (x - z_corrected) / 2.0
+	return Vector2(new_x, new_z)
+
+## Converts staggered isometric coordinates to true isometric
+func get_true_from_staggered_float(grid_pos: Vector2) -> Vector2:
+	var x = grid_pos.x
+	var z = grid_pos.y 
+	var new_x = z + x - z/2.0
+	var new_z = z - x - z/2.0
+	if fmod(z, 2.0) != 0.0: 
+		new_z -= 1.0
+	return Vector2(new_x, new_z)
 #endregion
 
 #region Grid-world transformations
