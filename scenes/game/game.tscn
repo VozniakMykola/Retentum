@@ -201,7 +201,7 @@ transform = Transform3D(0.961108, 0.115566, -0.250832, 0, 0.908238, 0.418454, 0.
 calculate_tangents = false
 flip_faces = true
 radius = 3.0
-height = 20.0
+height = 5.0
 smooth_faces = false
 material = SubResource("ShaderMaterial_2a8rs")
 
@@ -210,7 +210,7 @@ transform = Transform3D(0.961108, 0.115566, -0.250832, 0, 0.908238, 0.418454, 0.
 calculate_tangents = false
 flip_faces = true
 radius = 2.0
-height = 20.0
+height = 5.0
 smooth_faces = false
 material = SubResource("ShaderMaterial_2a8rs")
 
@@ -219,7 +219,7 @@ transform = Transform3D(0.961108, 0.115566, -0.250832, 0, 0.908238, 0.418454, 0.
 calculate_tangents = false
 flip_faces = true
 radius = 2.0
-height = 20.0
+height = 5.0
 smooth_faces = false
 material = SubResource("ShaderMaterial_2a8rs")
 
@@ -228,7 +228,7 @@ transform = Transform3D(0.961108, 0.115566, -0.250832, 0, 0.908238, 0.418454, 0.
 calculate_tangents = false
 flip_faces = true
 radius = 4.0
-height = 20.0
+height = 5.0
 smooth_faces = false
 material = SubResource("ShaderMaterial_2a8rs")
 
@@ -237,7 +237,7 @@ transform = Transform3D(0.961108, 0.115566, -0.250832, 0, 0.908238, 0.418454, 0.
 calculate_tangents = false
 flip_faces = true
 radius = 3.0
-height = 20.0
+height = 5.0
 smooth_faces = false
 material = SubResource("ShaderMaterial_2a8rs")
 
@@ -246,7 +246,7 @@ transform = Transform3D(0.961108, 0.115566, -0.250832, 0, 0.908238, 0.418454, 0.
 calculate_tangents = false
 flip_faces = true
 radius = 3.0
-height = 20.0
+height = 5.0
 smooth_faces = false
 material = SubResource("ShaderMaterial_2a8rs")
 
@@ -255,7 +255,7 @@ transform = Transform3D(0.961108, 0.115566, -0.250832, 0, 0.908238, 0.418454, 0.
 calculate_tangents = false
 flip_faces = true
 radius = 3.0
-height = 20.0
+height = 5.0
 smooth_faces = false
 material = SubResource("ShaderMaterial_2a8rs")
 
