@@ -12,11 +12,15 @@ var game_diagonal: float
 @onready var iso_camera: Camera3D = $IsoCamera
 @onready var monke: Monke = $Monke
 @onready var light: DirectionalLight3D = $DirectionalLight3D
-@onready var envi_objects: Node3D = $EnviObjects
-
+@onready var void_bottom: MeshInstance3D = $EnviObjects/VoidBottom
+@onready var godray_timer: Timer = $EnviObjects/GodrayTimer
+@onready var godray_pool: Node3D = $EnviObjects/GodrayPool
 
 func _ready() -> void:
 	G.turn_next.connect(_on_turn_next)
+	
+	for i in range(godray_pool.get_child_count()):
+		godray_pool.get_child(i).material.set_shader_parameter("alpha", 0)
 	initialize_game()
 
 func initialize_game() -> void:
@@ -52,8 +56,7 @@ func setup_camera() -> void:
 	iso_camera.rotation_degrees = Vector3(-45, 45, 0)
 
 func setup_environment() -> void:
-	envi_objects.position = Vector3(game_center.x - 6, game_center.y - 10, game_center.z - 6)
-	
+	void_bottom.position = Vector3(game_center.x - 6, game_center.y - 10, game_center.z - 6)
 
 func add_map_to_scene() -> void:
 	if not is_instance_valid(grid_map) or grid_map.get_parent() != self:
