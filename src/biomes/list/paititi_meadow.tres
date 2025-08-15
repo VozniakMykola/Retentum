@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Biome" load_steps=5 format=3 uid="uid://ba5x28rva1sv0"]
+
+[ext_resource type="Script" uid="uid://bmp4k8nlenb5s" path="res://src/biomes/biome.gd" id="1_jqvh5"]
+[ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tiles/tile_res.gd" id="2_qaf20"]
+[ext_resource type="Resource" uid="uid://cqtwpr3yawlhw" path="res://src/tiles/list/green_grass.tres" id="3_t78xd"]
+[ext_resource type="Resource" uid="uid://bmopgjsvl07om" path="res://src/tiles/list/navy_lapis.tres" id="4_5b6rx"]
+
+[resource]
+script = ExtResource("1_jqvh5")
+biome_id = 2
+tiles_palette = Array[ExtResource("2_qaf20")]([ExtResource("3_t78xd"), ExtResource("4_5b6rx")])
+terrain_patterns = Array[int]([2, 0])
+is_sequentially = true
+biome_decor = Array[PackedScene]([])
+biome_environment = Array[PackedScene]([])
+is_unlocked = false
+required_wins = 0
+metadata/_custom_type_script = "uid://bmp4k8nlenb5s"

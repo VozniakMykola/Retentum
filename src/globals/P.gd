@@ -42,11 +42,11 @@ const AFTER_MIDDLE_INDEX = 2
 
 const BIOME_REQUIREMENTS = {
 	G.BiomeType.RESTROOM: 1, 
-	G.BiomeType.CHIA_LAWN_PAITITI: 2, 
+	G.BiomeType.PAITITI_MEADOW: 2, 
 	G.BiomeType.PADDED_CELL: 3, 
 	G.BiomeType.FLUFFY_PRISON: 4,
 	G.BiomeType.OFFICE: 5,
-	G.BiomeType.CHIA_LAWN_RESILIENCE: 6, 
+	G.BiomeType.RESILIENCE_MEADOW: 6, 
 	G.BiomeType.FACTORY: 7,
 	G.BiomeType.SPACEYARD: 25
 }

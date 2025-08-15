@@ -33,11 +33,11 @@ enum ChalkType {
 enum BiomeType {
 	PLAZA,
 	RESTROOM,
-	CHIA_LAWN_PAITITI,
+	PAITITI_MEADOW,
 	PADDED_CELL,
 	FLUFFY_PRISON,
 	OFFICE,
-	CHIA_LAWN_RESILIENCE,
+	RESILIENCE_MEADOW,
 	FACTORY,
 	SPACEYARD
 }
@@ -45,11 +45,11 @@ enum BiomeType {
 const BIOME_RESOURCES = {
 	BiomeType.PLAZA: preload("res://src/biomes/list/plaza.tres"),
 	BiomeType.RESTROOM: preload("res://src/biomes/list/restroom.tres"),
-	BiomeType.CHIA_LAWN_PAITITI: preload("res://src/biomes/list/chia_lawn_paititi.tres"),
+	BiomeType.PAITITI_MEADOW: preload("res://src/biomes/list/paititi_meadow.tres"),
 	BiomeType.PADDED_CELL: preload("res://src/biomes/list/padded_cell.tres"),
 	BiomeType.FLUFFY_PRISON: preload("res://src/biomes/list/fluffy_prison.tres"),
 	BiomeType.OFFICE: preload("res://src/biomes/list/office.tres"),
-	BiomeType.CHIA_LAWN_RESILIENCE: preload("res://src/biomes/list/chia_lawn_resilience.tres"),
+	BiomeType.RESILIENCE_MEADOW: preload("res://src/biomes/list/resilience_meadow.tres"),
 	BiomeType.FACTORY: preload("res://src/biomes/list/factory.tres"),
 	BiomeType.SPACEYARD: preload("res://src/biomes/list/spaceyard.tres")
 }
@@ -109,7 +109,7 @@ enum ColorType {
 	ORANGE, PINK, PURPLE, RED, TEAL, WHITE, YELLOW
 }
 
-var active_color_module: Dictionary = COLOR_MODULE_1
+var active_color_module: Dictionary = COLOR_MODULE_BALANCED
 const COLOR_MODULE_1 = {
 	ColorType.GRAY: Color("#7F8C8D"),
 	ColorType.WHITE: Color("#ECF0F1"),
@@ -128,6 +128,25 @@ const COLOR_MODULE_1 = {
 	ColorType.YELLOW: Color("#F1C40F"),
 	ColorType.DARK_GRAY: Color("#5D6D7E")
 }
+
+const COLOR_MODULE_BALANCED = {
+  ColorType.GRAY: Color("#7F8C8D"),
+  ColorType.WHITE: Color("#F5F5DC"),    
+  ColorType.BLACK: Color("#2C2C2C"),    
+  ColorType.GREEN: Color("#569331"),
+  ColorType.NAVY: Color("#5D8AA8"),     
+  ColorType.BROWN: Color("#8B4513"),     
+  ColorType.OLIVE: Color("#6B8E23"),     
+  ColorType.ORANGE: Color("#E67E22"),
+  ColorType.PINK: Color("#DF8AA8"),
+  ColorType.RED: Color("#E74C3C"),
+  ColorType.BLUE: Color("#3498DB"),
+  ColorType.CYAN: Color("#00CEC9"),
+  ColorType.PURPLE: Color("#9B59B6"),
+  ColorType.TEAL: Color("#1ABC9C"),
+  ColorType.YELLOW: Color("#F1C40F"),
+  ColorType.DARK_GRAY: Color("#555555")
+};
 
 func get_color(color_enum: ColorType) -> Color:
 	return active_color_module.get(color_enum, Color.WHITE)
