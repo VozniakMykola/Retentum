@@ -63,6 +63,11 @@ const HOPSCOTCH_ROTATIONS = {
 
 func on(tile_core: TileConfig):
 	texture = G.chalk_textures[tile_core.chalk_type]
+	if tile_core.tile_res.albedo_color == G.ColorType.WHITE:
+		modulate = Color(\"#909090\")
+	else:
+		modulate = Color.WHITE
+	
 	var random_coef: bool = (randi() % 4) == 0
 	match tile_core.chalk_type:
 		G.ChalkType.SCRIBBLE:
@@ -179,7 +184,6 @@ skeleton = NodePath("")
 [node name="Chalk" type="Sprite3D" parent="Sprite"]
 transform = Transform3D(1.2, 0, 0, 0, -5.24537e-08, -1.2, 0, 1.2, -5.24537e-08, 0, 0.111, 0)
 extra_cull_margin = 0.11
-modulate = Color(1, 1, 1, 0.784314)
 pixel_size = 0.001
 shaded = true
 texture_filter = 0

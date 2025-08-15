@@ -473,7 +473,6 @@ func _apply_tile_type_ENDGAME(previous_type: G.TileType) -> void:
 			pass
 	
 func _apply_tile_type_DEAD(previous_type: G.TileType, is_clicked: bool = false) -> void:
-	#_update_material() not needed??????
 	match previous_type:
 		G.TileType.NORMAL:
 			if is_clicked:
