@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cd6iarec5feo4"
-path.s3tc="res://.godot/imported/tile_Tiles038_8K-PNG_NormalGL.png-b163e9ded8acd01704fd3ed624727156.s3tc.ctex"
+uid="uid://bn2ixk65d0isy"
+path.s3tc="res://.godot/imported/rust_normal.png-b1e3142e2fd38c0e1d9d0dc9f70ead3c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "52c8dbafd48945109a9f3471ddb8d0c7"
+"md5": "baf21ba97121f2d15c698a7bd6ef261e"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/concrete/tile_Tiles038_8K-PNG_NormalGL.png"
-dest_files=["res://.godot/imported/tile_Tiles038_8K-PNG_NormalGL.png-b163e9ded8acd01704fd3ed624727156.s3tc.ctex"]
+source_file="res://assets/materials/material_resources/rust/rust_normal.png"
+dest_files=["res://.godot/imported/rust_normal.png-b1e3142e2fd38c0e1d9d0dc9f70ead3c.s3tc.ctex"]
 
 [params]
 
@@ -28,7 +28,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
-roughness/src_normal="res://assets/tile/tile_Tiles038_8K-PNG_NormalGL.png"
+roughness/src_normal="res://assets/materials/material_resources/rust/rust_metal_grate_rusty_nor_gl_4k.png"
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

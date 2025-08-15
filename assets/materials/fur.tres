@@ -1,8 +1,8 @@
 [gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://f7poqibshgj2"]
 
-[ext_resource type="Texture2D" uid="uid://c6xxfuoxoge0s" path="res://assets/materials/material_resources/wool/wool_curly_teddy_natural_diff_4k.png" id="1_tkf8y"]
-[ext_resource type="Texture2D" uid="uid://dc5vx2g0pyk7u" path="res://assets/materials/material_resources/wool/wool_curly_teddy_natural_metal_4k.png-curly_teddy_natural_rough_4k.png" id="2_oqsdn"]
-[ext_resource type="Texture2D" uid="uid://b1ll0fveyct4w" path="res://assets/materials/material_resources/wool/wool_curly_teddy_natural_nor_gl_4k.png" id="3_kk8x4"]
+[ext_resource type="Texture2D" uid="uid://c6xxfuoxoge0s" path="res://assets/materials/material_resources/wool/wool_color.png" id="1_tkf8y"]
+[ext_resource type="Texture2D" uid="uid://dc5vx2g0pyk7u" path="res://assets/materials/material_resources/wool/wool_roughness.png" id="2_oqsdn"]
+[ext_resource type="Texture2D" uid="uid://b1ll0fveyct4w" path="res://assets/materials/material_resources/wool/wool_normal.png" id="3_kk8x4"]
 
 [resource]
 resource_name = "tile"

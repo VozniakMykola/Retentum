@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://by18y6s13nl46"
-path.s3tc="res://.godot/imported/tile2_Metal037_1K-PNG_Color.png-14f5429ec0c5ce224016ef37f0de6210.s3tc.ctex"
+uid="uid://yjexp36rc7ft"
+path.s3tc="res://.godot/imported/concrete_color.png-a458334a799aafef2e8069a2943c2806.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "f185048cfe1e6e4bf3625d50057c9271"
+"md5": "58bff080b914f68f175c5325182e758b"
 }
 
 [deps]
 
-source_file="res://assets/endgame/tile2_Metal037_1K-PNG_Color.png"
-dest_files=["res://.godot/imported/tile2_Metal037_1K-PNG_Color.png-14f5429ec0c5ce224016ef37f0de6210.s3tc.ctex"]
+source_file="res://assets/materials/material_resources/concrete/concrete_color.png"
+dest_files=["res://.godot/imported/concrete_color.png-a458334a799aafef2e8069a2943c2806.s3tc.ctex"]
 
 [params]
 

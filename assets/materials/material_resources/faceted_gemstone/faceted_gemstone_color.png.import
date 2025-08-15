@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cd6xm0boewuqc"
-path.s3tc="res://.godot/imported/grass_ground_0037_roughness_2k.png-61cd54adb83d0abc006e4c1845ce6ccd.s3tc.ctex"
+uid="uid://crd618ju2bfwu"
+path.s3tc="res://.godot/imported/faceted_gemstone_color.png-477b39cb549964454eccd4b9ac4a801d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "feef544b4601e24897b99e1b4f39537d"
+"md5": "04fb5515e8f917e3944f430a8526acb8"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/grass/grass_ground_0037_roughness_2k.png"
-dest_files=["res://.godot/imported/grass_ground_0037_roughness_2k.png-61cd54adb83d0abc006e4c1845ce6ccd.s3tc.ctex"]
+source_file="res://assets/materials/material_resources/faceted_gemstone/faceted_gemstone_color.png"
+dest_files=["res://.godot/imported/faceted_gemstone_color.png-477b39cb549964454eccd4b9ac4a801d.s3tc.ctex"]
 
 [params]
 

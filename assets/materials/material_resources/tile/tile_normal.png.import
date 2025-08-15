@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cd5cloohmrg2b"
-path.s3tc="res://.godot/imported/tile2_Metal037_1K-PNG_Metalness-Metal037_1K-PNG_Roughness.png-23d20f750ee4b7fb70e8438eab434b8d.s3tc.ctex"
+uid="uid://bho3vbul8qeq5"
+path.s3tc="res://.godot/imported/tile_normal.png-7424b4f70cc93d2487fcbc1c09a6254a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "3d9cea3bdbd1ce86beffedd131d9407c"
+"md5": "27a572b6395cab886ca74db2949b9739"
 }
 
 [deps]
 
-source_file="res://assets/endgame/tile2_Metal037_1K-PNG_Metalness-Metal037_1K-PNG_Roughness.png"
-dest_files=["res://.godot/imported/tile2_Metal037_1K-PNG_Metalness-Metal037_1K-PNG_Roughness.png-23d20f750ee4b7fb70e8438eab434b8d.s3tc.ctex"]
+source_file="res://assets/materials/material_resources/tile/tile_normal.png"
+dest_files=["res://.godot/imported/tile_normal.png-7424b4f70cc93d2487fcbc1c09a6254a.s3tc.ctex"]
 
 [params]
 
@@ -23,12 +23,12 @@ compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/normal_map=0
+compress/normal_map=1
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=0
-roughness/src_normal=""
+roughness/mode=1
+roughness/src_normal="res://assets/materials/material_resources/tile/tile_Tiles014_4K-PNG_NormalGL.png"
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

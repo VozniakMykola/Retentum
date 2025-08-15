@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwtt0g0ye3ycv"
-path.s3tc="res://.godot/imported/new_carpet_carpet_15_basecolor-2K.png-0e6fd368ab12ab742ffc0aedf508e6a3.s3tc.ctex"
+uid="uid://c7hd0wk6pfk12"
+path.s3tc="res://.godot/imported/buffer_roughness.png-8192593ade08ff02b7d324bdcfd50552.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "5479176a497b6854f1f7d78ef462e113"
+"md5": "758c09bfc91e8758ca9cd426191877d8"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/carpet/new_carpet_carpet_15_basecolor-2K.png"
-dest_files=["res://.godot/imported/new_carpet_carpet_15_basecolor-2K.png-0e6fd368ab12ab742ffc0aedf508e6a3.s3tc.ctex"]
+source_file="res://assets/materials/material_resources/buffer/buffer_roughness.png"
+dest_files=["res://.godot/imported/buffer_roughness.png-8192593ade08ff02b7d324bdcfd50552.s3tc.ctex"]
 
 [params]
 

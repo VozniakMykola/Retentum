@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1ll0fveyct4w"
-path.s3tc="res://.godot/imported/wool_curly_teddy_natural_nor_gl_4k.png-af1e60b3a1aacfac3be0194a1d6f620e.s3tc.ctex"
+uid="uid://vpts0f32sxe3"
+path.s3tc="res://.godot/imported/faceted_gemstone_normal.png-e9cf42d075dc7303446ac4d07bc61188.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "e1a38000b309fc7529bc1981f1d01a04"
+"md5": "b8b16d37496c1a1946dafb73f7b2eb4f"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/wool/wool_curly_teddy_natural_nor_gl_4k.png"
-dest_files=["res://.godot/imported/wool_curly_teddy_natural_nor_gl_4k.png-af1e60b3a1aacfac3be0194a1d6f620e.s3tc.ctex"]
+source_file="res://assets/materials/material_resources/faceted_gemstone/faceted_gemstone_normal.png"
+dest_files=["res://.godot/imported/faceted_gemstone_normal.png-e9cf42d075dc7303446ac4d07bc61188.s3tc.ctex"]
 
 [params]
 
@@ -28,7 +28,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
-roughness/src_normal="res://assets/materials/material_resources/wool/wool_curly_teddy_natural_nor_gl_4k.png"
+roughness/src_normal="res://assets/materials/material_resources/faceted_gemstone/faceted_gemstone_Obsidian_002_normal.png"
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

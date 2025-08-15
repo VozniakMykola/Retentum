@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bho3vbul8qeq5"
-path.s3tc="res://.godot/imported/tile_Tiles014_4K-PNG_NormalGL.png-7f9384231856338808e0f2cee5edf9aa.s3tc.ctex"
+uid="uid://ba3cwpe1lyxga"
+path.s3tc="res://.godot/imported/carpet_normal.png-db0d5c180159cb47f978897c10c88ce4.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "27a572b6395cab886ca74db2949b9739"
+"md5": "efae123126e5940f6f36d27fa5b7863b"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/tile/tile_Tiles014_4K-PNG_NormalGL.png"
-dest_files=["res://.godot/imported/tile_Tiles014_4K-PNG_NormalGL.png-7f9384231856338808e0f2cee5edf9aa.s3tc.ctex"]
+source_file="res://assets/materials/material_resources/carpet/carpet_normal.png"
+dest_files=["res://.godot/imported/carpet_normal.png-db0d5c180159cb47f978897c10c88ce4.s3tc.ctex"]
 
 [params]
 
@@ -28,7 +28,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
-roughness/src_normal="res://assets/materials/material_resources/tile/tile_Tiles014_4K-PNG_NormalGL.png"
+roughness/src_normal="res://assets/materials/material_resources/carpet/new_carpet_carpet_15_normal-2K.png"
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

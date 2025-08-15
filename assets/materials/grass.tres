@@ -1,8 +1,8 @@
 [gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://b71m5q4rbux4r"]
 
-[ext_resource type="Texture2D" uid="uid://c5kygxm3jul6o" path="res://assets/materials/material_resources/grass/grass_ground_0037_color_2k.jpg" id="1_4w8n5"]
-[ext_resource type="Texture2D" uid="uid://cd6xm0boewuqc" path="res://assets/materials/material_resources/grass/grass_ground_0037_roughness_2k.png" id="2_jkprj"]
-[ext_resource type="Texture2D" uid="uid://b1rt066jeiaii" path="res://assets/materials/material_resources/grass/grass_ground_0037_normal_opengl_2k.png" id="3_mxeyg"]
+[ext_resource type="Texture2D" uid="uid://c5kygxm3jul6o" path="res://assets/materials/material_resources/grass/grass_color.jpg" id="1_4w8n5"]
+[ext_resource type="Texture2D" uid="uid://cd6xm0boewuqc" path="res://assets/materials/material_resources/grass/grass_roughness.png" id="2_jkprj"]
+[ext_resource type="Texture2D" uid="uid://b1rt066jeiaii" path="res://assets/materials/material_resources/grass/grass_normal.png" id="3_mxeyg"]
 
 [resource]
 resource_name = "tile"

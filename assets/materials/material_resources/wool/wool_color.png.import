@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7hd0wk6pfk12"
-path.s3tc="res://.godot/imported/tile_padp_Fabric048_8K-PNG_Roughness.png-01d380ac174c507a4e68f9977af8e964.s3tc.ctex"
+uid="uid://c6xxfuoxoge0s"
+path.s3tc="res://.godot/imported/wool_color.png-1bb3cf88ca10c9d344637ab196165f00.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "758c09bfc91e8758ca9cd426191877d8"
+"md5": "80cabe8af2d583b68ee2f492d886fd36"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/buffer/tile_padp_Fabric048_8K-PNG_Roughness.png"
-dest_files=["res://.godot/imported/tile_padp_Fabric048_8K-PNG_Roughness.png-01d380ac174c507a4e68f9977af8e964.s3tc.ctex"]
+source_file="res://assets/materials/material_resources/wool/wool_color.png"
+dest_files=["res://.godot/imported/wool_color.png-1bb3cf88ca10c9d344637ab196165f00.s3tc.ctex"]
 
 [params]
 

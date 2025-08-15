@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ba3cwpe1lyxga"
-path.s3tc="res://.godot/imported/new_carpet_carpet_15_normal-2K.png-aa7275a0a091f0b849b785dd19ecd8fd.s3tc.ctex"
+uid="uid://v6a7e6u4gp5p"
+path.s3tc="res://.godot/imported/metal_normal.png-4275b40db49a6e1185d7548c2f886f04.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "efae123126e5940f6f36d27fa5b7863b"
+"md5": "f1ba68ae86e591f817f507f25bfc27fa"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/carpet/new_carpet_carpet_15_normal-2K.png"
-dest_files=["res://.godot/imported/new_carpet_carpet_15_normal-2K.png-aa7275a0a091f0b849b785dd19ecd8fd.s3tc.ctex"]
+source_file="res://assets/endgame/metal_normal.png"
+dest_files=["res://.godot/imported/metal_normal.png-4275b40db49a6e1185d7548c2f886f04.s3tc.ctex"]
 
 [params]
 
@@ -28,7 +28,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
-roughness/src_normal="res://assets/materials/material_resources/carpet/new_carpet_carpet_15_normal-2K.png"
+roughness/src_normal="res://assets/endgame/tile2_Metal037_1K-PNG_NormalGL.png"
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

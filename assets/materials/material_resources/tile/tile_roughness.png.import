@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dc5vx2g0pyk7u"
-path.s3tc="res://.godot/imported/wool_curly_teddy_natural_metal_4k.png-curly_teddy_natural_rough_4k.png-74cbc46640299debc989b99a2da0aff2.s3tc.ctex"
+uid="uid://d1aexfsc4y1y0"
+path.s3tc="res://.godot/imported/tile_roughness.png-100a394f203dbe22a2e8894830c42e74.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "e704825f0a4aa59fd26ecc9370e5b61d"
+"md5": "ec1b231f374a8550309d5988dfda18d0"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/wool/wool_curly_teddy_natural_metal_4k.png-curly_teddy_natural_rough_4k.png"
-dest_files=["res://.godot/imported/wool_curly_teddy_natural_metal_4k.png-curly_teddy_natural_rough_4k.png-74cbc46640299debc989b99a2da0aff2.s3tc.ctex"]
+source_file="res://assets/materials/material_resources/tile/tile_roughness.png"
+dest_files=["res://.godot/imported/tile_roughness.png-100a394f203dbe22a2e8894830c42e74.s3tc.ctex"]
 
 [params]
 

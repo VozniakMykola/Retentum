@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmvrw80mgkayx"
-path.s3tc="res://.godot/imported/tile_padp_Fabric048_8K-PNG_Color.png-3a24819b740a55ab3b808fcdb554c583.s3tc.ctex"
+uid="uid://by18y6s13nl46"
+path.s3tc="res://.godot/imported/metal_color.png-c5a9eb9662edb02eacb83ed5d827bfd7.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "183d1ad09a18360d1f3ded199dc4b0a0"
+"md5": "f185048cfe1e6e4bf3625d50057c9271"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/buffer/tile_padp_Fabric048_8K-PNG_Color.png"
-dest_files=["res://.godot/imported/tile_padp_Fabric048_8K-PNG_Color.png-3a24819b740a55ab3b808fcdb554c583.s3tc.ctex"]
+source_file="res://assets/endgame/metal_color.png"
+dest_files=["res://.godot/imported/metal_color.png-c5a9eb9662edb02eacb83ed5d827bfd7.s3tc.ctex"]
 
 [params]
 

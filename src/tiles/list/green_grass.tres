@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_va41k")
-tile_id = "green_chia"
+tile_id = "green_grass"
 base_material = ExtResource("1_vrdx7")
 albedo_color = 6
 ignore_albedo = false

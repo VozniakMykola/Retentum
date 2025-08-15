@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://yjexp36rc7ft"
-path.s3tc="res://.godot/imported/tile_Tiles038_8K-PNG_Color.png-d6fedfa6bc5a923a300be4cd661ae90f.s3tc.ctex"
+uid="uid://cd5cloohmrg2b"
+path.s3tc="res://.godot/imported/metal_roughness.png-fd23d95af073fc12c06aff8889d00dda.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "58bff080b914f68f175c5325182e758b"
+"md5": "3d9cea3bdbd1ce86beffedd131d9407c"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/concrete/tile_Tiles038_8K-PNG_Color.png"
-dest_files=["res://.godot/imported/tile_Tiles038_8K-PNG_Color.png-d6fedfa6bc5a923a300be4cd661ae90f.s3tc.ctex"]
+source_file="res://assets/endgame/metal_roughness.png"
+dest_files=["res://.godot/imported/metal_roughness.png-fd23d95af073fc12c06aff8889d00dda.s3tc.ctex"]
 
 [params]
 

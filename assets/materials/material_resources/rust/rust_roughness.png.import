@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crd618ju2bfwu"
-path.s3tc="res://.godot/imported/faceted_gemstone_Obsidian_002_basecolor.png-1e9081915a2b1403905494a8f76403d6.s3tc.ctex"
+uid="uid://dciyltge3xttw"
+path.s3tc="res://.godot/imported/rust_roughness.png-a3b3059d58afedb045cb88d593219d3a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "04fb5515e8f917e3944f430a8526acb8"
+"md5": "5fd0a597349dac5dfa211e078c69453d"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/faceted_gemstone/faceted_gemstone_Obsidian_002_basecolor.png"
-dest_files=["res://.godot/imported/faceted_gemstone_Obsidian_002_basecolor.png-1e9081915a2b1403905494a8f76403d6.s3tc.ctex"]
+source_file="res://assets/materials/material_resources/rust/rust_roughness.png"
+dest_files=["res://.godot/imported/rust_roughness.png-a3b3059d58afedb045cb88d593219d3a.s3tc.ctex"]
 
 [params]
 

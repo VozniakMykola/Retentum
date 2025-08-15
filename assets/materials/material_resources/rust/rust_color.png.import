@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cerpcjppp4o32"
-path.s3tc="res://.godot/imported/tile_Tiles014_4K-PNG_Color.png-4750b5af3952cccdaef7c759ab37b4e4.s3tc.ctex"
+uid="uid://173vsxo42vh0"
+path.s3tc="res://.godot/imported/rust_color.png-badae8ca1219d0b680b561da70420ff6.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "984acc12bc0f5d177d2e5f36e08bbb71"
+"md5": "2476b328d2e622fabe7752963cdac7e2"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/tile/tile_Tiles014_4K-PNG_Color.png"
-dest_files=["res://.godot/imported/tile_Tiles014_4K-PNG_Color.png-4750b5af3952cccdaef7c759ab37b4e4.s3tc.ctex"]
+source_file="res://assets/materials/material_resources/rust/rust_color.png"
+dest_files=["res://.godot/imported/rust_color.png-badae8ca1219d0b680b561da70420ff6.s3tc.ctex"]
 
 [params]
 

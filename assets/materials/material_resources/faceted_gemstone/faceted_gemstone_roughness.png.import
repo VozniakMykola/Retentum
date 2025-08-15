@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://173vsxo42vh0"
-path.s3tc="res://.godot/imported/rust_metal_grate_rusty_diff_4k.png-9fdb1249adfb47a04f2748c0b68c1926.s3tc.ctex"
+uid="uid://blyado6a3wpeb"
+path.s3tc="res://.godot/imported/faceted_gemstone_roughness.png-46e26225f926d8650d7958b156114370.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "2476b328d2e622fabe7752963cdac7e2"
+"md5": "70a3b62ce72aae865cb7783ca05632b4"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/rust/rust_metal_grate_rusty_diff_4k.png"
-dest_files=["res://.godot/imported/rust_metal_grate_rusty_diff_4k.png-9fdb1249adfb47a04f2748c0b68c1926.s3tc.ctex"]
+source_file="res://assets/materials/material_resources/faceted_gemstone/faceted_gemstone_roughness.png"
+dest_files=["res://.godot/imported/faceted_gemstone_roughness.png-46e26225f926d8650d7958b156114370.s3tc.ctex"]
 
 [params]
 

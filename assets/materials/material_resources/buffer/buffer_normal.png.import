@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1rt066jeiaii"
-path.s3tc="res://.godot/imported/grass_ground_0037_normal_opengl_2k.png-2b7aa48939a4bc0b4050631c0dfe1783.s3tc.ctex"
+uid="uid://crvqxhhxfxw5d"
+path.s3tc="res://.godot/imported/buffer_normal.png-730a8e39d446c7f27682b81c46604c3a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "1e92572282097f8186824e058dfc07f6"
+"md5": "4862c0ca84c0d9e3278d6e063540aafd"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/grass/grass_ground_0037_normal_opengl_2k.png"
-dest_files=["res://.godot/imported/grass_ground_0037_normal_opengl_2k.png-2b7aa48939a4bc0b4050631c0dfe1783.s3tc.ctex"]
+source_file="res://assets/materials/material_resources/buffer/buffer_normal.png"
+dest_files=["res://.godot/imported/buffer_normal.png-730a8e39d446c7f27682b81c46604c3a.s3tc.ctex"]
 
 [params]
 
@@ -28,7 +28,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
-roughness/src_normal="res://assets/materials/material_resources/grass/grass_ground_0037_normal_opengl_2k.png"
+roughness/src_normal="res://assets/materials/material_resources/buffer/tile_padp_Fabric048_8K-PNG_NormalGL.png"
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

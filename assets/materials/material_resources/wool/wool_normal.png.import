@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bn2ixk65d0isy"
-path.s3tc="res://.godot/imported/rust_metal_grate_rusty_nor_gl_4k.png-614e4f0dfd0ba502ca67a3857ed730d9.s3tc.ctex"
+uid="uid://b1ll0fveyct4w"
+path.s3tc="res://.godot/imported/wool_normal.png-6707b450ce8f04c697010598991adc1e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "baf21ba97121f2d15c698a7bd6ef261e"
+"md5": "e1a38000b309fc7529bc1981f1d01a04"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/rust/rust_metal_grate_rusty_nor_gl_4k.png"
-dest_files=["res://.godot/imported/rust_metal_grate_rusty_nor_gl_4k.png-614e4f0dfd0ba502ca67a3857ed730d9.s3tc.ctex"]
+source_file="res://assets/materials/material_resources/wool/wool_normal.png"
+dest_files=["res://.godot/imported/wool_normal.png-6707b450ce8f04c697010598991adc1e.s3tc.ctex"]
 
 [params]
 
@@ -28,7 +28,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
-roughness/src_normal="res://assets/materials/material_resources/rust/rust_metal_grate_rusty_nor_gl_4k.png"
+roughness/src_normal="res://assets/materials/material_resources/wool/wool_curly_teddy_natural_nor_gl_4k.png"
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

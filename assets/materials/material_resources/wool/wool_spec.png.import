@@ -2,24 +2,23 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5kygxm3jul6o"
-path.s3tc="res://.godot/imported/grass_ground_0037_color_2k.jpg-595aba72434b48a579b8aa8361acb5c7.s3tc.ctex"
+uid="uid://cy2yvwlwyqsa7"
+path="res://.godot/imported/wool_spec.png-2781bc9930a2cd5103c0fd2062ada934.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 generator_parameters={
-"md5": "36628a8f2b1b98e6547a439427a1daee"
+"md5": "c1ea56429d0e050434f4c469e7f09826"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/grass/grass_ground_0037_color_2k.jpg"
-dest_files=["res://.godot/imported/grass_ground_0037_color_2k.jpg-595aba72434b48a579b8aa8361acb5c7.s3tc.ctex"]
+source_file="res://assets/materials/material_resources/wool/wool_spec.png"
+dest_files=["res://.godot/imported/wool_spec.png-2781bc9930a2cd5103c0fd2062ada934.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
@@ -35,4 +34,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

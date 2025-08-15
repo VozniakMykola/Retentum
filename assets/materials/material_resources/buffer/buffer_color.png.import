@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6xxfuoxoge0s"
-path.s3tc="res://.godot/imported/wool_curly_teddy_natural_diff_4k.png-6fbd861a854fe0dbee69b1853bb3a531.s3tc.ctex"
+uid="uid://bmvrw80mgkayx"
+path.s3tc="res://.godot/imported/buffer_color.png-6049cd456016d3ce231e75b976d89aa6.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "80cabe8af2d583b68ee2f492d886fd36"
+"md5": "183d1ad09a18360d1f3ded199dc4b0a0"
 }
 
 [deps]
 
-source_file="res://assets/materials/material_resources/wool/wool_curly_teddy_natural_diff_4k.png"
-dest_files=["res://.godot/imported/wool_curly_teddy_natural_diff_4k.png-6fbd861a854fe0dbee69b1853bb3a531.s3tc.ctex"]
+source_file="res://assets/materials/material_resources/buffer/buffer_color.png"
+dest_files=["res://.godot/imported/buffer_color.png-6049cd456016d3ce231e75b976d89aa6.s3tc.ctex"]
 
 [params]
 

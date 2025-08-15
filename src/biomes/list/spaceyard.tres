@@ -8,7 +8,7 @@
 [ext_resource type="Resource" uid="uid://dgyhq3rq1lhuv" path="res://src/tiles/list/blue_carpet.tres" id="6_umo6j"]
 [ext_resource type="Resource" uid="uid://mcf4a6awn6dm" path="res://src/tiles/list/cyan_carpet.tres" id="7_u02pp"]
 [ext_resource type="Resource" uid="uid://crn68ij1j1lji" path="res://src/tiles/list/gray_concrete.tres" id="8_u2xci"]
-[ext_resource type="Resource" uid="uid://bmopgjsvl07om" path="res://src/tiles/list/navy_lapis.tres" id="9_l65pm"]
+[ext_resource type="Resource" uid="uid://bmopgjsvl07om" path="res://src/tiles/list/navy_gemstone.tres" id="9_l65pm"]
 [ext_resource type="Resource" uid="uid://bxkml7ih6vt7x" path="res://src/tiles/list/orange_buffer.tres" id="10_h0dx0"]
 [ext_resource type="Resource" uid="uid://bli32ylvv75f" path="res://src/tiles/list/pink_fur.tres" id="11_x2wp0"]
 [ext_resource type="Resource" uid="uid://dcbds287ueyv2" path="res://src/tiles/list/purple_carpet.tres" id="12_kfe24"]
