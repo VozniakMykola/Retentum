@@ -6,11 +6,14 @@
 
 [resource]
 resource_name = "tile"
-cull_mode = 2
+transparency = 4
 albedo_texture = ExtResource("1_4w8n5")
 metallic_texture = ExtResource("2_jkprj")
 metallic_texture_channel = 2
 roughness_texture = ExtResource("2_jkprj")
 roughness_texture_channel = 1
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0
 normal_enabled = true
 normal_texture = ExtResource("3_mxeyg")

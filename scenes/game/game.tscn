@@ -149,6 +149,7 @@ offset_bottom = 314.0
 text = "LOSE"
 
 [node name="EnviObjects" type="Node3D" parent="."]
+visible = false
 
 [node name="VoidBottom" type="MeshInstance3D" parent="EnviObjects"]
 transform = Transform3D(31.8198, -21.2132, -9.27259e-07, 0, -1.31134e-06, 30, -31.8198, -21.2132, -9.27259e-07, 0, 0, 0)

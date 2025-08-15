@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://n720l134ukve"]
+
+[ext_resource type="Texture2D" uid="uid://crd618ju2bfwu" path="res://assets/materials/material_resources/faceted_gemstone/faceted_gemstone_Obsidian_002_basecolor.png" id="1_0m2a2"]
+[ext_resource type="Texture2D" uid="uid://blyado6a3wpeb" path="res://assets/materials/material_resources/faceted_gemstone/faceted_gemstone_Obsidian_002_roughness.png" id="2_5ehf2"]
+[ext_resource type="Texture2D" uid="uid://vpts0f32sxe3" path="res://assets/materials/material_resources/faceted_gemstone/faceted_gemstone_Obsidian_002_normal.png" id="3_xmtd3"]
+
+[resource]
+resource_name = "tile"
+transparency = 4
+albedo_texture = ExtResource("1_0m2a2")
+metallic_texture = ExtResource("2_5ehf2")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_5ehf2")
+roughness_texture_channel = 1
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0
+normal_enabled = true
+normal_texture = ExtResource("3_xmtd3")

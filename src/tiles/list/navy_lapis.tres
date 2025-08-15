@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="TileResource" load_steps=3 format=3 uid="uid://bmopgjsvl07om"]
 
 [ext_resource type="Script" uid="uid://bcsf5g74r2jr5" path="res://src/tiles/tile_res.gd" id="1_8aq01"]
-[ext_resource type="Material" uid="uid://cb5qspvygrorx" path="res://assets/materials/lapis.tres" id="1_gecmn"]
+[ext_resource type="Material" uid="uid://n720l134ukve" path="res://assets/materials/faceted_gemstone.tres" id="1_gecmn"]
 
 [resource]
 script = ExtResource("1_8aq01")

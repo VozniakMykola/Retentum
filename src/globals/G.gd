@@ -109,43 +109,24 @@ enum ColorType {
 	ORANGE, PINK, PURPLE, RED, TEAL, WHITE, YELLOW
 }
 
-var active_color_module: Dictionary = COLOR_MODULE_BALANCED
-const COLOR_MODULE_1 = {
-	ColorType.GRAY: Color("#7F8C8D"),
-	ColorType.WHITE: Color("#ECF0F1"),
-	ColorType.BLACK: Color("#2C3E50"),
-	ColorType.GREEN: Color("#569331"),
-	ColorType.NAVY: Color("#546DFF"), #1A5276
-	ColorType.BROWN: Color("#b76433"),
-	ColorType.OLIVE: Color("#8D6E63"),
-	ColorType.ORANGE: Color("#E67E22"),
-	ColorType.PINK: Color("#F8A5C2"),
-	ColorType.RED: Color("#E74C3C"),
-	ColorType.BLUE: Color("#3498DB"),
-	ColorType.CYAN: Color("#00CEC9"),
-	ColorType.PURPLE: Color("#9B59B6"),
-	ColorType.TEAL: Color("#1ABC9C"),
-	ColorType.YELLOW: Color("#F1C40F"),
-	ColorType.DARK_GRAY: Color("#5D6D7E")
-}
-
-const COLOR_MODULE_BALANCED = {
+var active_color_module: Dictionary = COLOR_MODULE_BALANCED_2
+const COLOR_MODULE_BALANCED_2 = {
   ColorType.GRAY: Color("#7F8C8D"),
-  ColorType.WHITE: Color("#F5F5DC"),    
-  ColorType.BLACK: Color("#2C2C2C"),    
-  ColorType.GREEN: Color("#569331"),
-  ColorType.NAVY: Color("#5D8AA8"),     
-  ColorType.BROWN: Color("#8B4513"),     
-  ColorType.OLIVE: Color("#6B8E23"),     
+  ColorType.WHITE: Color("#F5E8D0"), #(#F8F0D8)
+  ColorType.BLACK: Color("#0C0A09"),
+  ColorType.GREEN: Color("#5A9A38"),
+  ColorType.NAVY: Color("#2A52BE"),
+  ColorType.BROWN: Color("#7E3A10"),
+  ColorType.OLIVE: Color("#6B8E23"),
   ColorType.ORANGE: Color("#E67E22"),
-  ColorType.PINK: Color("#DF8AA8"),
+  ColorType.PINK: Color("#D97A9C"),
   ColorType.RED: Color("#E74C3C"),
-  ColorType.BLUE: Color("#3498DB"),
-  ColorType.CYAN: Color("#00CEC9"),
+  ColorType.BLUE: Color("#3A8FD5"),
+  ColorType.CYAN: Color("#00B6B3"),
   ColorType.PURPLE: Color("#9B59B6"),
-  ColorType.TEAL: Color("#1ABC9C"),
+  ColorType.TEAL: Color("#18A58E"),
   ColorType.YELLOW: Color("#F1C40F"),
-  ColorType.DARK_GRAY: Color("#555555")
+  ColorType.DARK_GRAY: Color("#3E3A36")
 };
 
 func get_color(color_enum: ColorType) -> Color:
