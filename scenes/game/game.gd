@@ -13,8 +13,6 @@ var game_diagonal: float
 @onready var monke: Monke = $Monke
 @onready var light: DirectionalLight3D = $DirectionalLight3D
 @onready var void_bottom: MeshInstance3D = $EnviObjects/VoidBottom
-@onready var godray_timer: Timer = $EnviObjects/GodrayTimer
-@onready var godray_pool: Node3D = $EnviObjects/GodrayPool
 
 func _ready() -> void:
 	G.turn_next.connect(_on_turn_next)

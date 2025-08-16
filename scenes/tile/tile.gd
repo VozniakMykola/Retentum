@@ -147,6 +147,8 @@ func _update_material() -> void:
 func _on_turn_next(turn: G.GameTurn) -> void:
 	if turn == G.GameTurn.PLAYER_TURN and is_hovered:
 		_on_mouse_entered()
+	else:
+		print("kak")
 
 func _on_mouse_entered() -> void:
 	is_hovered = true
@@ -378,7 +380,6 @@ func set_tile_type(new_type: G.TileType , old_type = tile_core.tile_type, is_cli
 	if new_type == old_type:
 		return
 	tile_core.tile_type = new_type
-	is_hovered = false
 	_disconnect_tile()
 	_reset_tile()
 	
@@ -462,7 +463,7 @@ func _apply_tile_type_CHALKED(previous_type: G.TileType) -> void:
 func _apply_tile_type_ENDGAME(previous_type: G.TileType) -> void:
 	_update_material()
 	_on_tile_visibility()
-	chalk.off()
+	chalk.off_instant()
 	endgame.on()
 	
 	match previous_type:
@@ -471,7 +472,7 @@ func _apply_tile_type_ENDGAME(previous_type: G.TileType) -> void:
 			endgame.anim_appear()
 		_:
 			pass
-	
+
 func _apply_tile_type_DEAD(previous_type: G.TileType, is_clicked: bool = false) -> void:
 	match previous_type:
 		G.TileType.NORMAL:
@@ -483,6 +484,9 @@ func _apply_tile_type_DEAD(previous_type: G.TileType, is_clicked: bool = false) 
 			_off_tile_visibility()
 
 func _apply_tile_type_NULL() -> void:
+	chalk.off_instant()
+	_reset_tile()
+	is_hovered = false
 	_off_tile_visibility()
 
 func set_tile_state(new_state: G.TileState) -> void:

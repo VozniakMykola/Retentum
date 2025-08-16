@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=4 uid="uid://cys0c72c5dtqm"]
+[gd_scene load_steps=12 format=4 uid="uid://cys0c72c5dtqm"]
 
 [ext_resource type="Script" uid="uid://b3uwbkyiuqw2e" path="res://scenes/tile/tile.gd" id="1_bibkx"]
+[ext_resource type="Material" uid="uid://bqwc56jky5qxe" path="res://assets/vfx/shader_materials/dissolve_mat.tres" id="2_002hm"]
 [ext_resource type="Texture2D" uid="uid://fxr2vmaojy02" path="res://assets/chalks/test.png" id="2_2jaqc"]
 [ext_resource type="Material" uid="uid://br3p17mwt1w8y" path="res://assets/endgame/metal.tres" id="3_bibkx"]
 
@@ -56,43 +57,69 @@ const MIRROR_ROTATIONS = {
 	Direction2D.LEFT: Vector3(90.0, 225.0, 0.0),
 }
 
-const HOPSCOTCH_ROTATIONS = {
-	Direction2D.RIGHT: DEFAULT_UP_ROTATION,
-	Direction2D.LEFT: Vector3(90.0, 225.0, 0.0),
-}
+var current_tween: Tween
+
+func _ready():
+	material_override = preload(\"res://assets/vfx/shader_materials/dissolve_mat.tres\").duplicate()
+	visible = false
 
 func on(tile_core: TileConfig):
-	texture = G.chalk_textures[tile_core.chalk_type]
-	if tile_core.tile_res.albedo_color == G.ColorType.WHITE:
-		modulate = Color(\"#909090\")
-	else:
-		modulate = Color.WHITE
+	var chalk_texture = G.chalk_textures[tile_core.chalk_type]
+	texture = chalk_texture
+	modulate = Color(\"#909090\") if tile_core.tile_res.albedo_color == G.ColorType.WHITE else Color.WHITE
 	
-	var random_coef: bool = (randi() % 4) == 0
+	material_override.set_shader_parameter(\"albedo_texture\", chalk_texture)
+	material_override.set_shader_parameter(\"modulate_color\", modulate)
+	
+	var random_coef: bool = randf() < 0.25
+	rotation_degrees = DEFAULT_UP_ROTATION
 	match tile_core.chalk_type:
 		G.ChalkType.SCRIBBLE:
-			rotation_degrees = ARROW_ROTATIONS.get(Direction2D.get_random_main(), Vector3.ZERO) 
+			rotation_degrees = ARROW_ROTATIONS.get(Direction2D.get_random_main(), DEFAULT_UP_ROTATION) 
 		G.ChalkType.DECOY:
-			rotation_degrees = DEFAULT_UP_ROTATION
 			rotation_degrees.y += randi_range(-35, 10)
 		G.ChalkType.HOPSCOTCH:
-			rotation_degrees = MIRROR_ROTATIONS.get(Direction2D.LEFT, Vector3.ZERO) if random_coef else MIRROR_ROTATIONS.get(Direction2D.RIGHT, Vector3.ZERO)
+			rotation_degrees = MIRROR_ROTATIONS.get(Direction2D.LEFT, DEFAULT_UP_ROTATION) if random_coef else MIRROR_ROTATIONS.get(Direction2D.RIGHT, DEFAULT_UP_ROTATION)
 		G.ChalkType.SCOTOMA:
-			rotation_degrees = MIRROR_ROTATIONS.get(Direction2D.LEFT, Vector3.ZERO) if random_coef else MIRROR_ROTATIONS.get(Direction2D.RIGHT, Vector3.ZERO)
+			rotation_degrees = MIRROR_ROTATIONS.get(Direction2D.LEFT, DEFAULT_UP_ROTATION) if random_coef else MIRROR_ROTATIONS.get(Direction2D.RIGHT, DEFAULT_UP_ROTATION)
 		G.ChalkType.REVELATION:
-			rotation_degrees = DEFAULT_UP_ROTATION
 			rotation_degrees.y += randi_range(-15, 15)
 		G.ChalkType.SIGIL:
 			rotation_degrees.y = Direction2D.direction_to_degrees(Direction2D.get_random_diagonal())
 		G.ChalkType.GUIDANCE:
-			rotation_degrees = ARROW_ROTATIONS.get(tile_core.guidance_vec, Vector3.ZERO)
+			rotation_degrees = ARROW_ROTATIONS.get(tile_core.guidance_vec, DEFAULT_UP_ROTATION)
+	
 	visible = true
+	anim_appear()
 
 func off():
+	await anim_disappear()
 	visible = false
 
-func appear_anim():
-	pass
+func off_instant():
+	material_override.set_shader_parameter(\"dissolve_value\", 1)
+	visible = false
+
+func new_tween() -> void:
+	if current_tween and current_tween.is_running():
+		current_tween.kill()
+	current_tween = create_tween()
+
+func anim_appear():
+	new_tween()
+	var duration = randf_range(0.3, 0.6)
+	var delay = randf_range(0, 0.1)
+	current_tween.tween_method(
+		func(v): material_override.set_shader_parameter(\"dissolve_value\", v), 1.0, 0.0, duration
+	).set_delay(delay)
+
+func anim_disappear():
+	new_tween()
+	var duration = randf_range(0.15, 0.35)
+	current_tween.tween_method(
+		func(v): material_override.set_shader_parameter(\"dissolve_value\", v), 0.0, 1.0, duration
+	)
+	await current_tween.finished
 "
 
 [sub_resource type="GDScript" id="GDScript_2jaqc"]
@@ -183,6 +210,7 @@ skeleton = NodePath("")
 
 [node name="Chalk" type="Sprite3D" parent="Sprite"]
 transform = Transform3D(1.2, 0, 0, 0, -5.24537e-08, -1.2, 0, 1.2, -5.24537e-08, 0, 0.111, 0)
+material_override = ExtResource("2_002hm")
 extra_cull_margin = 0.11
 pixel_size = 0.001
 shaded = true

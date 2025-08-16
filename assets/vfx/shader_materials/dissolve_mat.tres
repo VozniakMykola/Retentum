@@ -1,0 +1,20 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://bqwc56jky5qxe"]
+
+[ext_resource type="Shader" uid="uid://cop1dr0ou0mjn" path="res://assets/vfx/dissolve.gdshader" id="1_ve8dn"]
+
+[sub_resource type="Gradient" id="Gradient_krq7o"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_aujw2"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ugclo"]
+color_ramp = SubResource("Gradient_krq7o")
+noise = SubResource("FastNoiseLite_aujw2")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ve8dn")
+shader_parameter/modulate_color = Color(1, 1, 1, 1)
+shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_ugclo")
+shader_parameter/dissolve_value = 0.0
+shader_parameter/edge_color = Color(1, 0.5, 0, 1)
+shader_parameter/edge_width = 0.05
